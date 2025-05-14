@@ -1,5 +1,5 @@
-import { useState, useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import { useState, useEffect, useRef, useLayoutEffect } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Navbar from '../../components/Navbar';
@@ -17,8 +17,39 @@ const stepImages = [
 ];
 
 const HowItWorksPage = () => {
+  const location = useLocation();
   const [activeStep, setActiveStep] = useState(0);
   const imageRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const pageRef = useRef<HTMLDivElement>(null);
+  const animationsInitialized = useRef(false);
+  
+  // Force scroll to top on mount - this is crucial
+  useLayoutEffect(() => {
+    // Force immediate scroll to top before any rendering
+    window.scrollTo(0, 0);
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+    
+    // Set a flag to know this is a fresh mount
+    const isMount = !animationsInitialized.current;
+    
+    // Initial animation and scroll settings
+    if (isMount) {
+      // Delay any ScrollTrigger initialization to ensure proper initial position
+      setTimeout(() => {
+        // Force scroll again to counteract any ScrollTrigger movement
+        window.scrollTo(0, 0);
+      }, 10);
+    }
+    
+    return () => {
+      // Clean up any pending timeouts
+      const allTimeouts = window.setTimeout(() => {}, 0);
+      for (let i = 0; i < allTimeouts; i++) {
+        window.clearTimeout(i);
+      }
+    };
+  }, [location.pathname]);
   
   // Step data
   const steps = [
@@ -57,118 +88,149 @@ const HowItWorksPage = () => {
 
   // Handle all animations and scrolling effects in a single useEffect
   useEffect(() => {
+    if (animationsInitialized.current) return;
+    
+    // Store the context in window for proper cleanup
     const ctx = gsap.context(() => {
       try {
-        const tl = gsap.timeline();
-        tl.fromTo(
-          '.header-title',
-          { y: 50, opacity: 0 },
-          { y: 0, opacity: 1, duration: 0.8, ease: 'power3.out' }
-        )
-        .fromTo(
-          '.header-subtitle',
-          { y: 30, opacity: 0 },
-          { y: 0, opacity: 1, duration: 0.8, ease: 'power3.out' },
-          '-=0.6'
-        )
-        .fromTo(
-          '.nav-button',
-          { y: 20, opacity: 0 },
-          { y: 0, opacity: 1, stagger: 0.1, duration: 0.5, ease: 'power3.out' },
-          '-=0.6'
-        );
-
-        ScrollTrigger.create({
-          trigger: 'body',
-          start: 'top top',
-          end: 'bottom bottom',
-          onUpdate: (self) => {
-            gsap.to('.progress-bar', {
-              scaleX: self.progress,
-              transformOrigin: 'left center',
-              duration: 0.1,
-              ease: 'none',
-            });
-          },
-        });
-
-        // Use string selectors for GSAP parallax
-        steps.forEach((step, idx) => {
-          gsap.fromTo(
-            `#${step.id} .parallax-image`,
-            { y: 0, scale: 1.08 },
-            {
-              y: '-12vw',
-              scale: 1,
-              ease: 'none',
-              scrollTrigger: {
-                trigger: `#${step.id} .parallax-image`,
-                start: 'top bottom',
-                end: 'bottom top',
-                scrub: 1.2,
-              },
-            }
+        // Delay the ScrollTrigger initialization to allow initial scroll position to settle
+        setTimeout(() => {
+          // Header animations don't rely on ScrollTrigger for initial appearance
+          const tl = gsap.timeline();
+          tl.fromTo(
+            '.header-title',
+            { y: 50, opacity: 0 },
+            { y: 0, opacity: 1, duration: 0.8, ease: 'power3.out' }
+          )
+          .fromTo(
+            '.header-subtitle',
+            { y: 30, opacity: 0 },
+            { y: 0, opacity: 1, duration: 0.8, ease: 'power3.out' },
+            '-=0.6'
+          )
+          .fromTo(
+            '.nav-button',
+            { y: 20, opacity: 0 },
+            { y: 0, opacity: 1, stagger: 0.1, duration: 0.5, ease: 'power3.out' },
+            '-=0.6'
           );
-        });
 
-        steps.forEach((step, index) => {
+          // Progress bar
           ScrollTrigger.create({
-            trigger: `#${step.id}`,
-            start: 'top center',
-            end: 'bottom center',
-            onEnter: () => setActiveStep(index),
-            onEnterBack: () => setActiveStep(index),
+            trigger: '#how-it-works-page',
+            start: 'top top',
+            end: 'bottom bottom',
+            onUpdate: (self) => {
+              gsap.to('.progress-bar', {
+                scaleX: self.progress,
+                transformOrigin: 'left center',
+                duration: 0.1,
+                ease: 'none',
+              });
+            },
+            id: 'progress-bar',
           });
 
+          // Use string selectors for GSAP parallax
+          steps.forEach((step, idx) => {
+            gsap.fromTo(
+              `#${step.id} .parallax-image`,
+              { y: 0, scale: 1.08 },
+              {
+                y: '-12vw',
+                scale: 1,
+                ease: 'none',
+                scrollTrigger: {
+                  trigger: `#${step.id} .parallax-image`,
+                  start: 'top bottom',
+                  end: 'bottom top',
+                  scrub: 1.2,
+                  id: `parallax-${step.id}`,
+                },
+              }
+            );
+          });
+
+          steps.forEach((step, index) => {
+            ScrollTrigger.create({
+              trigger: `#${step.id}`,
+              start: 'top center',
+              end: 'bottom center',
+              onEnter: () => setActiveStep(index),
+              onEnterBack: () => setActiveStep(index),
+              id: `step-tracker-${step.id}`,
+            });
+
+            ScrollTrigger.create({
+              trigger: `#${step.id}`,
+              start: 'top 75%',
+              once: true,
+              onEnter: () => {
+                gsap.to(`#${step.id}`, {
+                  opacity: 1,
+                  duration: 0.6,
+                  ease: 'power2.out',
+                });
+                gsap.fromTo(
+                  `#${step.id} .step-description`,
+                  { y: 30, opacity: 0 },
+                  { y: 0, opacity: 1, duration: 0.8, delay: 0.3, ease: 'power2.out' }
+                );
+                gsap.fromTo(
+                  `#${step.id} .step-button`,
+                  { y: 20, opacity: 0 },
+                  { y: 0, opacity: 1, duration: 0.5, delay: 0.5, ease: 'power2.out' }
+                );
+              },
+              id: `step-reveal-${step.id}`,
+            });
+          });
+
+          // Animation for CTA section
           ScrollTrigger.create({
-            trigger: `#${step.id}`,
-            start: 'top 75%',
+            trigger: '.cta-section',
+            start: 'top 80%',
             once: true,
             onEnter: () => {
-              gsap.to(`#${step.id}`, {
-                opacity: 1,
-                duration: 0.6,
-                ease: 'power2.out',
-              });
               gsap.fromTo(
-                `#${step.id} .step-description`,
+                '.cta-content > *',
                 { y: 30, opacity: 0 },
-                { y: 0, opacity: 1, duration: 0.8, delay: 0.3, ease: 'power2.out' }
-              );
-              gsap.fromTo(
-                `#${step.id} .step-button`,
-                { y: 20, opacity: 0 },
-                { y: 0, opacity: 1, duration: 0.5, delay: 0.5, ease: 'power2.out' }
+                { y: 0, opacity: 1, stagger: 0.1, duration: 0.6, ease: 'power2.out' }
               );
             },
+            id: 'cta-animation',
           });
-        });
-
-        // Animation for CTA section
-        ScrollTrigger.create({
-          trigger: '.cta-section',
-          start: 'top 80%',
-          once: true,
-          onEnter: () => {
-            gsap.fromTo(
-              '.cta-content > *',
-              { y: 30, opacity: 0 },
-              { y: 0, opacity: 1, stagger: 0.1, duration: 0.6, ease: 'power2.out' }
-            );
-          }
-        });
+          
+          // Mark as initialized so we don't reinitialize unnecessarily
+          animationsInitialized.current = true;
+          
+          // Store the animation context for proper cleanup
+          window.howItWorksAnimationsContext = ctx;
+        }, 100); // Short delay to ensure DOM is ready and scroll position is correct
       } catch (error) {
         console.error('Error setting up GSAP animations:', error);
       }
     });
+    
     return () => {
-      ctx.revert();
-      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+      // Comprehensive cleanup
+      if (window.howItWorksAnimationsContext) {
+        window.howItWorksAnimationsContext.revert();
+        window.howItWorksAnimationsContext = undefined;
+      }
+      
+      // Kill all ScrollTrigger instances manually for extra safety
+      ScrollTrigger.getAll().forEach((trigger) => {
+        trigger.kill();
+      });
+      
+      // Reset animation initialized flag for potential remount
+      animationsInitialized.current = false;
     };
   }, [steps]);
 
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div ref={pageRef} id="how-it-works-page" className="min-h-screen bg-black text-white">
       <Navbar />
       
       {/* Progress bar */}
@@ -177,7 +239,7 @@ const HowItWorksPage = () => {
       </div>
       
       {/* Header section */}
-      <header className="pt-32 pb-20 relative overflow-hidden">
+      <header className="pt-20 pb-20 relative overflow-hidden" style={{ scrollMarginTop: '80px' }}>
         <div className="container mx-auto px-4 text-center relative z-10">
           <h1 className="header-title text-5xl md:text-7xl font-bold mb-6">
             <span className="bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent">
