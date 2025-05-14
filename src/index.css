@@ -1,0 +1,346 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  /* Use only web-safe fonts and the Google Fonts we've loaded */
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  }
+
+  /* Improved smooth scrolling for browsers that support it */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Disable smooth scrolling when users prefer reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+
+  body {
+    @apply bg-black text-light antialiased;
+    /* Fix for iOS momentum scrolling */
+    -webkit-overflow-scrolling: touch;
+    /* Ensure minimum text size for accessibility */
+    font-size: 16px;
+    /* Improved text rendering */
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Add accessible focus outline that works across color schemes */
+  *:focus {
+    @apply outline-2 outline-offset-2 outline-secondary;
+  }
+
+  /* Improved focus styling that doesn't rely only on color */
+  *:focus-visible {
+    @apply outline-2 outline-offset-2 outline-secondary;
+  }
+
+  /* Improve text sizing scale and responsiveness */
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-bold;
+    /* Improved line height for readability */
+    line-height: 1.2;
+    /* Appropriate word spacing for better readability */
+    word-spacing: 0.05em;
+  }
+
+  h1 {
+    @apply text-3xl sm:text-4xl md:text-5xl lg:text-6xl;
+  }
+
+  h2 {
+    @apply text-2xl sm:text-3xl md:text-4xl lg:text-5xl;
+  }
+
+  h3 {
+    @apply text-xl sm:text-2xl md:text-3xl lg:text-4xl;
+  }
+
+  /* Ensure proper contrast ratios for text */
+  p, li, span, label, input, select, textarea, button {
+    @apply text-light;
+  }
+
+  /* Improve link accessibility */
+  a:not(.btn) {
+    @apply transition-colors duration-200;
+  }
+
+  a:not(.btn):hover {
+    @apply text-secondary;
+  }
+
+  /* Improve skip link for keyboard users */
+  .skip-link {
+    @apply sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[100] 
+           focus:bg-dark focus:text-white focus:px-4 focus:py-2 focus:rounded;
+  }
+}
+
+@layer components {
+  /* Enhanced button styles with focus states */
+  .btn {
+    @apply px-6 py-3 rounded-lg font-medium transition-all duration-300
+           focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-opacity-50;
+  }
+
+  .btn-primary {
+    @apply bg-secondary text-white hover:bg-opacity-90 
+           active:bg-opacity-80 active:translate-y-0.5;
+  }
+
+  .btn-outline {
+    @apply border border-white text-white hover:bg-white hover:bg-opacity-10
+           active:bg-opacity-20 active:translate-y-0.5;
+  }
+
+  /* Improved card styles with focus states */
+  .card {
+    @apply bg-dark/50 p-6 rounded-lg backdrop-blur-sm border border-white/10 transition-all duration-300 hover:border-secondary/50;
+  }
+
+  .glassmorphism {
+    @apply bg-white bg-opacity-10 backdrop-blur-md rounded-xl border border-white border-opacity-20;
+  }
+
+  /* Improved section spacing for better responsive layout */
+  .section {
+    @apply py-12 sm:py-16 md:py-20 lg:py-24;
+  }
+
+  /* Ensure container has proper padding on smaller screens */
+  .container {
+    @apply mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl;
+  }
+
+  /* Loading spinner */
+  .loader {
+    @apply inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-e-transparent align-[-0.125em] text-secondary motion-reduce:animate-[spin_1.5s_linear_infinite];
+  }
+}
+
+@layer utilities {
+  /* Text gradients */
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-secondary to-accent;
+  }
+
+  /* Glass effect */
+  .glass {
+    @apply bg-white/5 backdrop-blur-md border border-white/10;
+  }
+
+  /* 3D text effect */
+  .text-3d {
+    text-shadow: 0 1px 0 #ccc, 
+                0 2px 0 #c9c9c9,
+                0 3px 0 #bbb,
+                0 4px 0 #b9b9b9,
+                0 5px 0 #aaa,
+                0 6px 1px rgba(0,0,0,.1),
+                0 0 5px rgba(0,0,0,.1),
+                0 1px 3px rgba(0,0,0,.3),
+                0 3px 5px rgba(0,0,0,.2),
+                0 5px 10px rgba(0,0,0,.25),
+                0 10px 10px rgba(0,0,0,.2),
+                0 20px 20px rgba(0,0,0,.15);
+  }
+
+  /* Hide scrollbar but allow scrolling */
+  .scrollbar-hide {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
+  
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;  /* Chrome, Safari and Opera */
+  }
+
+  /* Custom animations */
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+    100% { transform: translateY(0px); }
+  }
+
+  /* Text shadow effects for glow */
+  .text-shadow-glow {
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5),
+      0 0 20px rgba(255, 255, 255, 0.3),
+      0 0 30px rgba(255, 255, 255, 0.2),
+      0 0 40px rgba(var(--color-secondary-rgb), 0.2),
+      0 0 70px rgba(var(--color-secondary-rgb), 0.1);
+  }
+
+  .text-shadow-sm {
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+  }
+}
+
+/* GSAP-specific classes */
+.parallax-element {
+  will-change: transform;
+}
+
+/* Dark theme custom properties */
+:root {
+  --background: #000000;
+  --foreground: #FFFFFF;
+  --primary: #111111;
+  --primary-foreground: #FFFFFF;
+  --secondary: #FF5733;
+  --secondary-foreground: #FFFFFF;
+  --accent: #5733FF;
+  --accent-foreground: #FFFFFF;
+  --muted: #333333;
+  --muted-foreground: #999999;
+  --card: #0A0A0A;
+  --card-foreground: #FFFFFF;
+  --border: rgba(255, 255, 255, 0.1);
+  --input: #222222;
+  --ring: #FF5733;
+  --radius: 0.5rem;
+}
+
+/* Custom animations */
+.parallax-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: -1;
+  will-change: transform;
+}
+
+.gradient-text {
+  background: linear-gradient(90deg, #FF5733, #3498DB);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Animation optimizations with will-change */
+.parallax-section {
+  will-change: transform;
+}
+
+.reveal-section {
+  will-change: opacity, transform;
+}
+
+.hero-text {
+  will-change: opacity, transform;
+}
+
+.smooth-wrapper {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.smooth-content {
+  will-change: transform;
+}
+
+/* Accessibility-enhanced hover effects */
+@media (hover: hover) {
+  /* Only enable hover effects on devices that support it */
+  .btn:hover {
+    transform: translateY(-2px);
+  }
+  
+  .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+  }
+}
+
+/* Performance optimizations for mobile */
+@media (max-width: 768px) {
+  .card {
+    transform: none !important;
+    transition: opacity 0.3s ease;
+  }
+  
+  .card:hover {
+    transform: none !important;
+  }
+}
+
+/* Disable hover effects on mobile */
+@media (hover: none) {
+  .hover\:bg-opacity-90:hover {
+    @apply bg-opacity-100;
+  }
+  
+  .hover\:bg-white:hover {
+    background-color: transparent;
+  }
+}
+
+/* Ensure proper styling when user prefers reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  
+  .parallax-bg, .reveal-section, .hero-text, 
+  .parallax-section, .smooth-content {
+    transform: none !important;
+    will-change: auto !important;
+    animation: none !important;
+  }
+  
+  .smooth-wrapper, .smooth-content {
+    transform: none !important;
+  }
+  
+  .gradient-text {
+    background: none !important;
+    color: inherit !important;
+  }
+}
+
+/* High contrast mode support */
+@media (forced-colors: active) {
+  .btn, .card, .gradient-text {
+    forced-color-adjust: none;
+  }
+  
+  .text-white\/70, .text-white\/80 {
+    opacity: 1 !important;
+  }
+}
+
+/* Helper for screen readers only */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Make images and videos responsive by default */
+img, video {
+  max-width: 100%;
+  height: auto;
+}

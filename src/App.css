@@ -1,0 +1,288 @@
+/* App main styling */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-primary: #0A0A0A;
+  --color-secondary: #FF5733;
+  --color-accent: #5733FF;
+  --color-dark: #0A0A0A;
+  --color-light: #FFFFFF;
+  --font-fallback: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+/* Black theme */
+body {
+  background-color: #000000;
+  color: var(--color-light);
+  font-family: 'InterTest', var(--font-fallback);
+  
+  /* Add this for smooth font transition when loading */
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Font fallback class applied when Google Fonts fails to load */
+/* .font-fallback body { */
+  /* font-family: var(--font-fallback); */
+/* } */
+
+/* Smooth wrapper for scroll effects - OLD DEFINITIONS (REMOVING) */
+/* .smooth-wrapper,
+.smooth-content {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.smooth-content {
+  overflow: visible;
+  will-change: transform;
+} */
+
+/* Button styles */
+.btn {
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-primary {
+  background: linear-gradient(to right, var(--color-secondary), var(--color-accent));
+  color: white;
+  border: none;
+}
+
+.btn-outline {
+  background: transparent;
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.btn-outline:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.btn-sm {
+  @apply px-4 py-2 text-sm;
+}
+
+/* Text styling */
+.gradient-text {
+  background: linear-gradient(to right, var(--color-secondary), var(--color-accent));
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0A0A0A;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #333;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #444;
+}
+
+/* Animations */
+@keyframes pulse-slow {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+.animate-pulse-slow {
+  animation: pulse-slow 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* For background gradients */
+.bg-dark {
+  background-color: var(--color-dark);
+}
+
+.bg-gradient-radial {
+  background-image: radial-gradient(var(--tw-gradient-stops));
+}
+
+/* Skip link for accessibility */
+.skip-link {
+  @apply sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-secondary focus:text-white focus:rounded;
+}
+
+/* Mobile menu */
+.menu-open {
+  @apply pointer-events-auto opacity-100;
+}
+
+/* Responsive helpers */
+@media (max-width: 768px) {
+  .container {
+    @apply px-4;
+  }
+}
+
+/* Fix for font flash during loading */
+.invisible-until-fonts-loaded {
+  opacity: 0;
+  transition: opacity 0.2s ease-in-out;
+}
+
+.fonts-loaded .invisible-until-fonts-loaded {
+  opacity: 1;
+}
+
+/* Progress bar animation */
+.progress-bar-inner {
+  transition: width 0.3s ease;
+}
+
+/* Debug mode styles */
+.debug-on * {
+  outline: 1px solid rgba(255, 0, 0, 0.2);
+}
+
+/* Custom styles for the HowItWorksPage */
+.steps-container .step-section {
+  transition: opacity 0.5s ease;
+}
+
+/* Enable hardware acceleration for smoother animations */
+.step-image, .parallax-bg, .will-change-transform {
+  will-change: transform;
+}
+
+/* Animation classes */
+.animate-spin-slow {
+  animation: spin 20s linear infinite;
+}
+
+.animate-reverse-spin {
+  animation: reverse-spin 15s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes reverse-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(-360deg);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+/* Make sure the container is properly sized for pinning */
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+/* For very small screens, adjust font sizes */
+@media (max-width: 480px) {
+  .text-7xl {
+    font-size: 3rem;
+  }
+  
+  .text-4xl {
+    font-size: 2rem;
+  }
+}
+
+/* Special class for pages using ScrollSmoother */
+html.has-scroll-smooth {
+  overflow: hidden;
+}
+
+/* Fix for ScrollSmoother containers - NEW IMPROVED DEFINITIONS */
+.smooth-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  contain: content;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.smooth-content {
+  position: absolute;
+  width: 100%;
+  height: auto;
+  min-height: 100%;
+  pointer-events: all;
+  will-change: transform;
+  padding-bottom: 100px; /* Add padding to ensure all content is visible when scrolling */
+}
+
+/* Debug styles for ScrollTrigger */
+.gsap-marker-start,
+.gsap-marker-end,
+.gsap-marker-scroller-start,
+.gsap-marker-scroller-end {
+  font-family: monospace;
+  font-size: 11px !important;
+  color: white;
+  z-index: 1000 !important;
+}
+
+/* ScrollSmoother progress bar */
+.smooth-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 0%;
+  height: 3px;
+  background: linear-gradient(to right, #4f46e5, #8b5cf6);
+  z-index: 999;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+
+/* Make sure elements with fixed position work correctly with ScrollSmoother */
+.gsap-fix-fixed {
+  will-change: transform;
+}
+

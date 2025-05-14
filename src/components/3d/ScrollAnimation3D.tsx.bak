@@ -1,0 +1,212 @@
+import { useRef, useEffect } from 'react';
+import { Canvas, useFrame, useThree } from '@react-three/fiber';
+import { Float, Text, RoundedBox } from '@react-three/drei';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import * as THREE from 'three';
+
+// Register GSAP plugins
+gsap.registerPlugin(ScrollTrigger);
+
+// 3D floating objects that react to scroll
+const FloatingObjects = ({ scrollProgress }: { scrollProgress: number }) => {
+  const cubesRef = useRef<THREE.Group>(null);
+  const spheresRef = useRef<THREE.Group>(null);
+  const textRef = useRef<THREE.Group>(null);
+  
+  // Get viewport dimensions
+  const { viewport } = useThree();
+  
+  // Animation loop for continuous small movements
+  useFrame((state) => {
+    const time = state.clock.getElapsedTime();
+    
+    // Animate cubes based on scroll position and time
+    if (cubesRef.current) {
+      cubesRef.current.rotation.y = scrollProgress * Math.PI * 2 + time * 0.1;
+      cubesRef.current.position.y = Math.sin(time * 0.5) * 0.2 + scrollProgress * 2 - 1;
+      cubesRef.current.position.z = -5 * scrollProgress;
+      
+      // Animate each cube individually
+      cubesRef.current.children.forEach((cube, i) => {
+        const meshCube = cube as THREE.Mesh;
+        meshCube.rotation.x = time * 0.2 * (i % 2 ? 1 : -1);
+        meshCube.rotation.z = time * 0.1 * (i % 2 ? 1 : -1);
+        meshCube.position.y = Math.sin(time * 0.5 + i) * 0.5;
+        
+        // Change color based on scroll
+        if (meshCube.material instanceof THREE.MeshStandardMaterial) {
+          meshCube.material.color.setHSL(scrollProgress * 0.5 + 0.6, 1, 0.5);
+          meshCube.material.emissive.setHSL(scrollProgress * 0.5, 1, 0.2);
+        }
+      });
+    }
+    
+    // Animate spheres
+    if (spheresRef.current) {
+      spheresRef.current.rotation.y = -scrollProgress * Math.PI + time * 0.2;
+      spheresRef.current.position.x = Math.sin(scrollProgress * Math.PI) * 4;
+      spheresRef.current.position.z = -2 - scrollProgress * 5;
+      
+      // Animate each sphere
+      spheresRef.current.children.forEach((sphere, i) => {
+        const meshSphere = sphere as THREE.Mesh;
+        meshSphere.position.y = Math.sin(time + i) * 0.5;
+        meshSphere.rotation.x = time * 0.2;
+        meshSphere.scale.setScalar(1 + Math.sin(time * 0.5 + i) * 0.2);
+        
+        // Change color based on scroll
+        if (meshSphere.material instanceof THREE.MeshStandardMaterial) {
+          meshSphere.material.color.setHSL((1 - scrollProgress) * 0.3, 0.8, 0.5);
+          meshSphere.material.emissive.setHSL((1 - scrollProgress) * 0.3, 0.5, 0.2);
+        }
+      });
+    }
+    
+    // Animate 3D text
+    if (textRef.current) {
+      textRef.current.position.z = -4 + scrollProgress * 8;
+      textRef.current.position.y = -viewport.height / 2 + scrollProgress * viewport.height * 2;
+      textRef.current.rotation.y = Math.PI * scrollProgress;
+      
+      // Scale text based on scroll
+      const scale = 0.3 + scrollProgress * 0.7;
+      textRef.current.scale.set(scale, scale, scale);
+      
+      // Change text color based on scroll
+      textRef.current.children.forEach(child => {
+        if (child instanceof THREE.Mesh && child.material instanceof THREE.MeshStandardMaterial) {
+          child.material.color.setHSL(0.5 - scrollProgress * 0.2, 0.8, 0.5);
+          child.material.emissive.setHSL(0.6 - scrollProgress * 0.2, 0.5, 0.2);
+        }
+      });
+    }
+  });
+  
+  return (
+    <>
+      {/* Floating cubes group */}
+      <group ref={cubesRef} position={[3, 0, -5]}>
+        {Array.from({ length: 5 }).map((_, i) => (
+          <RoundedBox
+            key={`cube-${i}`}
+            position={[
+              Math.sin(Math.PI * 2 * (i / 5)) * 2,
+              0,
+              Math.cos(Math.PI * 2 * (i / 5)) * 2
+            ]}
+            args={[0.5, 0.5, 0.5]}
+            radius={0.1}
+            smoothness={4}
+          >
+            <meshStandardMaterial
+              metalness={0.8}
+              roughness={0.2}
+              color={new THREE.Color().setHSL(i / 5, 0.8, 0.5)}
+              emissive={new THREE.Color().setHSL(i / 5, 0.5, 0.2)}
+            />
+          </RoundedBox>
+        ))}
+      </group>
+      
+      {/* Floating spheres group */}
+      <group ref={spheresRef} position={[-3, 0, -3]}>
+        {Array.from({ length: 3 }).map((_, i) => (
+          <mesh
+            key={`sphere-${i}`}
+            position={[
+              Math.sin(Math.PI * 2 * (i / 3)) * 1.5,
+              0,
+              Math.cos(Math.PI * 2 * (i / 3)) * 1.5
+            ]}
+          >
+            <sphereGeometry args={[0.3 + i * 0.1, 32, 32]} />
+            <meshStandardMaterial
+              metalness={0.4}
+              roughness={0.2}
+              color={new THREE.Color().setHSL(0.6 - i / 5, 0.8, 0.5)}
+              emissive={new THREE.Color().setHSL(0.6 - i / 5, 0.5, 0.2)}
+            />
+          </mesh>
+        ))}
+      </group>
+      
+      {/* 3D floating text - using Text instead of Text3D which requires font loading */}
+      <group ref={textRef} position={[0, 0, -4]}>
+        <Float rotationIntensity={0.5} floatIntensity={0.5}>
+          <Text
+            fontSize={1}
+            color="#FF5733"
+            anchorX="center"
+            anchorY="middle"
+            font="/assets/Inter-Bold.woff"
+            outlineWidth={0.02}
+            outlineColor="#ffffff"
+          >
+            TisAi
+          </Text>
+        </Float>
+      </group>
+      
+      {/* Environment lighting */}
+      <ambientLight intensity={0.5} />
+      <pointLight position={[10, 10, 5]} intensity={1} color="#ffffff" />
+      <pointLight position={[-10, -10, -5]} intensity={0.5} color="#3498db" />
+    </>
+  );
+};
+
+// Main component 
+interface ScrollAnimation3DProps {
+  scrollProgress: number;
+}
+
+const ScrollAnimation3D = ({ scrollProgress = 0 }: ScrollAnimation3DProps) => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  
+  // Setup scroll-based effects for the container
+  useEffect(() => {
+    if (!containerRef.current) return;
+    
+    // Create a scroll-based animation for the container
+    gsap.to(containerRef.current, {
+      scrollTrigger: {
+        trigger: containerRef.current,
+        start: "top bottom",
+        end: "bottom top",
+        scrub: true,
+        toggleActions: "restart pause reverse pause",
+      }
+    });
+    
+    // Cleanup
+    return () => {
+      ScrollTrigger.getAll().forEach(trigger => {
+        if (trigger.vars.trigger === containerRef.current) {
+          trigger.kill();
+        }
+      });
+    };
+  }, []);
+  
+  return (
+    <div 
+      ref={containerRef}
+      className="absolute w-full h-full top-0 left-0 -z-5 pointer-events-none"
+    >
+      <Canvas
+        camera={{ position: [0, 0, 5], fov: 50 }}
+        dpr={[1, 2]}
+        gl={{ 
+          antialias: true,
+          alpha: true,
+          powerPreference: 'high-performance',
+        }}
+      >
+        <FloatingObjects scrollProgress={scrollProgress} />
+      </Canvas>
+    </div>
+  );
+};
+
+export default ScrollAnimation3D; 

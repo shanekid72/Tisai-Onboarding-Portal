@@ -1,0 +1,254 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="800" height="600" viewBox="0 0 800 600">
+  <!-- Background gradients -->
+  <defs>
+    <linearGradient id="bg-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2563EB" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#3B82F6" stop-opacity="0.8"/>
+    </linearGradient>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+    <!-- Connection pattern -->
+    <pattern id="connection-pattern" patternUnits="userSpaceOnUse" width="60" height="60">
+      <rect width="60" height="60" fill="none"/>
+      <path d="M30,0 L30,60 M0,30 L60,30" stroke="#4F8CE9" stroke-width="0.5" opacity="0.15"/>
+    </pattern>
+  </defs>
+  
+  <!-- Base background -->
+  <rect width="100%" height="100%" fill="url(#bg-gradient)" />
+  <rect width="100%" height="100%" fill="url(#connection-pattern)" />
+  
+  <!-- Parallax layer 1: Deep background elements -->
+  <g class="parallax-layer" data-depth="0.1">
+    <circle cx="200" cy="150" r="100" fill="#3B82F6" opacity="0.1" />
+    <circle cx="650" cy="400" r="150" fill="#1D4ED8" opacity="0.1" />
+  </g>
+  
+  <!-- Parallax layer 2: Background harmony wave patterns -->
+  <g class="parallax-layer" data-depth="0.2">
+    <path class="harmony-wave" d="M0,350 C100,330 200,380 300,350 S500,300 600,330 S700,380 800,350" stroke="#60A5FA" stroke-width="2" fill="none" opacity="0.2" />
+    <path class="harmony-wave" d="M0,370 C150,350 250,400 350,370 S550,320 650,350 S750,400 800,370" stroke="#60A5FA" stroke-width="1.5" fill="none" opacity="0.15" />
+    <path class="harmony-wave" d="M0,390 C200,370 300,420 400,390 S600,340 700,370 S800,420 800,390" stroke="#60A5FA" stroke-width="1" fill="none" opacity="0.1" />
+  </g>
+  
+  <!-- Parallax layer 3: Main integration systems -->
+  <g class="parallax-layer" data-depth="0.4">
+    <!-- Central system -->
+    <g class="central-system" transform="translate(400, 300)">
+      <circle cx="0" cy="0" r="60" fill="#3B82F6" opacity="0.9" stroke="white" stroke-width="2" />
+      <text x="0" y="7" font-family="Arial, sans-serif" font-size="16" fill="white" text-anchor="middle">Core API</text>
+      <circle cx="0" cy="0" r="45" fill="none" stroke="white" stroke-width="1" opacity="0.6" class="pulsing-circle" />
+    </g>
+    
+    <!-- Connected systems - positioned around central system -->
+    <g class="connected-system legacy" transform="translate(200, 220)">
+      <rect x="-40" y="-30" width="80" height="60" rx="10" fill="#60A5FA" opacity="0.9" stroke="white" />
+      <text x="0" y="7" font-family="Arial, sans-serif" font-size="14" fill="white" text-anchor="middle">Legacy</text>
+    </g>
+    
+    <g class="connected-system modern" transform="translate(600, 220)">
+      <rect x="-40" y="-30" width="80" height="60" rx="10" fill="#60A5FA" opacity="0.9" stroke="white" />
+      <text x="0" y="7" font-family="Arial, sans-serif" font-size="14" fill="white" text-anchor="middle">Modern</text>
+    </g>
+    
+    <g class="connected-system cloud" transform="translate(600, 380)">
+      <rect x="-40" y="-30" width="80" height="60" rx="10" fill="#60A5FA" opacity="0.9" stroke="white" />
+      <text x="0" y="7" font-family="Arial, sans-serif" font-size="14" fill="white" text-anchor="middle">Cloud</text>
+    </g>
+    
+    <g class="connected-system db" transform="translate(200, 380)">
+      <rect x="-40" y="-30" width="80" height="60" rx="10" fill="#60A5FA" opacity="0.9" stroke="white" />
+      <text x="0" y="7" font-family="Arial, sans-serif" font-size="14" fill="white" text-anchor="middle">Database</text>
+    </g>
+  </g>
+  
+  <!-- Parallax layer 4: Connection lines with data flow -->
+  <g class="parallax-layer" data-depth="0.3">
+    <!-- Connections between systems -->
+    <path class="connection" d="M240,220 C300,230 340,260 400,300" stroke="white" stroke-width="2" fill="none" opacity="0.6" />
+    <path class="connection" d="M560,220 C500,230 460,260 400,300" stroke="white" stroke-width="2" fill="none" opacity="0.6" />
+    <path class="connection" d="M560,380 C500,370 460,340 400,300" stroke="white" stroke-width="2" fill="none" opacity="0.6" />
+    <path class="connection" d="M240,380 C300,370 340,340 400,300" stroke="white" stroke-width="2" fill="none" opacity="0.6" />
+    
+    <!-- Data packets moving along connections -->
+    <circle class="data-packet packet-1" cx="300" cy="240" r="4" fill="white" opacity="0.9" filter="url(#glow)" />
+    <circle class="data-packet packet-2" cx="500" cy="240" r="4" fill="white" opacity="0.9" filter="url(#glow)" />
+    <circle class="data-packet packet-3" cx="500" cy="360" r="4" fill="white" opacity="0.9" filter="url(#glow)" />
+    <circle class="data-packet packet-4" cx="300" cy="360" r="4" fill="white" opacity="0.9" filter="url(#glow)" />
+  </g>
+  
+  <!-- Parallax layer 5: Integration interface elements -->
+  <g class="parallax-layer" data-depth="0.5">
+    <!-- Interface elements representing the harmony between systems -->
+    <g class="interface-module" transform="translate(320, 170)">
+      <rect x="-30" y="-15" width="60" height="30" rx="5" fill="white" opacity="0.9" />
+      <path d="M-20,-5 L-10,-5 M-20,0 L0,0 M-20,5 L-5,5" stroke="#3B82F6" stroke-width="2" />
+      <path d="M10,-5 L20,-5 M10,0 L20,0 M10,5 L20,5" stroke="#3B82F6" stroke-width="2" />
+      <text x="0" y="-25" font-family="Arial, sans-serif" font-size="12" fill="white" text-anchor="middle">Adapter</text>
+    </g>
+    
+    <g class="interface-module" transform="translate(480, 170)">
+      <rect x="-30" y="-15" width="60" height="30" rx="5" fill="white" opacity="0.9" />
+      <path d="M-20,-5 L-10,-5 M-20,0 L0,0 M-20,5 L-5,5" stroke="#3B82F6" stroke-width="2" />
+      <path d="M10,-5 L20,-5 M10,0 L20,0 M10,5 L20,5" stroke="#3B82F6" stroke-width="2" />
+      <text x="0" y="-25" font-family="Arial, sans-serif" font-size="12" fill="white" text-anchor="middle">Gateway</text>
+    </g>
+    
+    <g class="interface-module" transform="translate(480, 430)">
+      <rect x="-30" y="-15" width="60" height="30" rx="5" fill="white" opacity="0.9" />
+      <path d="M-20,-5 L-10,-5 M-20,0 L0,0 M-20,5 L-5,5" stroke="#3B82F6" stroke-width="2" />
+      <path d="M10,-5 L20,-5 M10,0 L20,0 M10,5 L20,5" stroke="#3B82F6" stroke-width="2" />
+      <text x="0" y="45" font-family="Arial, sans-serif" font-size="12" fill="white" text-anchor="middle">Connector</text>
+    </g>
+    
+    <g class="interface-module" transform="translate(320, 430)">
+      <rect x="-30" y="-15" width="60" height="30" rx="5" fill="white" opacity="0.9" />
+      <path d="M-20,-5 L-10,-5 M-20,0 L0,0 M-20,5 L-5,5" stroke="#3B82F6" stroke-width="2" />
+      <path d="M10,-5 L20,-5 M10,0 L20,0 M10,5 L20,5" stroke="#3B82F6" stroke-width="2" />
+      <text x="0" y="45" font-family="Arial, sans-serif" font-size="12" fill="white" text-anchor="middle">Bridge</text>
+    </g>
+  </g>
+  
+  <!-- Parallax layer 6: Floating integration symbols -->
+  <g class="parallax-layer" data-depth="0.6">
+    <!-- JSON symbol -->
+    <g class="integration-symbol" transform="translate(260, 300)">
+      <rect x="-25" y="-15" width="50" height="30" rx="5" fill="white" opacity="0.8" />
+      <text x="0" y="5" font-family="monospace" font-size="12" fill="#3B82F6" text-anchor="middle">JSON</text>
+    </g>
+    
+    <!-- REST symbol -->
+    <g class="integration-symbol" transform="translate(540, 300)">
+      <rect x="-25" y="-15" width="50" height="30" rx="5" fill="white" opacity="0.8" />
+      <text x="0" y="5" font-family="monospace" font-size="12" fill="#3B82F6" text-anchor="middle">REST</text>
+    </g>
+    
+    <!-- GraphQL symbol -->
+    <g class="integration-symbol" transform="translate(400, 200)">
+      <rect x="-30" y="-15" width="60" height="30" rx="5" fill="white" opacity="0.8" />
+      <text x="0" y="5" font-family="monospace" font-size="12" fill="#3B82F6" text-anchor="middle">GraphQL</text>
+    </g>
+    
+    <!-- XML symbol -->
+    <g class="integration-symbol" transform="translate(400, 400)">
+      <rect x="-25" y="-15" width="50" height="30" rx="5" fill="white" opacity="0.8" />
+      <text x="0" y="5" font-family="monospace" font-size="12" fill="#3B82F6" text-anchor="middle">XML</text>
+    </g>
+  </g>
+  
+  <!-- Parallax layer 7: Synergy visualization -->
+  <g class="parallax-layer" data-depth="0.45">
+    <!-- Central synergy element -->
+    <g class="synergy-visualization" transform="translate(400, 300)">
+      <circle class="synergy-ring" cx="0" cy="0" r="80" stroke="#60A5FA" stroke-width="1" fill="none" opacity="0.3" />
+      <circle class="synergy-ring" cx="0" cy="0" r="100" stroke="#60A5FA" stroke-width="0.8" fill="none" opacity="0.2" />
+      <circle class="synergy-ring" cx="0" cy="0" r="120" stroke="#60A5FA" stroke-width="0.6" fill="none" opacity="0.1" />
+    </g>
+  </g>
+  
+  <!-- Parallax layer 8: Foreground elements -->
+  <g class="parallax-layer" data-depth="0.8">
+    <path d="M100,550 Q400,520 700,550" stroke="#60A5FA" stroke-width="3" fill="none" opacity="0.6" />
+    <text x="400" y="550" font-family="Arial, sans-serif" font-size="26" fill="white" text-anchor="middle" filter="url(#glow)">Integration Harmony</text>
+  </g>
+  
+  <!-- Animation definitions -->
+  <style>
+    .parallax-layer {
+      transition: transform 0.1s ease-out;
+    }
+    
+    @keyframes packetFlow {
+      0% { transform: translate(0, 0); opacity: 0; }
+      20% { opacity: 1; }
+      100% { transform: translate(100px, 60px); opacity: 0; }
+    }
+    
+    .packet-1 {
+      animation: packetFlow 3s infinite;
+    }
+    
+    .packet-2 {
+      animation: packetFlow 3s infinite;
+      animation-direction: reverse;
+    }
+    
+    .packet-3 {
+      animation: packetFlow 3s infinite;
+      animation-direction: reverse;
+    }
+    
+    .packet-4 {
+      animation: packetFlow 3s infinite;
+    }
+    
+    @keyframes pulse {
+      0% { transform: scale(0.9); opacity: 0.2; }
+      50% { transform: scale(1); opacity: 0.6; }
+      100% { transform: scale(0.9); opacity: 0.2; }
+    }
+    
+    .pulsing-circle {
+      animation: pulse 3s infinite;
+    }
+    
+    @keyframes wavyMotion {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(10px); }
+      100% { transform: translateY(0); }
+    }
+    
+    .harmony-wave:nth-child(1) {
+      animation: wavyMotion 8s infinite;
+    }
+    
+    .harmony-wave:nth-child(2) {
+      animation: wavyMotion 12s infinite;
+    }
+    
+    .harmony-wave:nth-child(3) {
+      animation: wavyMotion 10s infinite;
+    }
+    
+    @keyframes float {
+      0% { transform: translate(0, 0); }
+      50% { transform: translate(0, -5px); }
+      100% { transform: translate(0, 0); }
+    }
+    
+    .integration-symbol {
+      animation: float 4s ease-in-out infinite;
+    }
+    
+    .integration-symbol:nth-child(2) {
+      animation-delay: 1s;
+    }
+    
+    .integration-symbol:nth-child(3) {
+      animation-delay: 2s;
+    }
+    
+    .integration-symbol:nth-child(4) {
+      animation-delay: 3s;
+    }
+    
+    @keyframes rotate {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    
+    .synergy-ring:nth-child(1) {
+      animation: rotate 30s linear infinite;
+    }
+    
+    .synergy-ring:nth-child(2) {
+      animation: rotate 45s linear infinite reverse;
+    }
+    
+    .synergy-ring:nth-child(3) {
+      animation: rotate 60s linear infinite;
+    }
+  </style>
+</svg>

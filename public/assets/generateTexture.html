@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Earth Texture Generator</title>
+  <style>
+    body { background: #000; margin: 0; padding: 20px; color: #fff; font-family: Arial, sans-serif; }
+    canvas { border: 1px solid #333; margin-bottom: 20px; }
+    button { padding: 10px; background: #333; color: #fff; border: none; margin: 5px; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <h1>Earth Texture Generator</h1>
+  <div>
+    <canvas id="textureCanvas" width="1024" height="512"></canvas>
+  </div>
+  <div>
+    <button id="generateDarkEarth">Generate Dark Earth Texture</button>
+    <button id="generateBumpMap">Generate Bump Map</button>
+    <button id="download">Download Texture</button>
+  </div>
+  <p>Instructions: Click "Generate Dark Earth Texture" or "Generate Bump Map" and then "Download Texture".</p>
+  
+  <script>
+    const canvas = document.getElementById('textureCanvas');
+    const ctx = canvas.getContext('2d');
+    let currentTexture = 'dark';
+    
+    // Generate dark earth texture
+    function generateDarkEarthTexture() {
+      currentTexture = 'dark';
+      const width = canvas.width;
+      const height = canvas.height;
+      
+      // Fill with dark blue
+      ctx.fillStyle = '#05162C';
+      ctx.fillRect(0, 0, width, height);
+      
+      // Generate continents
+      ctx.fillStyle = '#0F2E4C';
+      
+      // North America
+      drawContinent(ctx, 200, 150, 220, 120);
+      
+      // South America
+      drawContinent(ctx, 300, 280, 100, 150);
+      
+      // Europe and Africa
+      drawContinent(ctx, 500, 180, 150, 220);
+      
+      // Asia
+      drawContinent(ctx, 650, 150, 220, 150);
+      
+      // Australia
+      drawContinent(ctx, 750, 310, 100, 80);
+      
+      // Add noise for texture
+      addNoise(ctx, width, height, 0.1);
+      
+      // Add grid lines
+      drawGridLines(ctx, width, height);
+    }
+    
+    // Generate bump map
+    function generateBumpMap() {
+      currentTexture = 'bump';
+      const width = canvas.width;
+      const height = canvas.height;
+      
+      // Fill with mid gray (neutral bump)
+      ctx.fillStyle = '#808080';
+      ctx.fillRect(0, 0, width, height);
+      
+      // Generate continents with higher bump
+      ctx.fillStyle = '#BFBFBF';
+      
+      // North America
+      drawContinent(ctx, 200, 150, 220, 120);
+      
+      // South America
+      drawContinent(ctx, 300, 280, 100, 150);
+      
+      // Europe and Africa
+      drawContinent(ctx, 500, 180, 150, 220);
+      
+      // Asia
+      drawContinent(ctx, 650, 150, 220, 150);
+      
+      // Australia
+      drawContinent(ctx, 750, 310, 100, 80);
+      
+      // Add height variance
+      addBumpNoise(ctx, width, height);
+    }
+    
+    // Helper function to draw a continent shape
+    function drawContinent(ctx, x, y, width, height) {
+      ctx.beginPath();
+      
+      // Draw a random blob shape
+      ctx.moveTo(x, y);
+      
+      // Top edge with randomness
+      for (let i = 0; i < width; i += 20) {
+        ctx.lineTo(x + i, y - 10 + Math.random() * 20);
+      }
+      
+      // Right edge with randomness
+      for (let i = 0; i < height; i += 20) {
+        ctx.lineTo(x + width + Math.random() * 20, y + i);
+      }
+      
+      // Bottom edge with randomness
+      for (let i = width; i > 0; i -= 20) {
+        ctx.lineTo(x + i, y + height + Math.random() * 20);
+      }
+      
+      // Left edge with randomness
+      for (let i = height; i > 0; i -= 20) {
+        ctx.lineTo(x - 10 + Math.random() * 20, y + i);
+      }
+      
+      ctx.closePath();
+      ctx.fill();
+    }
+    
+    // Add noise for texture
+    function addNoise(ctx, width, height, intensity) {
+      const imageData = ctx.getImageData(0, 0, width, height);
+      const data = imageData.data;
+      
+      for (let i = 0; i < data.length; i += 4) {
+        const noise = Math.random() * intensity;
+        data[i] = Math.min(255, data[i] * (1 + noise));     // r
+        data[i+1] = Math.min(255, data[i+1] * (1 + noise)); // g
+        data[i+2] = Math.min(255, data[i+2] * (1 + noise)); // b
+      }
+      
+      ctx.putImageData(imageData, 0, 0);
+    }
+    
+    // Add bump noise
+    function addBumpNoise(ctx, width, height) {
+      const imageData = ctx.getImageData(0, 0, width, height);
+      const data = imageData.data;
+      
+      for (let y = 0; y < height; y++) {
+        for (let x = 0; x < width; x++) {
+          const i = (y * width + x) * 4;
+          
+          // Add perlin-like noise for natural terrain
+          const noise = (Math.sin(x/20) * Math.cos(y/20) + Math.random() * 0.1) * 20;
+          
+          data[i] = Math.min(255, Math.max(0, data[i] + noise));
+          data[i+1] = Math.min(255, Math.max(0, data[i+1] + noise));
+          data[i+2] = Math.min(255, Math.max(0, data[i+2] + noise));
+        }
+      }
+      
+      ctx.putImageData(imageData, 0, 0);
+    }
+    
+    // Draw latitude/longitude grid lines
+    function drawGridLines(ctx, width, height) {
+      ctx.strokeStyle = '#1A3A5F';
+      ctx.lineWidth = 1;
+      
+      // Latitude lines
+      for (let y = 0; y < height; y += height / 18) {
+        ctx.beginPath();
+        ctx.moveTo(0, y);
+        ctx.lineTo(width, y);
+        ctx.stroke();
+      }
+      
+      // Longitude lines
+      for (let x = 0; x < width; x += width / 36) {
+        ctx.beginPath();
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x, height);
+        ctx.stroke();
+      }
+    }
+    
+    // Download the generated texture
+    function downloadTexture() {
+      const link = document.createElement('a');
+      link.download = currentTexture === 'dark' ? 'earth_dark_texture.jpg' : 'earth_bump_map.jpg';
+      link.href = canvas.toDataURL('image/jpeg', 0.9);
+      link.click();
+    }
+    
+    // Event listeners
+    document.getElementById('generateDarkEarth').addEventListener('click', generateDarkEarthTexture);
+    document.getElementById('generateBumpMap').addEventListener('click', generateBumpMap);
+    document.getElementById('download').addEventListener('click', downloadTexture);
+    
+    // Generate a dark earth texture on load
+    generateDarkEarthTexture();
+  </script>
+</body>
+</html> 

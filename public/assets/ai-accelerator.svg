@@ -1,0 +1,253 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="800" height="600" viewBox="0 0 800 600">
+  <!-- Background gradients -->
+  <defs>
+    <linearGradient id="bg-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#10B981" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#059669" stop-opacity="0.8"/>
+    </linearGradient>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+    <!-- Neural pattern -->
+    <pattern id="neural-pattern" patternUnits="userSpaceOnUse" width="100" height="100" patternTransform="rotate(45)">
+      <rect width="100" height="100" fill="none"/>
+      <circle cx="50" cy="50" r="3" fill="white" opacity="0.15"/>
+      <circle cx="0" cy="0" r="3" fill="white" opacity="0.15"/>
+      <circle cx="0" cy="100" r="3" fill="white" opacity="0.15"/>
+      <circle cx="100" cy="0" r="3" fill="white" opacity="0.15"/>
+      <circle cx="100" cy="100" r="3" fill="white" opacity="0.15"/>
+    </pattern>
+  </defs>
+  
+  <!-- Base background -->
+  <rect width="100%" height="100%" fill="url(#bg-gradient)" />
+  <rect width="100%" height="100%" fill="url(#neural-pattern)" />
+  
+  <!-- Parallax layer 1: Deep background elements -->
+  <g class="parallax-layer" data-depth="0.1">
+    <circle cx="250" cy="150" r="120" fill="#10B981" opacity="0.2" />
+    <circle cx="600" cy="400" r="150" fill="#059669" opacity="0.15" />
+  </g>
+  
+  <!-- Parallax layer 2: Neural connections background -->
+  <g class="parallax-layer" data-depth="0.2">
+    <!-- Neural network graph -->
+    <g class="neural-graph" opacity="0.3">
+      <!-- Nodes -->
+      <circle cx="200" cy="200" r="6" fill="white" class="neural-node" />
+      <circle cx="300" cy="150" r="6" fill="white" class="neural-node" />
+      <circle cx="350" cy="250" r="6" fill="white" class="neural-node" />
+      <circle cx="450" cy="180" r="6" fill="white" class="neural-node" />
+      <circle cx="500" cy="300" r="6" fill="white" class="neural-node" />
+      <circle cx="600" cy="220" r="6" fill="white" class="neural-node" />
+      <circle cx="250" cy="350" r="6" fill="white" class="neural-node" />
+      <circle cx="400" cy="400" r="6" fill="white" class="neural-node" />
+      <circle cx="550" cy="420" r="6" fill="white" class="neural-node" />
+      
+      <!-- Connections -->
+      <line x1="200" y1="200" x2="300" y2="150" stroke="white" stroke-width="1" opacity="0.3" class="neural-connection" />
+      <line x1="300" y1="150" x2="450" y2="180" stroke="white" stroke-width="1" opacity="0.3" class="neural-connection" />
+      <line x1="450" y1="180" x2="600" y2="220" stroke="white" stroke-width="1" opacity="0.3" class="neural-connection" />
+      <line x1="200" y1="200" x2="350" y2="250" stroke="white" stroke-width="1" opacity="0.3" class="neural-connection" />
+      <line x1="350" y1="250" x2="500" y2="300" stroke="white" stroke-width="1" opacity="0.3" class="neural-connection" />
+      <line x1="500" y1="300" x2="550" y2="420" stroke="white" stroke-width="1" opacity="0.3" class="neural-connection" />
+      <line x1="200" y1="200" x2="250" y2="350" stroke="white" stroke-width="1" opacity="0.3" class="neural-connection" />
+      <line x1="250" y1="350" x2="400" y2="400" stroke="white" stroke-width="1" opacity="0.3" class="neural-connection" />
+      <line x1="400" y1="400" x2="550" y2="420" stroke="white" stroke-width="1" opacity="0.3" class="neural-connection" />
+      <line x1="350" y1="250" x2="400" y2="400" stroke="white" stroke-width="1" opacity="0.3" class="neural-connection" />
+      <line x1="450" y1="180" x2="500" y2="300" stroke="white" stroke-width="1" opacity="0.3" class="neural-connection" />
+    </g>
+  </g>
+  
+  <!-- Parallax layer 3: Main brain structure -->
+  <g class="parallax-layer" data-depth="0.4">
+    <!-- Central brain visualization -->
+    <g class="brain-container" transform="translate(400, 300)">
+      <!-- Brain outline -->
+      <path d="M-70,-40 C-90,-80 -40,-90 -20,-85 C0,-100 40,-100 60,-85 C100,-90 120,-60 100,-30
+               C120,0 110,50 80,70 C40,100 -40,100 -80,70 C-110,50 -120,0 -100,-30 Z" 
+            fill="#34D399" opacity="0.7" stroke="white" stroke-width="2" />
+      
+      <!-- Brain inner details -->
+      <path d="M-10,-80 C-10,-20 20,-20 20,-80" fill="none" stroke="white" stroke-width="1.5" opacity="0.6" />
+      <path d="M-50,-50 C-30,-30 -30,30 -50,50" fill="none" stroke="white" stroke-width="1.5" opacity="0.6" />
+      <path d="M50,-50 C30,-30 30,30 50,50" fill="none" stroke="white" stroke-width="1.5" opacity="0.6" />
+      <path d="M-30,60 C0,80 30,80 60,60" fill="none" stroke="white" stroke-width="1.5" opacity="0.6" />
+      <path d="M0,0 C-20,30 20,30 0,0" fill="none" stroke="white" stroke-width="1.5" opacity="0.6" />
+    </g>
+  </g>
+  
+  <!-- Parallax layer 4: Circuitry and processing elements -->
+  <g class="parallax-layer" data-depth="0.5">
+    <!-- Circuit pathways surrounding the brain -->
+    <path d="M150,300 C200,250 250,270 300,230" stroke="#A7F3D0" stroke-width="2" fill="none" opacity="0.7" class="circuit-path" />
+    <path d="M450,350 C500,370 550,330 600,350" stroke="#A7F3D0" stroke-width="2" fill="none" opacity="0.7" class="circuit-path" />
+    <path d="M300,400 C350,420 400,410 450,430" stroke="#A7F3D0" stroke-width="2" fill="none" opacity="0.7" class="circuit-path" />
+    <path d="M320,200 C380,180 400,220 450,200" stroke="#A7F3D0" stroke-width="2" fill="none" opacity="0.7" class="circuit-path" />
+    
+    <!-- Circuit nodes -->
+    <circle cx="300" cy="230" r="6" fill="white" class="circuit-node" />
+    <circle cx="600" cy="350" r="6" fill="white" class="circuit-node" />
+    <circle cx="450" cy="430" r="6" fill="white" class="circuit-node" />
+    <circle cx="450" cy="200" r="6" fill="white" class="circuit-node" />
+    
+    <!-- Data pulses traveling along circuits -->
+    <circle class="data-pulse pulse-1" cx="220" cy="260" r="4" fill="white" opacity="0.9" filter="url(#glow)" />
+    <circle class="data-pulse pulse-2" cx="520" cy="340" r="4" fill="white" opacity="0.9" filter="url(#glow)" />
+    <circle class="data-pulse pulse-3" cx="370" cy="410" r="4" fill="white" opacity="0.9" filter="url(#glow)" />
+    <circle class="data-pulse pulse-4" cx="400" cy="200" r="4" fill="white" opacity="0.9" filter="url(#glow)" />
+  </g>
+  
+  <!-- Parallax layer 5: UI Elements showing AI processing -->
+  <g class="parallax-layer" data-depth="0.6">
+    <!-- Processing boxes -->
+    <g class="process-element" transform="translate(200, 150)">
+      <rect x="-50" y="-25" width="100" height="50" rx="10" fill="white" opacity="0.9" />
+      <text x="0" y="0" font-family="monospace" font-size="12" fill="#059669" text-anchor="middle" dominant-baseline="middle">INPUT DATA</text>
+      <rect x="-40" y="15" width="80" height="5" rx="2" fill="#059669" opacity="0.5" />
+    </g>
+    
+    <g class="process-element" transform="translate(600, 150)">
+      <rect x="-50" y="-25" width="100" height="50" rx="10" fill="white" opacity="0.9" />
+      <text x="0" y="0" font-family="monospace" font-size="12" fill="#059669" text-anchor="middle" dominant-baseline="middle">AI ANALYSIS</text>
+      <rect x="-35" y="15" width="70" height="5" rx="2" fill="#059669" opacity="0.5" />
+    </g>
+    
+    <g class="process-element" transform="translate(200, 450)">
+      <rect x="-50" y="-25" width="100" height="50" rx="10" fill="white" opacity="0.9" />
+      <text x="0" y="0" font-family="monospace" font-size="12" fill="#059669" text-anchor="middle" dominant-baseline="middle">PROCESSING</text>
+      <rect x="-30" y="15" width="60" height="5" rx="2" fill="#059669" opacity="0.5" />
+    </g>
+    
+    <g class="process-element" transform="translate(600, 450)">
+      <rect x="-50" y="-25" width="100" height="50" rx="10" fill="white" opacity="0.9" />
+      <text x="0" y="0" font-family="monospace" font-size="12" fill="#059669" text-anchor="middle" dominant-baseline="middle">OUTPUT</text>
+      <rect x="-40" y="15" width="80" height="5" rx="2" fill="#059669" opacity="0.5" />
+    </g>
+  </g>
+  
+  <!-- Parallax layer 6: Floating code snippets -->
+  <g class="parallax-layer" data-depth="0.3">
+    <g class="code-snippet" transform="translate(180, 350) rotate(-5)">
+      <rect x="-60" y="-40" width="120" height="80" rx="5" fill="white" opacity="0.8" />
+      <text x="-50" y="-20" font-family="monospace" font-size="10" fill="#059669">import ai</text>
+      <text x="-50" y="0" font-family="monospace" font-size="10" fill="#059669">model = ai.load()</text>
+      <text x="-50" y="20" font-family="monospace" font-size="10" fill="#059669">result = model.predict()</text>
+    </g>
+    
+    <g class="code-snippet" transform="translate(620, 350) rotate(5)">
+      <rect x="-60" y="-40" width="120" height="80" rx="5" fill="white" opacity="0.8" />
+      <text x="-50" y="-20" font-family="monospace" font-size="10" fill="#059669">class NeuralNet {</text>
+      <text x="-50" y="0" font-family="monospace" font-size="10" fill="#059669">  train() { ... }</text>
+      <text x="-50" y="20" font-family="monospace" font-size="10" fill="#059669">}</text>
+    </g>
+  </g>
+  
+  <!-- Parallax layer 7: Foreground elements -->
+  <g class="parallax-layer" data-depth="0.8">
+    <path d="M100,550 Q400,520 700,550" stroke="#34D399" stroke-width="3" fill="none" opacity="0.6" />
+    <text x="400" y="550" font-family="Arial, sans-serif" font-size="26" fill="white" text-anchor="middle" filter="url(#glow)">AI Accelerator</text>
+  </g>
+  
+  <!-- Animation definitions -->
+  <style>
+    .parallax-layer {
+      transition: transform 0.1s ease-out;
+    }
+    
+    @keyframes pulse {
+      0% { transform: scale(0.8); opacity: 0.4; }
+      50% { transform: scale(1.2); opacity: 0.9; }
+      100% { transform: scale(0.8); opacity: 0.4; }
+    }
+    
+    .circuit-node {
+      animation: pulse 3s infinite;
+    }
+    
+    .circuit-node:nth-child(2) {
+      animation-delay: 0.7s;
+    }
+    
+    .circuit-node:nth-child(3) {
+      animation-delay: 1.4s;
+    }
+    
+    .circuit-node:nth-child(4) {
+      animation-delay: 2.1s;
+    }
+    
+    @keyframes dataFlow {
+      0% { transform: translate(0, 0); opacity: 0; }
+      50% { opacity: 1; }
+      100% { transform: translate(80px, -30px); opacity: 0; }
+    }
+    
+    .pulse-1 {
+      animation: dataFlow 3s infinite;
+    }
+    
+    .pulse-2 {
+      animation: dataFlow 3s infinite;
+      animation-direction: reverse;
+    }
+    
+    .pulse-3 {
+      animation: dataFlow 3s infinite;
+    }
+    
+    .pulse-4 {
+      animation: dataFlow 3s infinite;
+      animation-direction: reverse;
+    }
+    
+    @keyframes nodeGlow {
+      0% { opacity: 0.3; }
+      50% { opacity: 0.7; }
+      100% { opacity: 0.3; }
+    }
+    
+    .neural-node {
+      animation: nodeGlow 5s infinite;
+    }
+    
+    .neural-node:nth-child(2n) {
+      animation-delay: 1s;
+    }
+    
+    .neural-node:nth-child(3n) {
+      animation-delay: 2s;
+    }
+    
+    @keyframes float {
+      0% { transform: translate(0, 0); }
+      50% { transform: translate(0, -10px); }
+      100% { transform: translate(0, 0); }
+    }
+    
+    .process-element {
+      animation: float 5s ease-in-out infinite;
+    }
+    
+    .process-element:nth-child(2) {
+      animation-delay: 1.5s;
+    }
+    
+    .process-element:nth-child(3) {
+      animation-delay: 2.5s;
+    }
+    
+    .process-element:nth-child(4) {
+      animation-delay: 3.5s;
+    }
+    
+    .code-snippet {
+      animation: float 7s ease-in-out infinite;
+    }
+    
+    .code-snippet:nth-child(2) {
+      animation-delay: 3.5s;
+    }
+  </style>
+</svg>

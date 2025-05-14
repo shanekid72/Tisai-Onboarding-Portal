@@ -1,0 +1,89 @@
+/* Optimize smooth scrolling performance */
+html, body {
+  overscroll-behavior: none;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+/* Setup for ScrollSmoother */
+.smooth-wrapper {
+  overflow: hidden;
+  position: relative;
+}
+
+.smooth-content {
+  will-change: transform;
+}
+
+/* Fix for parallax elements */
+.parallax-bg {
+  will-change: transform;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  pointer-events: none;
+}
+
+/* Fix for reveal elements */
+.reveal-element {
+  transform: translateY(10px);
+  opacity: 0;
+  will-change: transform, opacity;
+  transition: transform 0.5s ease-out, opacity 0.5s ease-out;
+}
+
+/* Fix for hero animations */
+.hero-title,
+.hero-subtitle,
+.hero-buttons {
+  will-change: transform, opacity;
+  transition: transform 0.8s ease-out, opacity 0.8s ease-out;
+}
+
+/* Consistent container style */
+.container {
+  position: relative;
+  z-index: 1;
+}
+
+/* Card animations */
+.card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  will-change: transform;
+}
+
+/* Performance optimizations for mobile */
+@media (max-width: 768px) {
+  .smooth-wrapper,
+  .smooth-content {
+    transform: none !important;
+    transition: none !important;
+  }
+  
+  .parallax-bg {
+    opacity: 0.6 !important;
+  }
+}
+
+/* Ensure visibility for items during animation */
+[data-scrollsmoother-wrapper].has-animation-error .reveal-element,
+[data-scrollsmoother-wrapper].has-animation-error .hero-title,
+[data-scrollsmoother-wrapper].has-animation-error .hero-subtitle,
+[data-scrollsmoother-wrapper].has-animation-error .hero-buttons {
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  
+  .smooth-content {
+    transform: none !important;
+  }
+} 

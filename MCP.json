@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "worldAPI": {
+      "url": "http://worldapi.block9.ai:8000/sse",
+      "env": { "PARTNER_ID": "sk_15120" },
+      "capabilities": { "tools": { "listChanged": true } }
+    }
+  }
+} 

@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="TisAi WorldAPI Connect - Connect to the power of WorldAPI with TisAi's conversational onboarding and seamless integration." />
+    <meta name="theme-color" content="#0D0D0F" />
+    <meta name="color-scheme" content="dark" />
+    <!-- CSP fix script - Add early to intercept console warnings -->
+    <script src="/csp-fix.js"></script>
+    <!-- Ensure proper contrast for text selection -->
+    <style>
+      ::selection {
+        background-color: #FF5733;
+        color: #fff;
+      }
+      
+      /* Fixed font loading with correct file names */
+      @font-face {
+        font-family: 'Inter';
+        font-style: normal;
+        font-weight: 400;
+        font-display: swap;
+        src: local('Inter Regular'), local('Inter-Regular'), 
+             url('/fonts/inter-regular.woff2') format('woff2'),
+             url('/fonts/inter-regular.woff') format('woff');
+      }
+
+      @font-face {
+        font-family: 'Inter';
+        font-style: normal;
+        font-weight: 500;
+        font-display: swap;
+        src: local('Inter Medium'), local('Inter-Medium'), 
+             url('/fonts/inter-medium.woff2') format('woff2'),
+             url('/fonts/inter-medium.woff') format('woff');
+      }
+      
+      @font-face {
+        font-family: 'Inter';
+        font-style: normal;
+        font-weight: 600;
+        font-display: swap;
+        src: local('Inter SemiBold'), local('Inter-SemiBold'), 
+             url('/fonts/inter-semibold.woff2') format('woff2'),
+             url('/fonts/inter-semibold.woff') format('woff');
+      }
+      
+      @font-face {
+        font-family: 'Inter';
+        font-style: normal;
+        font-weight: 700;
+        font-display: swap;
+        src: local('Inter Bold'), local('Inter-Bold'), 
+             url('/fonts/inter-bold.woff2') format('woff2'),
+             url('/fonts/inter-Bold.woff') format('woff');
+      }
+    </style>
+    <title>TisAi WorldAPI Connect</title>
+    <!-- Add Google Fonts with fallback nonce for CSP environments -->
+    <!--
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" 
+          onerror="document.documentElement.classList.add('font-fallback')">
+    -->
+  </head>
+  <body>
+    <!-- Skip link for keyboard users -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+    <noscript>
+      <div style="padding: 2rem; text-align: center; color: white;">
+        <h1>JavaScript is required</h1>
+        <p>This application requires JavaScript to function properly. Please enable JavaScript in your browser settings and reload the page.</p>
+      </div>
+    </noscript>
+  </body>
+</html>

@@ -1,0 +1,332 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="800" height="600" viewBox="0 0 800 600">
+  <!-- Background gradients -->
+  <defs>
+    <linearGradient id="bg-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#10B981" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#047857" stop-opacity="0.8"/>
+    </linearGradient>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+    <!-- Grid pattern for globe -->
+    <pattern id="grid-pattern" patternUnits="userSpaceOnUse" width="20" height="20">
+      <rect width="20" height="20" fill="none"/>
+      <path d="M0,10 L20,10 M10,0 L10,20" stroke="white" stroke-width="0.3" opacity="0.2"/>
+    </pattern>
+  </defs>
+  
+  <!-- Base background -->
+  <rect width="100%" height="100%" fill="url(#bg-gradient)" />
+  
+  <!-- Parallax layer 1: Deep background elements -->
+  <g class="parallax-layer" data-depth="0.1">
+    <circle cx="200" cy="150" r="100" fill="#10B981" opacity="0.1" />
+    <circle cx="650" cy="450" r="120" fill="#047857" opacity="0.1" />
+    
+    <!-- Background stars/datapoints -->
+    <g class="background-stars">
+      <circle cx="120" cy="80" r="1.5" fill="white" opacity="0.6" />
+      <circle cx="220" cy="120" r="1" fill="white" opacity="0.5" />
+      <circle cx="320" cy="90" r="1.5" fill="white" opacity="0.7" />
+      <circle cx="420" cy="60" r="1" fill="white" opacity="0.6" />
+      <circle cx="520" cy="110" r="1.5" fill="white" opacity="0.5" />
+      <circle cx="620" cy="80" r="1" fill="white" opacity="0.7" />
+      <circle cx="720" cy="130" r="1.5" fill="white" opacity="0.6" />
+      
+      <circle cx="150" cy="520" r="1" fill="white" opacity="0.5" />
+      <circle cx="250" cy="490" r="1.5" fill="white" opacity="0.7" />
+      <circle cx="350" cy="540" r="1" fill="white" opacity="0.6" />
+      <circle cx="450" cy="510" r="1.5" fill="white" opacity="0.5" />
+      <circle cx="550" cy="530" r="1" fill="white" opacity="0.7" />
+      <circle cx="650" cy="500" r="1.5" fill="white" opacity="0.6" />
+    </g>
+  </g>
+  
+  <!-- Parallax layer 2: Globe wireframe background -->
+  <g class="parallax-layer" data-depth="0.2">
+    <!-- Globe wireframe circles -->
+    <g class="globe-wireframe" transform="translate(400, 300)">
+      <circle cx="0" cy="0" r="180" fill="none" stroke="white" stroke-width="0.5" opacity="0.1" />
+      <ellipse cx="0" cy="0" rx="180" ry="30" fill="none" stroke="white" stroke-width="0.5" opacity="0.2" />
+      <ellipse cx="0" cy="0" rx="180" ry="60" fill="none" stroke="white" stroke-width="0.5" opacity="0.2" />
+      <ellipse cx="0" cy="0" rx="180" ry="90" fill="none" stroke="white" stroke-width="0.5" opacity="0.2" />
+      <ellipse cx="0" cy="0" rx="180" ry="120" fill="none" stroke="white" stroke-width="0.5" opacity="0.2" />
+      <ellipse cx="0" cy="0" rx="180" ry="150" fill="none" stroke="white" stroke-width="0.5" opacity="0.2" />
+      
+      <!-- Vertical lines -->
+      <path d="M-180,0 A180,180 0 0,1 180,0" fill="none" stroke="white" stroke-width="0.5" opacity="0.2" transform="rotate(0)" />
+      <path d="M-180,0 A180,180 0 0,1 180,0" fill="none" stroke="white" stroke-width="0.5" opacity="0.2" transform="rotate(30)" />
+      <path d="M-180,0 A180,180 0 0,1 180,0" fill="none" stroke="white" stroke-width="0.5" opacity="0.2" transform="rotate(60)" />
+      <path d="M-180,0 A180,180 0 0,1 180,0" fill="none" stroke="white" stroke-width="0.5" opacity="0.2" transform="rotate(90)" />
+      <path d="M-180,0 A180,180 0 0,1 180,0" fill="none" stroke="white" stroke-width="0.5" opacity="0.2" transform="rotate(120)" />
+      <path d="M-180,0 A180,180 0 0,1 180,0" fill="none" stroke="white" stroke-width="0.5" opacity="0.2" transform="rotate(150)" />
+    </g>
+  </g>
+  
+  <!-- Parallax layer 3: Main globe -->
+  <g class="parallax-layer" data-depth="0.4">
+    <!-- Central globe with continents -->
+    <g class="globe" transform="translate(400, 300)">
+      <!-- Main globe sphere with slight gradient -->
+      <circle cx="0" cy="0" r="120" fill="#34D399" opacity="0.3" stroke="white" stroke-width="1" />
+      
+      <!-- Stylized continents -->
+      <path d="M-40,-60 Q-20,-80 10,-70 Q30,-80 50,-60 Q70,-70 80,-40 Q60,-20 70,10 Q50,30 30,20 Q10,40 -10,30 Q-30,40 -50,20 Q-70,30 -90,10 Q-70,-10 -80,-40 Q-60,-60 -40,-60 Z" 
+            fill="#10B981" opacity="0.8" />
+      <path d="M-20,40 Q0,20 20,30 Q40,20 50,40 Q30,60 40,80 Q20,90 0,80 Q-20,90 -40,70 Q-20,50 -20,40 Z" 
+            fill="#10B981" opacity="0.8" />
+      <path d="M40,-10 Q60,-30 80,-20 Q90,0 80,20 Q60,30 40,20 Q30,0 40,-10 Z" 
+            fill="#10B981" opacity="0.8" />
+      
+      <!-- Grid overlay for tech feel -->
+      <circle cx="0" cy="0" r="120" fill="url(#grid-pattern)" opacity="0.3" />
+    </g>
+  </g>
+  
+  <!-- Parallax layer 4: Server locations and connections -->
+  <g class="parallax-layer" data-depth="0.5">
+    <!-- Major "server locations" around the globe -->
+    <g class="server-locations">
+      <circle class="server-node" cx="340" cy="220" r="5" fill="white" opacity="0.8" />
+      <circle class="server-node" cx="500" cy="200" r="5" fill="white" opacity="0.8" />
+      <circle class="server-node" cx="450" cy="350" r="5" fill="white" opacity="0.8" />
+      <circle class="server-node" cx="300" cy="320" r="5" fill="white" opacity="0.8" />
+      <circle class="server-node" cx="400" cy="400" r="5" fill="white" opacity="0.8" />
+      <circle class="server-node" cx="250" cy="250" r="5" fill="white" opacity="0.8" />
+      <circle class="server-node" cx="550" cy="320" r="5" fill="white" opacity="0.8" />
+    </g>
+    
+    <!-- Connection lines between server locations -->
+    <g class="server-connections">
+      <line x1="340" y1="220" x2="500" y2="200" stroke="white" stroke-width="1" opacity="0.3" />
+      <line x1="500" y1="200" x2="550" y2="320" stroke="white" stroke-width="1" opacity="0.3" />
+      <line x1="550" y1="320" x2="450" y2="350" stroke="white" stroke-width="1" opacity="0.3" />
+      <line x1="450" y1="350" x2="400" y2="400" stroke="white" stroke-width="1" opacity="0.3" />
+      <line x1="400" y1="400" x2="300" y2="320" stroke="white" stroke-width="1" opacity="0.3" />
+      <line x1="300" y1="320" x2="250" y2="250" stroke="white" stroke-width="1" opacity="0.3" />
+      <line x1="250" y1="250" x2="340" y2="220" stroke="white" stroke-width="1" opacity="0.3" />
+      
+      <!-- Cross connections -->
+      <line x1="340" y1="220" x2="450" y2="350" stroke="white" stroke-width="1" opacity="0.3" />
+      <line x1="500" y1="200" x2="300" y2="320" stroke="white" stroke-width="1" opacity="0.3" />
+      <line x1="250" y1="250" x2="550" y2="320" stroke="white" stroke-width="1" opacity="0.3" />
+    </g>
+    
+    <!-- Data packets traveling along paths -->
+    <circle class="data-packet packet-1" cx="380" cy="215" r="3" fill="white" opacity="0.9" filter="url(#glow)" />
+    <circle class="data-packet packet-2" cx="500" cy="250" r="3" fill="white" opacity="0.9" filter="url(#glow)" />
+    <circle class="data-packet packet-3" cx="350" cy="320" r="3" fill="white" opacity="0.9" filter="url(#glow)" />
+    <circle class="data-packet packet-4" cx="450" cy="380" r="3" fill="white" opacity="0.9" filter="url(#glow)" />
+    <circle class="data-packet packet-5" cx="270" cy="270" r="3" fill="white" opacity="0.9" filter="url(#glow)" />
+  </g>
+  
+  <!-- Parallax layer 5: Regional Server Clusters -->
+  <g class="parallax-layer" data-depth="0.3">
+    <!-- North America Region -->
+    <g class="server-cluster" transform="translate(200, 200)">
+      <rect x="-40" y="-20" width="80" height="40" rx="5" fill="white" opacity="0.9" />
+      <text x="0" y="5" font-family="Arial, sans-serif" font-size="10" fill="#047857" text-anchor="middle">US-WEST</text>
+      <circle cx="-25" cy="-10" r="3" fill="#34D399" opacity="0.8" />
+      <circle cx="-15" cy="-10" r="3" fill="#34D399" opacity="0.8" />
+      <circle cx="-5" cy="-10" r="3" fill="#34D399" opacity="0.8" />
+    </g>
+    
+    <!-- Europe Region -->
+    <g class="server-cluster" transform="translate(500, 150)">
+      <rect x="-40" y="-20" width="80" height="40" rx="5" fill="white" opacity="0.9" />
+      <text x="0" y="5" font-family="Arial, sans-serif" font-size="10" fill="#047857" text-anchor="middle">EU-CENTRAL</text>
+      <circle cx="-25" cy="-10" r="3" fill="#34D399" opacity="0.8" />
+      <circle cx="-15" cy="-10" r="3" fill="#34D399" opacity="0.8" />
+      <circle cx="-5" cy="-10" r="3" fill="#34D399" opacity="0.8" />
+    </g>
+    
+    <!-- Asia Region -->
+    <g class="server-cluster" transform="translate(600, 280)">
+      <rect x="-40" y="-20" width="80" height="40" rx="5" fill="white" opacity="0.9" />
+      <text x="0" y="5" font-family="Arial, sans-serif" font-size="10" fill="#047857" text-anchor="middle">ASIA-EAST</text>
+      <circle cx="-25" cy="-10" r="3" fill="#34D399" opacity="0.8" />
+      <circle cx="-15" cy="-10" r="3" fill="#34D399" opacity="0.8" />
+      <circle cx="-5" cy="-10" r="3" fill="#34D399" opacity="0.8" />
+    </g>
+    
+    <!-- Oceanic Region -->
+    <g class="server-cluster" transform="translate(500, 400)">
+      <rect x="-40" y="-20" width="80" height="40" rx="5" fill="white" opacity="0.9" />
+      <text x="0" y="5" font-family="Arial, sans-serif" font-size="10" fill="#047857" text-anchor="middle">AU-SOUTH</text>
+      <circle cx="-25" cy="-10" r="3" fill="#34D399" opacity="0.8" />
+      <circle cx="-15" cy="-10" r="3" fill="#34D399" opacity="0.8" />
+      <circle cx="-5" cy="-10" r="3" fill="#34D399" opacity="0.8" />
+    </g>
+    
+    <!-- South America Region -->
+    <g class="server-cluster" transform="translate(300, 400)">
+      <rect x="-40" y="-20" width="80" height="40" rx="5" fill="white" opacity="0.9" />
+      <text x="0" y="5" font-family="Arial, sans-serif" font-size="10" fill="#047857" text-anchor="middle">BR-EAST</text>
+      <circle cx="-25" cy="-10" r="3" fill="#34D399" opacity="0.8" />
+      <circle cx="-15" cy="-10" r="3" fill="#34D399" opacity="0.8" />
+      <circle cx="-5" cy="-10" r="3" fill="#34D399" opacity="0.8" />
+    </g>
+  </g>
+  
+  <!-- Parallax layer 6: Stats indicators -->
+  <g class="parallax-layer" data-depth="0.7">
+    <!-- Load Balancing Indicator -->
+    <g class="metric-card" transform="translate(150, 480)">
+      <rect x="-60" y="-30" width="120" height="60" rx="10" fill="white" opacity="0.9" />
+      <text x="0" y="-10" font-family="Arial, sans-serif" font-size="12" fill="#047857" text-anchor="middle">LOAD BALANCE</text>
+      <text x="0" y="15" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#10B981" text-anchor="middle">99.8%</text>
+    </g>
+    
+    <!-- Latency Indicator -->
+    <g class="metric-card" transform="translate(400, 480)">
+      <rect x="-60" y="-30" width="120" height="60" rx="10" fill="white" opacity="0.9" />
+      <text x="0" y="-10" font-family="Arial, sans-serif" font-size="12" fill="#047857" text-anchor="middle">AVG LATENCY</text>
+      <text x="0" y="15" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#10B981" text-anchor="middle">42ms</text>
+    </g>
+    
+    <!-- Uptime Indicator -->
+    <g class="metric-card" transform="translate(650, 480)">
+      <rect x="-60" y="-30" width="120" height="60" rx="10" fill="white" opacity="0.9" />
+      <text x="0" y="-10" font-family="Arial, sans-serif" font-size="12" fill="#047857" text-anchor="middle">GLOBAL UPTIME</text>
+      <text x="0" y="15" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#10B981" text-anchor="middle">99.99%</text>
+    </g>
+  </g>
+  
+  <!-- Parallax layer 7: Foreground elements -->
+  <g class="parallax-layer" data-depth="0.8">
+    <path d="M100,550 Q400,520 700,550" stroke="#34D399" stroke-width="3" fill="none" opacity="0.6" />
+    <text x="400" y="550" font-family="Arial, sans-serif" font-size="26" fill="white" text-anchor="middle" filter="url(#glow)">Global Scale</text>
+  </g>
+  
+  <!-- Animation definitions -->
+  <style>
+    .parallax-layer {
+      transition: transform 0.1s ease-out;
+    }
+    
+    @keyframes pulse {
+      0% { transform: scale(0.8); opacity: 0.5; }
+      50% { transform: scale(1.2); opacity: 0.9; }
+      100% { transform: scale(0.8); opacity: 0.5; }
+    }
+    
+    .server-node {
+      animation: pulse 3s infinite;
+    }
+    
+    .server-node:nth-child(2n) {
+      animation-delay: 0.5s;
+    }
+    
+    .server-node:nth-child(3n) {
+      animation-delay: 1s;
+    }
+    
+    .server-node:nth-child(4n) {
+      animation-delay: 1.5s;
+    }
+    
+    @keyframes packetMove {
+      0% { opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { opacity: 0; transform: translate(50px, 50px); }
+    }
+    
+    .packet-1 {
+      animation: packetMove 8s infinite;
+      animation-delay: 0s;
+    }
+    
+    .packet-2 {
+      animation: packetMove 8s infinite;
+      animation-delay: 1.6s;
+    }
+    
+    .packet-3 {
+      animation: packetMove 8s infinite;
+      animation-delay: 3.2s;
+    }
+    
+    .packet-4 {
+      animation: packetMove 8s infinite;
+      animation-delay: 4.8s;
+    }
+    
+    .packet-5 {
+      animation: packetMove 8s infinite;
+      animation-delay: 6.4s;
+    }
+    
+    @keyframes float {
+      0% { transform: translate(0, 0); }
+      50% { transform: translate(0, -5px); }
+      100% { transform: translate(0, 0); }
+    }
+    
+    .server-cluster {
+      animation: float 5s ease-in-out infinite;
+    }
+    
+    .server-cluster:nth-child(2) {
+      animation-delay: 1s;
+    }
+    
+    .server-cluster:nth-child(3) {
+      animation-delay: 2s;
+    }
+    
+    .server-cluster:nth-child(4) {
+      animation-delay: 3s;
+    }
+    
+    .server-cluster:nth-child(5) {
+      animation-delay: 4s;
+    }
+    
+    @keyframes metricPulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.02); }
+      100% { transform: scale(1); }
+    }
+    
+    .metric-card {
+      animation: metricPulse 3s ease-in-out infinite;
+    }
+    
+    .metric-card:nth-child(2) {
+      animation-delay: 1s;
+    }
+    
+    .metric-card:nth-child(3) {
+      animation-delay: 2s;
+    }
+    
+    .background-stars circle {
+      animation: pulse 5s infinite;
+    }
+    
+    .background-stars circle:nth-child(2n) {
+      animation-delay: 0.7s;
+    }
+    
+    .background-stars circle:nth-child(3n) {
+      animation-delay: 1.4s;
+    }
+    
+    .background-stars circle:nth-child(5n) {
+      animation-delay: 2.1s;
+    }
+    
+    @keyframes globeRotate {
+      0% { transform: translateX(0); }
+      50% { transform: translateX(10px); }
+      100% { transform: translateX(0); }
+    }
+    
+    .globe {
+      animation: globeRotate 20s ease-in-out infinite;
+    }
+  </style>
+</svg>

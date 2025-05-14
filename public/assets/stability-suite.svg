@@ -1,0 +1,223 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="800" height="600" viewBox="0 0 800 600">
+  <!-- Background gradients -->
+  <defs>
+    <linearGradient id="bg-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2563EB" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#1E40AF" stop-opacity="0.8"/>
+    </linearGradient>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+    <!-- Grid pattern -->
+    <pattern id="grid-pattern" patternUnits="userSpaceOnUse" width="40" height="40">
+      <rect width="40" height="40" fill="none"/>
+      <path d="M0,20 L40,20 M20,0 L20,40" stroke="white" stroke-width="0.5" opacity="0.1"/>
+    </pattern>
+  </defs>
+  
+  <!-- Base background -->
+  <rect width="100%" height="100%" fill="url(#bg-gradient)" />
+  <rect width="100%" height="100%" fill="url(#grid-pattern)" />
+  
+  <!-- Parallax layer 1: Deep background elements -->
+  <g class="parallax-layer" data-depth="0.1">
+    <circle cx="150" cy="150" r="100" fill="#3B82F6" opacity="0.2" />
+    <circle cx="650" cy="450" r="120" fill="#1D4ED8" opacity="0.15" />
+  </g>
+  
+  <!-- Parallax layer 2: Background wave patterns -->
+  <g class="parallax-layer" data-depth="0.2">
+    <path d="M0,400 C150,380 250,420 400,400 S650,380 800,400 V600 H0 Z" fill="#2563EB" opacity="0.1" />
+    <path d="M0,450 C200,430 300,470 500,450 S700,430 800,450 V600 H0 Z" fill="#2563EB" opacity="0.15" />
+    <path d="M0,500 C150,480 350,520 500,500 S700,480 800,500 V600 H0 Z" fill="#2563EB" opacity="0.2" />
+  </g>
+  
+  <!-- Parallax layer 3: Main stability elements -->
+  <g class="parallax-layer" data-depth="0.4">
+    <!-- Center platform foundation -->
+    <rect x="250" y="300" width="300" height="30" rx="5" fill="#3B82F6" opacity="0.9" />
+    
+    <!-- Balance scales -->
+    <g class="balance-scale">
+      <!-- Center pillar -->
+      <rect x="395" y="200" width="10" height="100" rx="2" fill="white" opacity="0.9" />
+      
+      <!-- Balance beam -->
+      <rect x="300" y="200" width="200" height="8" rx="4" fill="white" opacity="0.9" class="balance-beam" />
+      
+      <!-- Left plate -->
+      <g class="scale-plate left-plate">
+        <circle cx="320" cy="240" r="40" fill="#60A5FA" stroke="white" stroke-width="2" opacity="0.8" />
+        <text x="320" y="245" font-family="Arial, sans-serif" font-size="14" fill="white" text-anchor="middle">Systems</text>
+      </g>
+      
+      <!-- Right plate -->
+      <g class="scale-plate right-plate">
+        <circle cx="480" cy="240" r="40" fill="#60A5FA" stroke="white" stroke-width="2" opacity="0.8" />
+        <text x="480" y="245" font-family="Arial, sans-serif" font-size="14" fill="white" text-anchor="middle">Services</text>
+      </g>
+    </g>
+  </g>
+  
+  <!-- Parallax layer 4: Connecting elements -->
+  <g class="parallax-layer" data-depth="0.5">
+    <!-- Connection lines -->
+    <g class="connection-lines" stroke="white" stroke-width="1.5" opacity="0.6" stroke-dasharray="4,4">
+      <path d="M320,280 C320,350 250,380 180,350" />
+      <path d="M320,280 C320,350 220,330 200,400" />
+      <path d="M320,280 C320,350 300,400 350,450" />
+      
+      <path d="M480,280 C480,350 550,380 620,350" />
+      <path d="M480,280 C480,350 580,330 600,400" />
+      <path d="M480,280 C480,350 500,400 450,450" />
+    </g>
+    
+    <!-- Connection nodes -->
+    <g class="nodes">
+      <circle class="node" cx="180" cy="350" r="15" fill="#60A5FA" opacity="0.8" />
+      <circle class="node" cx="200" cy="400" r="15" fill="#60A5FA" opacity="0.8" />
+      <circle class="node" cx="350" cy="450" r="15" fill="#60A5FA" opacity="0.8" />
+      
+      <circle class="node" cx="620" cy="350" r="15" fill="#60A5FA" opacity="0.8" />
+      <circle class="node" cx="600" cy="400" r="15" fill="#60A5FA" opacity="0.8" />
+      <circle class="node" cx="450" cy="450" r="15" fill="#60A5FA" opacity="0.8" />
+    </g>
+  </g>
+  
+  <!-- Parallax layer 5: Floating metrics and indicators -->
+  <g class="parallax-layer" data-depth="0.6">
+    <!-- Stability metrics -->
+    <g class="metric-container" transform="translate(150, 150)">
+      <rect x="0" y="0" width="120" height="70" rx="10" fill="white" opacity="0.9" />
+      <text x="60" y="25" font-family="Arial, sans-serif" font-size="14" fill="#2563EB" text-anchor="middle">Uptime</text>
+      <text x="60" y="50" font-family="Arial, sans-serif" font-size="18" fill="#2563EB" text-anchor="middle" font-weight="bold">99.99%</text>
+      <path d="M20,60 L40,40 L60,50 L80,30 L100,35" stroke="#2563EB" stroke-width="2" fill="none" />
+    </g>
+    
+    <g class="metric-container" transform="translate(530, 150)">
+      <rect x="0" y="0" width="120" height="70" rx="10" fill="white" opacity="0.9" />
+      <text x="60" y="25" font-family="Arial, sans-serif" font-size="14" fill="#2563EB" text-anchor="middle">Response Time</text>
+      <text x="60" y="50" font-family="Arial, sans-serif" font-size="18" fill="#2563EB" text-anchor="middle" font-weight="bold">120ms</text>
+      <path d="M20,50 L40,45 L60,55 L80,35 L100,40" stroke="#2563EB" stroke-width="2" fill="none" />
+    </g>
+    
+    <g class="metric-container" transform="translate(350, 100)">
+      <rect x="0" y="0" width="120" height="70" rx="10" fill="white" opacity="0.9" />
+      <text x="60" y="25" font-family="Arial, sans-serif" font-size="14" fill="#2563EB" text-anchor="middle">Error Rate</text>
+      <text x="60" y="50" font-family="Arial, sans-serif" font-size="18" fill="#2563EB" text-anchor="middle" font-weight="bold">0.01%</text>
+      <path d="M20,40 L40,42 L60,38 L80,39 L100,35" stroke="#2563EB" stroke-width="2" fill="none" />
+    </g>
+  </g>
+  
+  <!-- Parallax layer 6: Pulse waves to show monitoring -->
+  <g class="parallax-layer" data-depth="0.3">
+    <!-- Pulse waves radiating from center -->
+    <circle class="pulse-wave" cx="400" cy="300" r="30" stroke="white" stroke-width="2" fill="none" opacity="0.1" />
+    <circle class="pulse-wave" cx="400" cy="300" r="80" stroke="white" stroke-width="1.5" fill="none" opacity="0.08" />
+    <circle class="pulse-wave" cx="400" cy="300" r="130" stroke="white" stroke-width="1" fill="none" opacity="0.06" />
+    <circle class="pulse-wave" cx="400" cy="300" r="180" stroke="white" stroke-width="0.8" fill="none" opacity="0.04" />
+  </g>
+  
+  <!-- Parallax layer 7: Foreground elements -->
+  <g class="parallax-layer" data-depth="0.8">
+    <path d="M100,550 Q400,520 700,550" stroke="#60A5FA" stroke-width="3" fill="none" opacity="0.6" />
+    <text x="400" y="550" font-family="Arial, sans-serif" font-size="26" fill="white" text-anchor="middle" filter="url(#glow)">Stability Suite</text>
+  </g>
+  
+  <!-- Animation definitions -->
+  <style>
+    .parallax-layer {
+      transition: transform 0.1s ease-out;
+    }
+    
+    @keyframes pulse {
+      0% { transform: scale(1); opacity: 0.1; }
+      50% { transform: scale(1.2); opacity: 0.3; }
+      100% { transform: scale(1); opacity: 0.1; }
+    }
+    
+    .pulse-wave:nth-child(1) {
+      animation: pulse 3s infinite;
+    }
+    
+    .pulse-wave:nth-child(2) {
+      animation: pulse 3s infinite 0.5s;
+    }
+    
+    .pulse-wave:nth-child(3) {
+      animation: pulse 3s infinite 1s;
+    }
+    
+    .pulse-wave:nth-child(4) {
+      animation: pulse 3s infinite 1.5s;
+    }
+    
+    @keyframes balanceBeam {
+      0% { transform: rotate(-2deg); }
+      50% { transform: rotate(2deg); }
+      100% { transform: rotate(-2deg); }
+    }
+    
+    .balance-beam {
+      transform-origin: center center;
+      animation: balanceBeam 8s ease-in-out infinite;
+    }
+    
+    .left-plate {
+      animation: leftPlate 8s ease-in-out infinite;
+    }
+    
+    .right-plate {
+      animation: rightPlate 8s ease-in-out infinite;
+    }
+    
+    @keyframes leftPlate {
+      0% { transform: translate(0, -5px); }
+      50% { transform: translate(0, 5px); }
+      100% { transform: translate(0, -5px); }
+    }
+    
+    @keyframes rightPlate {
+      0% { transform: translate(0, 5px); }
+      50% { transform: translate(0, -5px); }
+      100% { transform: translate(0, 5px); }
+    }
+    
+    .node {
+      animation: nodePulse 4s infinite;
+    }
+    
+    @keyframes nodePulse {
+      0% { opacity: 0.5; r: 12; }
+      50% { opacity: 0.8; r: 15; }
+      100% { opacity: 0.5; r: 12; }
+    }
+    
+    .node:nth-child(2n) {
+      animation-delay: 1s;
+    }
+    
+    .node:nth-child(3n) {
+      animation-delay: 2s;
+    }
+    
+    .metric-container {
+      animation: float 5s ease-in-out infinite;
+    }
+    
+    @keyframes float {
+      0% { transform: translateY(150px); }
+      50% { transform: translateY(140px); }
+      100% { transform: translateY(150px); }
+    }
+    
+    .metric-container:nth-child(2) {
+      animation-delay: 1s;
+    }
+    
+    .metric-container:nth-child(3) {
+      animation-delay: 2s;
+    }
+  </style>
+</svg>

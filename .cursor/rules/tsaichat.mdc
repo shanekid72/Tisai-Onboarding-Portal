@@ -1,0 +1,61 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+    # Coding pattern preferences
+Always prefer simple solutions  
+Avoid duplication of code whenever possible, which means checking for other areas of the codebase that might already have similar code and functionality  
+Write code that takes into account the different environments: dev, test, and prod  
+You are careful to only make changes that are requested or you are confident are well understood and related to the change being requested  
+When fixing an issue or bug, do not introduce a new pattern or technology without first exhausting all options for the existing implementation. And if you finally do this, make sure to remove the old implementation afterwards so we don’t have duplicate logic.  
+Keep the codebase very clean and organized  
+Avoid writing scripts in files if possible, especially if the script is likely only to be run once  
+Avoid having files over 200–300 lines of code. Refactor at that point.  
+Mocking data is only needed for tests, never mock data for dev or prod  
+Never add stubbing or fake data patterns to code that affects the dev or prod environments  
+Never overwrite my .env file without first asking and confirming
+
+# technicalstack
+Frontend - React + TypeScript,Core UI logic and structure written in typed components for reliability and scale.
+Vite-Fast build tool optimized for modern front-end dev with lightning-fast hot reloading.
+Tailwind CSS-Utility-first styling to drive pixel-perfect cyberpunk aesthetics and responsive UI.
+Framer Motion-Powering smooth UI animations and micro-interactions, especially for Dolly's bootup and stage transitions.
+Three.js + React Three Fiber
+Optional support for interactive 3D visual effects and avatar embedding (planned/extendable).
+Modular Component-Reusable building blocks like ChatInterface, TsaiBootup, ProgressTracker, AIAgent
+
+# Testing prefrences
+
+Always do test a new implementaion,feature,change has been added or done.
+Always test when a fix is done.
+
+{
+  ["npm run build", "pytest", "docker build","npm run dev","npm run dev:prod","npm run dev:prod:debug",npm run install",]
+}
+
+Animation Rules (using GSAP)  
+   1. **Imports & Setup**  
+      ```ts
+      import { gsap } from 'gsap';
+      import { ScrollTrigger } from 'gsap/ScrollTrigger';
+      gsap.registerPlugin(ScrollTrigger);
+      ```  
+   2. **Lifecycle**  
+      • Wrap GSAP timelines in `useEffect` (or `useIsomorphicLayoutEffect`)  
+      • Clean up with `ctx.revert()` or `.kill()` on unmount  
+   3. **Page Transitions**  
+      • Animate old page out (`opacity:1→0`, `y:0→-20`) then new page in (`opacity:0→1`, `y:20→0`)  
+   4. **Form Interactions**  
+      • Input focus: underline expand via `gsap.fromTo()` on focus/blur  
+      • Button hover/tap: scale or tint transitions with `gsap.to()`  
+   5. **List & Samples Animations**  
+      • Stagger code-block entries with fade/slide using `gsap.utils.toArray()` + `stagger`  
+      • Animate dropdown open/close via height/opacity tweens  
+   6. **Theme Toggle**  
+      • Tween CSS variables (e.g. `--bg`, `--fg`) on switch via GSAP’s `quickSetter`  
+   7. **Scroll-Based Reveals**  
+      • Use `ScrollTrigger` to animate cards/sections into view (slide up + fade)  
+   8. **Reduced-Motion**  
+
+      • Detect `window.matchMedia('(prefers-reduced-motion)').matches` and disable/simplify animations when true
