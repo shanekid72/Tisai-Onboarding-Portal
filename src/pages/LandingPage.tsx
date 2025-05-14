@@ -195,7 +195,7 @@ const LandingPage = ({ has3dFeatures }: LandingPageProps) => {
       title: "Take Off",
       description: "Boost your productivity and creativity with energizing API solutions",
       color: "from-red-500 to-orange-500",
-      bgImage: "/assets/take-off-bg.svg",
+      bgImage: "/assets/take-off-placeholder.png",
       path: "/products?category=take-off"
     },
     {
@@ -203,7 +203,7 @@ const LandingPage = ({ has3dFeatures }: LandingPageProps) => {
       title: "Touch Down",
       description: "Stabilize and secure your systems with reliable integrations",
       color: "from-blue-500 to-indigo-500",
-      bgImage: "/assets/touch-down-bg.svg",
+      bgImage: "/assets/touch-down-placeholder.png",
       path: "/products?category=touch-down"
     },
     {
@@ -211,7 +211,7 @@ const LandingPage = ({ has3dFeatures }: LandingPageProps) => {
       title: "High Point",
       description: "Reach new heights with advanced AI and scaling capabilities",
       color: "from-green-500 to-emerald-500",
-      bgImage: "/assets/high-point-bg.svg",
+      bgImage: "/assets/high-point-placeholder.png",
       path: "/products?category=high-point"
     }
   ];

@@ -25,13 +25,14 @@ const ScrollFloat: React.FC<ScrollFloatProps> = ({
   containerClassName = "",
   textClassName = "",
   animationDuration = 1,
-  ease = "back.inOut(2)",
-  scrollStart = "center bottom+=50%",
-  scrollEnd = "bottom bottom-=40%",
+  ease = "power2.out",
+  scrollStart = "top 80%",
+  scrollEnd = "bottom top",
   stagger = 0.03,
   id = `scroll-float-${Math.random().toString(36).substring(2, 9)}`
 }) => {
   const containerRef = useRef<HTMLHeadingElement>(null);
+  const tl = useRef<gsap.core.Timeline | null>(null);
 
   const splitText = useMemo(() => {
     const text = typeof children === "string" ? children : "";
@@ -47,43 +48,71 @@ const ScrollFloat: React.FC<ScrollFloatProps> = ({
     
     // Give the container a unique ID for GSAP to target
     containerRef.current.id = id;
+    const chars = document.querySelectorAll(`#${id} .char`);
     
-    const scroller = scrollContainerRef?.current || window;
-
-    // Use string selectors for GSAP instead of direct DOM references
-    gsap.fromTo(
-      `#${id} .char`,
-      {
-        willChange: "opacity, transform",
-        opacity: 0,
-        yPercent: 120,
-        scaleY: 2.3,
-        scaleX: 0.7,
-        transformOrigin: "50% 0%"
+    // Set initial state
+    gsap.set(chars, {
+      willChange: "opacity, transform",
+      opacity: 0,
+      yPercent: 50,
+      scaleY: 1.5,
+      scaleX: 0.7,
+      transformOrigin: "50% 0%"
+    });
+    
+    // Create a timeline for better control
+    tl.current = gsap.timeline({ 
+      paused: true,
+      defaults: { duration: animationDuration, ease: ease } 
+    });
+    
+    // Add the animation to the timeline
+    tl.current.to(chars, {
+      opacity: 1,
+      yPercent: 0,
+      scaleY: 1,
+      scaleX: 1,
+      stagger: stagger,
+    });
+    
+    // Create ScrollTrigger
+    const trigger = ScrollTrigger.create({
+      trigger: `#${id}`,
+      start: scrollStart,
+      end: scrollEnd,
+      // Use toggle actions instead of scrub for more reliable behavior
+      // play, reverse, restart, complete (forward), reverse, restart, reset (backward)
+      toggleActions: "play none none reverse",
+      id: `trigger-${id}`,
+      onEnter: () => {
+        if (tl.current) tl.current.play();
       },
-      {
-        duration: animationDuration,
-        ease: ease,
-        opacity: 1,
-        yPercent: 0,
-        scaleY: 1,
-        scaleX: 1,
-        stagger: stagger,
-        scrollTrigger: {
-          trigger: `#${id}`,
-          scroller: scroller as Element | Window,
-          start: scrollStart,
-          end: scrollEnd,
-          scrub: true
-        },
+      onEnterBack: () => {
+        if (tl.current) tl.current.reverse(0); // Ensure we go to beginning before playing
+      },
+      onLeave: () => {
+        if (tl.current) tl.current.pause();
+      },
+      onLeaveBack: () => {
+        if (tl.current) tl.current.pause();
       }
-    );
+    });
 
     return () => {
-      // Clean up ScrollTrigger instances
-      ScrollTrigger.getAll().forEach(trigger => {
-        if (trigger.vars.trigger === `#${id}`) {
-          trigger.kill();
+      // Proper cleanup to prevent memory leaks
+      if (tl.current) {
+        tl.current.kill();
+        tl.current = null;
+      }
+      
+      if (trigger) {
+        trigger.kill();
+      }
+      
+      // Clean up all ScrollTrigger instances related to this component
+      ScrollTrigger.getAll().forEach(st => {
+        if (st.vars.id === `trigger-${id}` || st.vars.trigger === `#${id}`) {
+          st.kill();
         }
       });
     };

@@ -42,9 +42,11 @@ function AppRoutes() {
   
   // Reset scroll on navigation
   useEffect(() => {
-    // On navigation, scroll to top
+    // On navigation, scroll to top after a short delay to ensure layout and GSAP are done
     if (navigationType !== 'POP') {
-      window.scrollTo(0, 0);
+      setTimeout(() => {
+        window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+      }, 50); // 50ms delay for robustness
     }
     
     // If we're NOT going to a page with its own ScrollSmoother,

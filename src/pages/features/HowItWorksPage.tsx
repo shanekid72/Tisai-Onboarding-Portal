@@ -166,11 +166,7 @@ const HowItWorksPage = () => {
               start: 'top 75%',
               once: true,
               onEnter: () => {
-                gsap.to(`#${step.id}`, {
-                  opacity: 1,
-                  duration: 0.6,
-                  ease: 'power2.out',
-                });
+                // Don't animate opacity of the whole section since headers should stay visible
                 gsap.fromTo(
                   `#${step.id} .step-description`,
                   { y: 30, opacity: 0 },
@@ -180,6 +176,11 @@ const HowItWorksPage = () => {
                   `#${step.id} .step-button`,
                   { y: 20, opacity: 0 },
                   { y: 0, opacity: 1, duration: 0.5, delay: 0.5, ease: 'power2.out' }
+                );
+                // Add animation for ScrollFloat container to make it visible
+                gsap.to(
+                  `#${step.id} .animate-in`,
+                  { opacity: 1, duration: 0.5, ease: 'power2.out' }
                 );
               },
               id: `step-reveal-${step.id}`,
@@ -283,27 +284,34 @@ const HowItWorksPage = () => {
           <section 
             key={step.id}
             id={step.id}
-            className="step-section py-16 mb-16 relative opacity-0"
+            className="step-section py-16 mb-16 relative"
+            style={{ opacity: 1 }} /* Set initial opacity to 1 to ensure visibility */
           >
             <div className="container mx-auto px-4 relative z-10">
               <div className="flex flex-col md:flex-row items-center gap-12 md:gap-16">
                 {/* Description side */}
                 <div className={`w-full md:w-1/2 step-content ${index % 2 !== 0 ? 'md:order-2' : ''}`}>
                   <div className="p-6 bg-black/40 backdrop-blur-md rounded-lg border border-white/10">
-                    {/* Using ScrollFloat for the title */}
-                    <div className={`bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent`}>
-                      <ScrollFloat
-                        animationDuration={1.2}
-                        ease="power3.out"
-                        scrollStart="top bottom+=20%"
-                        scrollEnd="center center"
-                        stagger={0.02}
-                        containerClassName="text-3xl md:text-4xl font-bold mb-6"
-                        textClassName="!text-left !font-bold !text-[2rem] md:!text-[2.5rem]"
-                        id={`float-${step.id}`}
-                      >
+                    {/* Add a static title that's always visible, with the animated effect on top */}
+                    <div className="relative">
+                      <h2 className="text-3xl md:text-4xl font-bold mb-6 bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent">
                         {step.title}
-                      </ScrollFloat>
+                      </h2>
+                      {/* Using ScrollFloat as an enhancement, not the primary title */}
+                      <div className={`bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent absolute top-0 left-0 pointer-events-none opacity-0 animate-in`}>
+                        <ScrollFloat
+                          animationDuration={1.2}
+                          ease="power2.out"
+                          scrollStart="top bottom-=20%"
+                          scrollEnd="center center"
+                          stagger={0.02}
+                          containerClassName="text-3xl md:text-4xl font-bold mb-6"
+                          textClassName="!text-left !font-bold !text-[2rem] md:!text-[2.5rem]"
+                          id={`float-${step.id}`}
+                        >
+                          {step.title}
+                        </ScrollFloat>
+                      </div>
                     </div>
                     
                     <p className="step-description text-lg text-white/80 mb-8">
