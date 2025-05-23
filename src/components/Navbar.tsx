@@ -140,9 +140,13 @@ const Navbar = () => {
           <a href="#features" className="nav-item text-white/70 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-opacity-50" role="menuitem">
             Features
           </a>
-          <a href="#docs" className="nav-item text-white/70 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-opacity-50" role="menuitem">
+          <Link 
+            to="/documentation" 
+            className="nav-item text-white/70 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-opacity-50" 
+            role="menuitem"
+          >
             Documentation
-          </a>
+          </Link>
           <Link 
             to="/send-money"
             className="nav-item text-white/70 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-opacity-50"
@@ -214,15 +218,15 @@ const Navbar = () => {
           >
             Features
           </a>
-          <a 
-            href="#docs" 
+          <Link 
+            to="/documentation" 
             className="text-white/70 hover:text-white py-2 focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-opacity-50" 
             onClick={toggleMobileMenu}
             role="menuitem"
             tabIndex={mobileMenuOpen ? 0 : -1}
           >
             Documentation
-          </a>
+          </Link>
           <Link
             to="/send-money"
             className="text-white/70 hover:text-white py-2 focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-opacity-50"

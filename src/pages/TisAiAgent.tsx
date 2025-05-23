@@ -3,9 +3,11 @@ import { useNavigate } from 'react-router-dom';
 
 // Components
 import ChatInterface from '../components/chat/ChatInterface';
+import OnboardingChatInterface from '../components/onboarding/ChatInterface';
 import ProgressTracker from '../components/progress/ProgressTracker';
 import OnboardingSelector from '../components/onboarding/OnboardingSelector';
 import FastOnboarding from '../components/onboarding/FastOnboarding';
+import { OnboardingProvider } from '../context/OnboardingContext';
 
 // Types
 type OnboardingMode = 'full' | 'fast-track' | null;
@@ -223,6 +225,10 @@ const TisAiAgent = () => {
             <div className="flex-1 flex flex-col">
               {onboardingMode === null ? (
                 <OnboardingSelector onModeSelect={handleModeSelect} />
+              ) : onboardingMode === 'full' ? (
+                <OnboardingProvider>
+                  <OnboardingChatInterface />
+                </OnboardingProvider>
               ) : (
                 <ChatInterface mode={onboardingMode} />
               )}

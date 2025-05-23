@@ -16,6 +16,10 @@ import HowItWorksPage from './pages/features/HowItWorksPage';
 import CompliancePage from './pages/features/CompliancePage';
 import IntegrationPage from './pages/features/IntegrationPage';
 import SendMoneyPage from './pages/SendMoneyPage';
+import DocumentationPage from './pages/DocumentationPage';
+import PartnerOnboardingPage from './pages/PartnerOnboardingPage';
+import OnboardingSelectionPage from './pages/OnboardingSelectionPage';
+import TisAIOnboardingPage from './pages/TisAIOnboardingPage';
 
 // Style
 import './App.css';
@@ -155,10 +159,9 @@ function AppRoutes() {
             window.appScrollSmoother.kill();
             window.appScrollSmoother = null;
           }
-          
           const smootherInstance = initScrollSmoother(
-            smoothWrapperRef.current,
-            smoothContentRef.current,
+            smoothWrapperRef.current as Element,
+            smoothContentRef.current as Element,
             {
               smooth: 1.0, // Lighter smoothing for global application
               normalizeScroll: true,
@@ -198,7 +201,11 @@ function AppRoutes() {
           <main id="main-content">
             <Routes>
               <Route path="/" element={<LandingPage has3dFeatures={has3dFeatures} smoother={smoother} />} />
-              <Route path="/tisai" element={<TisAiAgent />} />
+              <Route path="/tisai" element={
+                <div style={{ visibility: 'visible', height: 'auto', overflow: 'visible' }}>
+                  <TisAiAgent />
+                </div>
+              } />
               <Route path="/products" element={<ProductsPage />} />
               <Route path="/products/:productId" element={<ProductDetailPage />} />
               <Route 
@@ -212,6 +219,34 @@ function AppRoutes() {
               <Route path="/compliance" element={<CompliancePage />} />
               <Route path="/integration" element={<IntegrationPage />} />
               <Route path="/send-money" element={<SendMoneyPage />} />
+              <Route path="/documentation" 
+                element={
+                  <div style={{ visibility: 'visible', height: 'auto', overflow: 'visible' }}>
+                    <DocumentationPage />
+                  </div>
+                } 
+              />
+              <Route path="/partner-onboarding" 
+                element={
+                  <div style={{ visibility: 'visible', height: 'auto', overflow: 'visible' }}>
+                    <PartnerOnboardingPage />
+                  </div>
+                } 
+              />
+              <Route path="/onboarding" 
+                element={
+                  <div style={{ visibility: 'visible', height: 'auto', overflow: 'visible' }}>
+                    <OnboardingSelectionPage />
+                  </div>
+                } 
+              />
+              <Route path="/tisai-onboarding" 
+                element={
+                  <div style={{ visibility: 'visible', height: 'auto', overflow: 'visible' }}>
+                    <TisAIOnboardingPage />
+                  </div>
+                } 
+              />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </main>

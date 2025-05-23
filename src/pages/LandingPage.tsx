@@ -85,7 +85,7 @@ const LandingPage = ({ has3dFeatures }: LandingPageProps) => {
       
       // Categories animation
       if (categoriesRef.current) {
-        const categoryCards = categoriesRef.current.querySelectorAll('.category-card');
+        const categoryCards = categoriesRef.current.querySelectorAll('.group');
         
         ScrollTrigger.create({
           trigger: categoriesRef.current,
@@ -97,29 +97,6 @@ const LandingPage = ({ has3dFeatures }: LandingPageProps) => {
             duration: 1,
             ease: "power3.out"
           })
-        });
-        
-        // Category hover effects
-        categoryCards.forEach((card) => {
-          const bg = card.querySelector('.category-bg');
-          const content = card.querySelector('.category-content');
-          
-          if (bg && content && useAdvancedAnimations) {
-            const hoverTl = gsap.timeline({ paused: true });
-            
-            hoverTl.to(bg, {
-              opacity: 0.9,
-              scale: 1.05,
-              duration: 0.4
-            })
-            .to(content, {
-              y: -10,
-              duration: 0.4
-            }, 0);
-            
-            card.addEventListener('mouseenter', () => hoverTl.play());
-            card.addEventListener('mouseleave', () => hoverTl.reverse());
-          }
         });
       }
       
@@ -277,32 +254,40 @@ const LandingPage = ({ has3dFeatures }: LandingPageProps) => {
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {categories.map((category) => (
-              <Link
-                key={category.id}
+              <Link 
                 to={category.path}
-                className="category-card group h-[500px] relative rounded-3xl overflow-hidden border border-white/10 shadow-lg"
+                key={category.id}
+                className="relative group overflow-hidden rounded-lg h-[350px] border border-white/10"
               >
-                {/* Background image with colored overlay */}
-                <div className="category-bg absolute inset-0 transition-all duration-500">
-                  <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-black/70 z-10"></div>
-                  <div className={`absolute inset-0 bg-gradient-to-br ${category.color} opacity-30 z-20`}></div>
-                  <img 
-                    src={category.bgImage} 
-                    alt={category.title}
-                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                  />
+                {/* Background image with globe focus */}
+                <div 
+                  className="absolute inset-0 z-0 bg-cover bg-center transition-transform duration-1000 ease-out group-hover:scale-110"
+                  style={{ backgroundImage: `url(${category.bgImage})` }}
+                />
+                
+                {/* Dark overlay with nice gradient */}
+                <div className="absolute inset-0 z-10 bg-gradient-to-b from-black/70 via-black/30 to-black/70 transition-opacity duration-300"></div>
+                
+                {/* Animated globe glow effect */}
+                <div className="absolute inset-0 z-5 flex items-center justify-center overflow-hidden">
+                  <div className="absolute w-[200px] h-[200px] rounded-full bg-gradient-to-r from-transparent via-white/5 to-transparent animate-pulse-slow"></div>
+                  <div className="absolute w-[180px] h-[180px] rounded-full border border-white/10 animate-spin-slow"></div>
+                  <div className="absolute w-[240px] h-[240px] rounded-full border border-white/5 animate-reverse-spin"></div>
                 </div>
                 
-                {/* Content */}
-                <div className="category-content absolute inset-0 z-30 flex flex-col justify-end p-8 transition-all duration-500">
-                  <h3 className="text-4xl font-bold mb-4">{category.title}</h3>
-                  <p className="text-white/80 text-lg mb-8">{category.description}</p>
-                  <div className="inline-flex items-center gap-2 text-lg font-medium">
-                    Explore
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M5 12h14"></path>
-                      <path d="M12 5l7 7-7 7"></path>
-                    </svg>
+                {/* Content container - clean and minimal */}
+                <div className="relative z-20 h-full flex flex-col justify-end p-6">
+                  <div className="bg-black/50 backdrop-blur-md p-4 rounded-lg border border-white/10 transition-all duration-300 transform group-hover:translate-y-[-5px]">
+                    <h3 className={`text-2xl font-bold mb-2 bg-gradient-to-r ${category.color} bg-clip-text text-transparent drop-shadow-lg`}>
+                      {category.title}
+                    </h3>
+                    <p className="text-white/90 mb-4 drop-shadow-md">{category.description}</p>
+                    <span className={`inline-flex items-center text-sm font-medium bg-gradient-to-r ${category.color} bg-clip-text text-transparent group-hover:translate-x-1 transition-transform duration-300`}>
+                      Explore
+                      <svg className="w-4 h-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                      </svg>
+                    </span>
                   </div>
                 </div>
               </Link>
@@ -406,7 +391,7 @@ const LandingPage = ({ has3dFeatures }: LandingPageProps) => {
                       >
                         {/* Add connecting lines from dots to center */}
                         <div 
-                          className="absolute opacity-30 bg-gradient-to-c from-white/30 to-transparent"
+                          className="absolute opacity-30 bg-gradient-to-r from-white/30 to-transparent"
                           style={{
                             width: '1px',
                             height: `${radius}px`,
@@ -506,6 +491,33 @@ const LandingPage = ({ has3dFeatures }: LandingPageProps) => {
       </section>
       
       <Footer />
+      
+      {/* Add custom animations */}
+      <style>
+        {`
+          @keyframes pulse-slow {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 0.6; transform: scale(1.1); }
+          }
+          .animate-pulse-slow {
+            animation: pulse-slow 4s ease-in-out infinite;
+          }
+          @keyframes spin-slow {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+          }
+          .animate-spin-slow {
+            animation: spin-slow 30s linear infinite;
+          }
+          @keyframes reverse-spin {
+            from { transform: rotate(360deg); }
+            to { transform: rotate(0deg); }
+          }
+          .animate-reverse-spin {
+            animation: reverse-spin 25s linear infinite;
+          }
+        `}
+      </style>
     </div>
   );
 };

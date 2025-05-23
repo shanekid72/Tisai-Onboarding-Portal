@@ -17,6 +17,16 @@ interface ChatInterfaceProps {
   mode: 'full' | 'fast-track';
 }
 
+// Conversation step type
+type ConversationStep = 
+  | 'welcome'
+  | 'name'
+  | 'organization'
+  | 'email'
+  | 'connection'
+  | 'api-questions'
+  | 'completed';
+
 // Demo initial messages based on mode
 const getInitialMessages = (mode: 'full' | 'fast-track'): Message[] => {
   const baseWelcome = {
@@ -42,11 +52,52 @@ const getInitialMessages = (mode: 'full' | 'fast-track'): Message[] => {
   }
 };
 
+// Get the stored conversation state or use default
+const getStoredConversationState = (): { 
+  step: ConversationStep, 
+  messages: Message[] | null,
+  userData: {
+    name?: string;
+    organization?: string;
+    email?: string;
+  }
+} => {
+  try {
+    const stored = localStorage.getItem('tisai_chat_state');
+    if (stored) {
+      const parsed = JSON.parse(stored);
+      console.log('Loaded stored chat state:', parsed);
+      return parsed;
+    }
+  } catch (error) {
+    console.error('Error loading stored chat state:', error);
+  }
+  
+  return { 
+    step: 'welcome', 
+    messages: null,
+    userData: {}
+  };
+};
+
+// Store the conversation state
+const storeConversationState = (step: ConversationStep, messages: Message[], userData: any) => {
+  try {
+    localStorage.setItem('tisai_chat_state', JSON.stringify({ step, messages, userData }));
+    console.log(`Stored chat state: step=${step}, messages=${messages.length}`);
+  } catch (error) {
+    console.error('Error storing chat state:', error);
+  }
+};
+
 const ChatInterface: React.FC<ChatInterfaceProps> = ({ mode }) => {
-  const [messages, setMessages] = useState<Message[]>(getInitialMessages(mode));
+  const storedState = getStoredConversationState();
+  const [currentStep, setCurrentStep] = useState<ConversationStep>(storedState.step);
+  const [messages, setMessages] = useState<Message[]>(storedState.messages || getInitialMessages(mode));
   const [inputValue, setInputValue] = useState('');
   const [isTyping, setIsTyping] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const [userData, setUserData] = useState(storedState.userData);
 
   // Audio toggle state
   const [audioEnabled, setAudioEnabled] = useState(false);
@@ -55,6 +106,11 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ mode }) => {
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
+
+  // Store conversation state when it changes
+  useEffect(() => {
+    storeConversationState(currentStep, messages, userData);
+  }, [currentStep, messages, userData]);
 
   // Initial animation
   useEffect(() => {
@@ -75,26 +131,102 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ mode }) => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
+  // Update the current step and manage state transitions
+  const updateStep = (step: ConversationStep) => {
+    console.log(`Updating conversation step: ${currentStep} -> ${step}`);
+    setCurrentStep(step);
+  };
+
+  // Extracts information from user input based on current step
+  const extractUserData = (text: string, step: ConversationStep) => {
+    const newUserData = { ...userData };
+    
+    switch (step) {
+      case 'name':
+        newUserData.name = text.trim();
+        break;
+      case 'organization':
+        newUserData.organization = text.trim();
+        break;
+      case 'email':
+        newUserData.email = text.trim();
+        break;
+    }
+    
+    console.log('Updated user data:', newUserData);
+    setUserData(newUserData);
+    return newUserData;
+  };
+
   // Demo response (in a real app, this would call an API)
   const simulateResponse = (userMessage: string) => {
     setIsTyping(true);
     
-    // Simple demo responses based on message content
     setTimeout(() => {
-      let responseContent = '';
+      const userTextLower = userMessage.toLowerCase().trim();
       
-      if (userMessage.toLowerCase().includes('hello') || userMessage.toLowerCase().includes('hi')) {
-        responseContent = "Hello! How can I help you with your WorldAPI integration today?";
-      } else if (userMessage.toLowerCase().includes('name')) {
-        responseContent = "Great! Nice to meet you. What organization are you representing?";
-      } else if (userMessage.toLowerCase().includes('organization') || userMessage.toLowerCase().includes('company')) {
-        responseContent = "Thanks for that information. Now, what's your email address so we can associate it with your WorldAPI account?";
-      } else if (userMessage.toLowerCase().includes('email') || userMessage.toLowerCase().includes('@')) {
-        responseContent = "Perfect! I've recorded your email. Now let's establish a connection to the WorldAPI servers. Would you like me to initiate the connection now?";
-      } else if (userMessage.toLowerCase().includes('yes') || userMessage.toLowerCase().includes('connect')) {
-        responseContent = "Great! I'm initiating the connection to WorldAPI servers... Connection established! You can now download your configuration file from the progress panel.";
-      } else {
-        responseContent = "I understand. Let's move forward with your WorldAPI integration. Is there anything specific you'd like to know about the API?";
+      // Process user response based on the current conversation step
+      let responseContent = '';
+      let nextStep: ConversationStep = currentStep;
+      
+      console.log(`Processing response for step: ${currentStep}, user message: "${userMessage}"`);
+      
+      switch (currentStep) {
+        case 'welcome':
+          extractUserData(userMessage, 'name');
+          responseContent = "Great! Nice to meet you. What organization are you representing?";
+          nextStep = 'organization';
+          break;
+          
+        case 'name':
+          extractUserData(userMessage, 'name');
+          responseContent = "Great! Nice to meet you. What organization are you representing?";
+          nextStep = 'organization';
+          break;
+          
+        case 'organization':
+          extractUserData(userMessage, 'organization');
+          responseContent = "Thanks for that information. Now, what's your email address so we can associate it with your WorldAPI account?";
+          nextStep = 'email';
+          break;
+          
+        case 'email':
+          extractUserData(userMessage, 'email');
+          responseContent = "Perfect! I've recorded your email. Now let's establish a connection to the WorldAPI servers. Would you like me to initiate the connection now?";
+          nextStep = 'connection';
+          break;
+          
+        case 'connection':
+          if (userTextLower.includes('yes') || userTextLower.includes('ok') || userTextLower.includes('sure')) {
+            responseContent = "Great! I'm initiating the connection to WorldAPI servers... Connection established! You can now download your configuration file from the progress panel.";
+            nextStep = 'api-questions';
+          } else {
+            responseContent = "No problem. Let me know when you're ready to establish the connection.";
+            // Stay on the same step
+          }
+          break;
+          
+        case 'api-questions':
+          // Handle "no" response explicitly
+          if (userTextLower === 'no' || userTextLower === 'nope' || userTextLower === 'nothing' || userTextLower === 'not really') {
+            responseContent = "Perfect! You're all set with the WorldAPI integration basics. If you have questions later, you can always reach out to our support team.";
+            nextStep = 'completed';
+          } else {
+            // Handle specific questions about the API
+            responseContent = `Thank you for your question about "${userMessage}". The WorldAPI documentation covers that in detail. You can find comprehensive information in the developer portal. Would you like to see anything else about the API?`;
+            // Stay in the same step for follow-up questions
+          }
+          break;
+          
+        case 'completed':
+          responseContent = "Your WorldAPI integration is complete! Feel free to explore the developer portal for additional resources, or contact our support team if you need assistance.";
+          // Stay in completed state
+          break;
+          
+        default:
+          // Fallback response - should not normally get here
+          responseContent = "I'm sorry, there seems to be an issue with our conversation flow. Let's restart. What's your name?";
+          nextStep = 'name';
       }
       
       const newMessage: Message = {
@@ -105,6 +237,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ mode }) => {
       };
       
       setMessages(prev => [...prev, newMessage]);
+      updateStep(nextStep);
       setIsTyping(false);
       
       // If audio is enabled, you would trigger text-to-speech here
@@ -143,6 +276,15 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ mode }) => {
     setAudioEnabled(!audioEnabled);
   };
 
+  // Reset the conversation
+  const resetConversation = () => {
+    localStorage.removeItem('tisai_chat_state');
+    setMessages(getInitialMessages(mode));
+    setCurrentStep('welcome');
+    setUserData({});
+    console.log('Conversation reset');
+  };
+
   return (
     <div className="flex flex-col h-full">
       {/* Chat header with audio controls */}
@@ -151,25 +293,39 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ mode }) => {
           <h3 className="font-medium">TisAi Assistant</h3>
           <p className="text-sm text-white/60">{mode === 'full' ? 'Full Onboarding' : 'Fast Track'}</p>
         </div>
-        <button 
-          onClick={toggleAudio}
-          className={`p-2 rounded-full transition-colors ${audioEnabled ? 'bg-secondary bg-opacity-20 text-secondary' : 'bg-white bg-opacity-5 text-white/60'}`}
-          aria-label={audioEnabled ? 'Disable audio' : 'Enable audio'}
-        >
-          {audioEnabled ? (
+        <div className="flex items-center space-x-2">
+          <button 
+            onClick={resetConversation}
+            className="p-2 rounded-full bg-white bg-opacity-5 text-white/60 hover:bg-opacity-10"
+            aria-label="Reset conversation"
+          >
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
-              <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
-              <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+              <path d="M3 2v6h6"></path>
+              <path d="M21 12A9 9 0 0 0 6 5.3L3 8"></path>
+              <path d="M21 22v-6h-6"></path>
+              <path d="M3 12a9 9 0 0 0 15 6.7l3-2.7"></path>
             </svg>
-          ) : (
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
-              <line x1="23" y1="9" x2="17" y2="15"></line>
-              <line x1="17" y1="9" x2="23" y2="15"></line>
-            </svg>
-          )}
-        </button>
+          </button>
+          <button 
+            onClick={toggleAudio}
+            className={`p-2 rounded-full transition-colors ${audioEnabled ? 'bg-secondary bg-opacity-20 text-secondary' : 'bg-white bg-opacity-5 text-white/60'}`}
+            aria-label={audioEnabled ? 'Disable audio' : 'Enable audio'}
+          >
+            {audioEnabled ? (
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+              </svg>
+            ) : (
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                <line x1="23" y1="9" x2="17" y2="15"></line>
+                <line x1="17" y1="9" x2="23" y2="15"></line>
+              </svg>
+            )}
+          </button>
+        </div>
       </div>
       
       {/* Messages area */}
