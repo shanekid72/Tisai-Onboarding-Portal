@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
@@ -107,3 +108,6 @@ If issues persist, consider:
 1. Using a more robust state management solution like Redux or Zustand
 2. Adding telemetry to track conversation flow in production
 3. Implementing proper error boundaries to catch and recover from unexpected issues
+=======
+# Tisai-Onboarding-Portal
+>>>>>>> 44dc26b2562b52573d3d810e1a708143c757c47c
