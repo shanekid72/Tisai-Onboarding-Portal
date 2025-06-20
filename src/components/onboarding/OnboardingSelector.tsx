@@ -3,7 +3,7 @@ import { gsap } from 'gsap';
 import FastOnboarding from './FastOnboarding';
 
 interface OnboardingSelectorProps {
-  onModeSelect: (mode: 'full' | 'fast-track') => void;
+  onModeSelect: (mode: 'fast-track') => void;
 }
 
 const OnboardingSelector: React.FC<OnboardingSelectorProps> = ({ onModeSelect }) => {
@@ -31,10 +31,7 @@ const OnboardingSelector: React.FC<OnboardingSelectorProps> = ({ onModeSelect })
     const storedMode = sessionStorage.getItem('onboardingMode');
     console.log('OnboardingSelector checking stored mode:', storedMode);
     
-    if (storedMode === 'full') {
-      onModeSelect('full');
-      return;
-    } else if (storedMode === 'fast-track') {
+    if (storedMode === 'fast-track') {
       setShowFastTrack(true);
       return;
     }
@@ -118,13 +115,6 @@ const OnboardingSelector: React.FC<OnboardingSelectorProps> = ({ onModeSelect })
     onModeSelect('fast-track');
   }, [onModeSelect]);
 
-  // Handle mode selection with useCallback
-  const handleFullModeSelect = useCallback(() => {
-    console.log('Full mode selected');
-    sessionStorage.setItem('onboardingMode', 'full');
-    onModeSelect('full');
-  }, [onModeSelect]);
-
   const handleFastTrackSelect = useCallback(() => {
     console.log('Fast track selected');
     // Check if we're already in config stage
@@ -141,67 +131,30 @@ const OnboardingSelector: React.FC<OnboardingSelectorProps> = ({ onModeSelect })
     return <FastOnboarding onComplete={handleFastTrackComplete} />;
   }
 
-  // Ensure content is always visible, regardless of animation state
+  // Show only Fast Track option
   return (
     <div className="flex flex-col items-center justify-center min-h-[calc(100vh-4rem)] p-6 bg-gradient-to-b from-primary to-dark">
-      <div className="max-w-4xl w-full" style={{ opacity: contentVisible || isAnimated ? 1 : 0 }}>
+      <div className="max-w-2xl w-full" style={{ opacity: contentVisible || isAnimated ? 1 : 0 }}>
         <div className="text-center mb-10">
           <h2 className="selector-title text-3xl md:text-4xl font-bold mb-4 gradient-text">
-            Choose Your Onboarding Path
+            WorldAPI Integration Setup
           </h2>
           <p className="selector-title text-white/70 max-w-xl mx-auto">
-            Select how you'd like to set up your WorldAPI integration with TisAi
+            Get started with your WorldAPI integration quickly and efficiently
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-8">
-          {/* Full Onboarding Card */}
-          <div 
-            className="selector-card card hover:shadow-lg cursor-pointer transition-all"
-            onClick={handleFullModeSelect}
-          >
-            <div className="mb-4 text-3xl">🤝</div>
-            <h3 className="text-xl font-bold mb-2">Full Onboarding</h3>
-            <p className="text-white/70 mb-4">
-              Guided, step-by-step conversation with TisAi. Perfect for first-time 
-              users or those wanting a complete walkthrough.
-            </p>
-            <ul className="space-y-2 text-sm text-white/70 mb-6">
-              <li className="flex items-start">
-                <span className="text-secondary mr-2">✓</span>
-                <span>Personalized experience</span>
-              </li>
-              <li className="flex items-start">
-                <span className="text-secondary mr-2">✓</span>
-                <span>Detailed explanations</span>
-              </li>
-              <li className="flex items-start">
-                <span className="text-secondary mr-2">✓</span>
-                <span>Use case recommendations</span>
-              </li>
-              <li className="flex items-start">
-                <span className="text-secondary mr-2">✓</span>
-                <span>Troubleshooting assistance</span>
-              </li>
-            </ul>
-            <button 
-              className="btn btn-outline w-full"
-              onClick={handleFullModeSelect}
-            >
-              Start Full Onboarding
-            </button>
-          </div>
-
+        <div className="flex justify-center">
           {/* Fast Track Card */}
           <div 
-            className="selector-card card bg-gradient-to-br from-dark to-primary border border-secondary/20 hover:shadow-lg cursor-pointer transition-all"
+            className="selector-card card bg-gradient-to-br from-dark to-primary border border-secondary/20 hover:shadow-lg cursor-pointer transition-all max-w-md"
             onClick={handleFastTrackSelect}
           >
             <div className="mb-4 text-3xl">⚡</div>
-            <h3 className="text-xl font-bold mb-2 text-secondary">Fast Track</h3>
+            <h3 className="text-xl font-bold mb-2 text-secondary">Fast Track Setup</h3>
             <p className="text-white/70 mb-4">
-              Quick setup with minimal questions. Ideal for experienced developers 
-              or those in a hurry.
+              Quick setup with minimal questions. Get your WorldAPI integration 
+              up and running in minutes.
             </p>
             <ul className="space-y-2 text-sm text-white/70 mb-6">
               <li className="flex items-start">
@@ -225,7 +178,7 @@ const OnboardingSelector: React.FC<OnboardingSelectorProps> = ({ onModeSelect })
               className="btn btn-primary w-full"
               onClick={handleFastTrackSelect}
             >
-              Use Fast Track
+              Start Setup
             </button>
           </div>
         </div>

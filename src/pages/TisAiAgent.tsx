@@ -3,14 +3,12 @@ import { useNavigate } from 'react-router-dom';
 
 // Components
 import ChatInterface from '../components/chat/ChatInterface';
-import OnboardingChatInterface from '../components/onboarding/ChatInterface';
 import ProgressTracker from '../components/progress/ProgressTracker';
 import OnboardingSelector from '../components/onboarding/OnboardingSelector';
 import FastOnboarding from '../components/onboarding/FastOnboarding';
-import { OnboardingProvider } from '../context/OnboardingContext';
 
 // Types
-type OnboardingMode = 'full' | 'fast-track' | null;
+type OnboardingMode = 'fast-track' | null;
 
 // User info type for fast track
 type UserInfo = {
@@ -57,23 +55,21 @@ const TisAiAgent = () => {
     
     console.log('Initializing TisAiAgent with stored state:', { storedMode, hasUserInfo: !!storedUserInfo });
     
-    if (storedMode) {
+    if (storedMode === 'fast-track') {
       setOnboardingMode(storedMode);
-      if (storedMode === 'fast-track') {
-        // If there's user info and we're in fast-track mode,
-        // we're past the FastOnboarding component
-        if (storedUserInfo) {
-          try {
-            const parsedInfo = JSON.parse(storedUserInfo);
-            setUserInfo(parsedInfo);
-            setShowFastTrack(false);
-          } catch (e) {
-            console.error('Failed to parse stored user info:', e);
-            setShowFastTrack(true);
-          }
-        } else {
+      // If there's user info and we're in fast-track mode,
+      // we're past the FastOnboarding component
+      if (storedUserInfo) {
+        try {
+          const parsedInfo = JSON.parse(storedUserInfo);
+          setUserInfo(parsedInfo);
+          setShowFastTrack(false);
+        } catch (e) {
+          console.error('Failed to parse stored user info:', e);
           setShowFastTrack(true);
         }
+      } else {
+        setShowFastTrack(true);
       }
     }
 
@@ -218,17 +214,13 @@ const TisAiAgent = () => {
           <main className="flex-1 flex flex-col lg:flex-row">
             {/* Sidebar with progress tracking */}
             <div className="lg:w-80 bg-dark">
-              <ProgressTracker mode={onboardingMode || 'full'} />
+              <ProgressTracker mode={onboardingMode || 'fast-track'} />
             </div>
 
             {/* Chat or mode selection */}
             <div className="flex-1 flex flex-col">
               {onboardingMode === null ? (
                 <OnboardingSelector onModeSelect={handleModeSelect} />
-              ) : onboardingMode === 'full' ? (
-                <OnboardingProvider>
-                  <OnboardingChatInterface />
-                </OnboardingProvider>
               ) : (
                 <ChatInterface mode={onboardingMode} />
               )}

@@ -6,6 +6,8 @@ export interface ApiEndpoint {
   method: 'GET' | 'POST' | 'PUT' | 'DELETE';
   path: string;
   description: string;
+  baseUrl?: string;
+  operationId?: string;
   params?: Array<ApiParameter>;
   body?: Array<ApiParameter>;
   response?: {
@@ -22,4 +24,7 @@ export interface ApiParameter {
   type: string;
   required: boolean;
   description: string;
-} 
+  in?: 'path' | 'query' | 'header' | 'cookie';
+  example?: any;
+  enum?: string[];
+}

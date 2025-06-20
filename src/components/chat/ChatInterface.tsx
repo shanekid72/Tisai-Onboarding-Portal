@@ -14,7 +14,7 @@ export interface Message {
 
 // Props
 interface ChatInterfaceProps {
-  mode: 'full' | 'fast-track';
+  mode: 'fast-track';
 }
 
 // Conversation step type
@@ -27,29 +27,16 @@ type ConversationStep =
   | 'api-questions'
   | 'completed';
 
-// Demo initial messages based on mode
-const getInitialMessages = (mode: 'full' | 'fast-track'): Message[] => {
-  const baseWelcome = {
-    id: '1',
-    sender: 'tisai' as const,
-    timestamp: new Date(),
-  };
-
-  if (mode === 'full') {
-    return [
-      {
-        ...baseWelcome,
-        content: `👋 Welcome to TisAi WorldAPI Connect! I'll guide you through the complete setup process for integrating with WorldAPI. Let's start with some basic information. What's your name?`,
-      },
-    ];
-  } else {
-    return [
-      {
-        ...baseWelcome,
-        content: `⚡ Welcome to the Fast Track setup! Let's get you connected quickly. I just need a few essential details to configure your WorldAPI connection. First, could you provide your name, organization, and email?`,
-      },
-    ];
-  }
+// Demo initial messages for fast-track mode
+const getInitialMessages = (): Message[] => {
+  return [
+    {
+      id: '1',
+      sender: 'tisai' as const,
+      timestamp: new Date(),
+      content: `⚡ Welcome to the Fast Track setup! Let's get you connected quickly. I just need a few essential details to configure your WorldAPI connection. First, could you provide your name, organization, and email?`,
+    },
+  ];
 };
 
 // Get the stored conversation state or use default
@@ -93,7 +80,7 @@ const storeConversationState = (step: ConversationStep, messages: Message[], use
 const ChatInterface: React.FC<ChatInterfaceProps> = ({ mode }) => {
   const storedState = getStoredConversationState();
   const [currentStep, setCurrentStep] = useState<ConversationStep>(storedState.step);
-  const [messages, setMessages] = useState<Message[]>(storedState.messages || getInitialMessages(mode));
+  const [messages, setMessages] = useState<Message[]>(storedState.messages || getInitialMessages());
   const [inputValue, setInputValue] = useState('');
   const [isTyping, setIsTyping] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -279,7 +266,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ mode }) => {
   // Reset the conversation
   const resetConversation = () => {
     localStorage.removeItem('tisai_chat_state');
-    setMessages(getInitialMessages(mode));
+    setMessages(getInitialMessages());
     setCurrentStep('welcome');
     setUserData({});
     console.log('Conversation reset');
@@ -291,7 +278,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ mode }) => {
       <div className="bg-dark p-4 flex items-center justify-between">
         <div>
           <h3 className="font-medium">TisAi Assistant</h3>
-          <p className="text-sm text-white/60">{mode === 'full' ? 'Full Onboarding' : 'Fast Track'}</p>
+          <p className="text-sm text-white/60">Fast Track Setup</p>
         </div>
         <div className="flex items-center space-x-2">
           <button 

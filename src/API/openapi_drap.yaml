@@ -1,0 +1,70 @@
+
+openapi: 3.0.0
+info:
+  title: DRAP Remittance API
+  version: 1.0.0
+servers:
+  - url: https://drap.digitnine.com
+paths:
+  /amr/ras/api/v1_0/ras/quote:
+    post:
+      summary: Create Quote
+      description: Lock exchange rate and fee for a payment transaction.
+      operationId: createQuote
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                sending_country_code:
+                  type: string
+                sending_currency_code:
+                  type: string
+                receiving_country_code:
+                  type: string
+                receiving_currency_code:
+                  type: string
+                sending_amount:
+                  type: number
+                receiving_mode:
+                  type: string
+                type:
+                  type: string
+                instrument:
+                  type: string
+      responses:
+        '200':
+          description: Quote created successfully
+  /amr/ras/api/v1_0/ras/createtransaction:
+    post:
+      summary: Create Transaction
+      description: Creates a payment order using quote and sender/receiver info.
+      operationId: createTransaction
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: Transaction created
+  /amr/ras/api/v1_0/ras/confirmtransaction:
+    post:
+      summary: Confirm Transaction
+      description: Confirms a previously created transaction.
+      operationId: confirmTransaction
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                transaction_ref_number:
+                  type: string
+      responses:
+        '200':
+          description: Transaction confirmed

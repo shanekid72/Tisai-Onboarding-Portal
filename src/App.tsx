@@ -1,6 +1,10 @@
 import { BrowserRouter as Router, Routes, Route, useLocation, useNavigationType } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useState, useRef, useLayoutEffect, useEffect } from 'react';
+import { AdminAuthProvider } from './context/AdminAuthContext';
+import { NotificationProvider } from './context/NotificationContext';
+import { NotificationToastContainer } from './components/ui/NotificationToast';
+import ErrorBoundary from './components/common/ErrorBoundary';
 
 // Import from our utility instead of directly from gsap
 import { ScrollTrigger, initScrollSmoother, killAllAnimations } from './utils/gsapInit';
@@ -16,10 +20,12 @@ import HowItWorksPage from './pages/features/HowItWorksPage';
 import CompliancePage from './pages/features/CompliancePage';
 import IntegrationPage from './pages/features/IntegrationPage';
 import SendMoneyPage from './pages/SendMoneyPage';
-import DocumentationPage from './pages/DocumentationPage';
+import DocumentationPageEnhanced from './pages/DocumentationPageEnhanced';
 import PartnerOnboardingPage from './pages/PartnerOnboardingPage';
+import PricingProposalPage from './pages/PricingProposalPage';
 import OnboardingSelectionPage from './pages/OnboardingSelectionPage';
-import TisAIOnboardingPage from './pages/TisAIOnboardingPage';
+import AdminPanelPage from './pages/AdminPanelPage';
+import CRMPage from './pages/CRMPage';
 
 // Style
 import './App.css';
@@ -203,6 +209,11 @@ function AppRoutes() {
               <Route path="/" element={<LandingPage has3dFeatures={has3dFeatures} smoother={smoother} />} />
               <Route path="/tisai" element={
                 <div style={{ visibility: 'visible', height: 'auto', overflow: 'visible' }}>
+                  <OnboardingSelectionPage />
+                </div>
+              } />
+              <Route path="/tisai-agent" element={
+                <div style={{ visibility: 'visible', height: 'auto', overflow: 'visible' }}>
                   <TisAiAgent />
                 </div>
               } />
@@ -217,12 +228,13 @@ function AppRoutes() {
                 } 
               />
               <Route path="/compliance" element={<CompliancePage />} />
-              <Route path="/integration" element={<IntegrationPage />} />
+              <Route path="/partner-onboarding" element={<PartnerOnboardingPage />} />
+              <Route path="/pricing-proposal" element={<PricingProposalPage />} />
               <Route path="/send-money" element={<SendMoneyPage />} />
               <Route path="/documentation" 
                 element={
                   <div style={{ visibility: 'visible', height: 'auto', overflow: 'visible' }}>
-                    <DocumentationPage />
+                    <DocumentationPageEnhanced />
                   </div>
                 } 
               />
@@ -240,77 +252,42 @@ function AppRoutes() {
                   </div>
                 } 
               />
-              <Route path="/tisai-onboarding" 
+              <Route path="/admin" 
                 element={
                   <div style={{ visibility: 'visible', height: 'auto', overflow: 'visible' }}>
-                    <TisAIOnboardingPage />
+                    <AdminPanelPage />
                   </div>
                 } 
               />
+              <Route path="/crm/*" element={<CRMPage />} />
+
               <Route path="*" element={<NotFound />} />
             </Routes>
           </main>
         </div>
       </div>
+      
+      {/* Global notification toast container */}
+      <NotificationToastContainer />
     </>
   );
 }
 
 function App() {
-  const [isLoaded, setIsLoaded] = useState(false);
+  // Temporarily disable loading screen for debugging
+  const isLoaded = true;
   
-  // Simulate initial loading with a fallback
-  useEffect(() => {
-    // Regular loading timer
-    const timer = setTimeout(() => {
-      setIsLoaded(true);
-      console.log('App loaded through normal timer');
-    }, 1500);
-    
-    // Fallback safety timer in case the normal loading gets stuck
-    const fallbackTimer = setTimeout(() => {
-      if (!isLoaded) {
-        console.log('Forcing app to load through fallback timer');
-        setIsLoaded(true);
-      }
-    }, 5000);
-    
-    return () => {
-      clearTimeout(timer);
-      clearTimeout(fallbackTimer);
-    };
-  }, [isLoaded]);
-
-  if (!isLoaded) {
-    return (
-      <div 
-        className="fixed inset-0 bg-primary flex items-center justify-center"
-        role="progressbar"
-        aria-valuemin={0}
-        aria-valuemax={100}
-        aria-valuenow={0}
-        aria-label="Loading TisAi WorldAPI Connect"
-      >
-        <div className="text-center max-w-md px-4">
-          <div className="animate-pulse-slow">
-            <h1 className="text-3xl font-bold mb-4 gradient-text">TisAi WorldAPI Connect</h1>
-          </div>
-          <div className="w-64 h-1 bg-white bg-opacity-20 rounded-full overflow-hidden mx-auto">
-            <div className="loading-bar h-full bg-gradient-to-r from-secondary to-accent rounded-full" />
-          </div>
-          <p className="mt-4 text-sm text-white/70">
-            Loading...
-          </p>
-        </div>
-      </div>
-    );
-  }
+  console.log('App render - loading screen disabled for debugging');
 
   return (
     <QueryClientProvider client={queryClient}>
+      <AdminAuthProvider>
+        <NotificationProvider>
       <Router>
         <AppRoutes />
       </Router>
+        </NotificationProvider>
+      </AdminAuthProvider>
     </QueryClientProvider>
   );
 }

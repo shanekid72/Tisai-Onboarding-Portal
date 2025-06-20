@@ -4,14 +4,13 @@ import { gsap } from 'gsap';
 // Define the possible onboarding steps
 type OnboardingStep = 
   | 'welcome'
-  | 'company-info'
   | 'quick-setup'
   | 'api-connection'
   | 'configuration'
   | 'integration';
 
 interface ProgressTrackerProps {
-  mode: 'full' | 'fast-track';
+  mode: 'fast-track';
   currentStep?: OnboardingStep;
 }
 
@@ -21,22 +20,14 @@ const ProgressTracker: React.FC<ProgressTrackerProps> = ({
 }) => {
   const [activeStep, setActiveStep] = useState<OnboardingStep>(currentStep);
 
-  // Define steps based on mode
-  const steps: { id: OnboardingStep; label: string; icon: string }[] = mode === 'full' 
-    ? [
-        { id: 'welcome', label: 'Welcome', icon: '👋' },
-        { id: 'company-info', label: 'Company Info', icon: '🏢' },
-        { id: 'api-connection', label: 'API Connection', icon: '🔗' },
-        { id: 'configuration', label: 'Configuration', icon: '⚙️' },
-        { id: 'integration', label: 'Integration', icon: '📦' }
-      ]
-    : [
-        { id: 'welcome', label: 'Welcome', icon: '👋' },
-        { id: 'quick-setup', label: 'Quick Setup', icon: '⚡' },
-        { id: 'api-connection', label: 'API Connection', icon: '🔗' },
-        { id: 'configuration', label: 'Configuration', icon: '⚙️' },
-        { id: 'integration', label: 'Integration', icon: '📦' }
-      ];
+  // Define steps for fast-track mode
+  const steps: { id: OnboardingStep; label: string; icon: string }[] = [
+    { id: 'welcome', label: 'Welcome', icon: '👋' },
+    { id: 'quick-setup', label: 'Quick Setup', icon: '⚡' },
+    { id: 'api-connection', label: 'API Connection', icon: '🔗' },
+    { id: 'configuration', label: 'Configuration', icon: '⚙️' },
+    { id: 'integration', label: 'Integration', icon: '📦' }
+  ];
 
   // Update active step when currentStep prop changes
   useEffect(() => {
@@ -127,7 +118,6 @@ const ProgressTracker: React.FC<ProgressTrackerProps> = ({
       <div className="mt-6 p-4 rounded-lg bg-white bg-opacity-5">
         <p className="text-sm text-white text-opacity-70 mb-2">
           {activeStep === 'welcome' && "Let's get you set up with WorldAPI!"}
-          {activeStep === 'company-info' && "We'll need some basic information about your company."}
           {activeStep === 'quick-setup' && "Just the essentials to get you started quickly."}
           {activeStep === 'api-connection' && "We'll establish a connection to the WorldAPI servers."}
           {activeStep === 'configuration' && "Download your config file when ready."}

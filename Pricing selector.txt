@@ -1,0 +1,125 @@
+Upload & parse the Excel in a Serverless Function
+
+Create a new Function (call it parsePricing).
+Upload your P2P Pricing Proposal.xlsx as a static asset in that function.
+
+In the function’s code editor, install & import the XLSX parser:
+
+# In the “Dependencies” pane, add: xlsx@latest
+// parsePricing/index.js
+import XLSX from 'xlsx';
+import { readFileSync } from 'fs';
+
+// 1) load the workbook from the bundled asset
+const buf = readFileSync(`${__dirname}/P2P Pricing Proposal.xlsx`);
+const wb  = XLSX.read(buf, { type: 'buffer' });
+const ws  = wb.Sheets[wb.SheetNames[0]];
+const rows = XLSX.utils.sheet_to_json(ws, { defval: null });
+
+// 2) transform to nested JSON
+const data = {};
+rows.forEach(r => {
+  const { Region, Country, ServiceType, Coverage, Currency, TxnLimit, TAT, Fee } = r;
+  if (!Region || !Country || !ServiceType) return;
+  data[Region]        ??= {};
+  data[Region][Country] ??= {};
+  data[Region][Country][ServiceType] ??= [];
+  data[Region][Country][ServiceType].push({
+    coverage: Coverage,
+    currency: Currency,
+    txnLimit: TxnLimit,
+    tat: TAT,
+    fee: Fee
+  });
+});
+
+export default async function handler(req, res) {
+  res.json(data);
+}
+
+Deploy parsePricing. Its endpoint (e.g. GET /.netlify/functions/parsePricing) now returns the full nested JSON.
+
+Expose slim “read-only” endpoints
+Rather than re-fetching and re-parsing on every call, you can in Windsurf set up three tiny proxy functions:
+
+1)regions.js
+import pricing from './parsePricing';  // assume you can import the parsed JSON
+export default (_, res) => {
+  res.json(Object.keys(pricing));
+}
+
+2. countries.js
+import pricing from './parsePricing';
+export default (req, res) => {
+  const { region } = req.query;
+  if (!pricing[region]) return res.status(400).json({ error: 'Invalid region' });
+  res.json(Object.keys(pricing[region]));
+}
+
+3. coverage.js
+Combine services & details into one:
+import pricing from './parsePricing';
+export default (req, res) => {
+  const { region, country, service } = req.query;
+  const block = pricing[region]?.[country]?.[service];
+  if (!block) return res.status(400).json({ error: 'Invalid params' });
+  res.json(block);
+}
+
+Each of these functions becomes an HTTP endpoint you can call from the UI.
+
+3. Build the Frontend in Windsurf’s Page Builder
+
+When the user clicks the slect pricing options button 
+
+Create a new Page (e.g. P2P-Pricing).
+
+Drag in four Select components, label them:
+
+Region
+
+Country
+
+Service
+
+Coverage
+
+Configure “Region” select:
+
+Data source: HTTP GET to /functions/regions
+
+Option value & label: each item in the returned array
+
+On Region change:
+
+Clear downstream selects (Country, Service, Coverage).
+
+Country select → Data source: GET /functions/countries?region={{region.value}}
+
+On Country change:
+
+Clear Service & Coverage.
+
+Service select → Data source: GET /functions/countries?region={{region.value}} then pick keys of that country node; or you could split out a /functions/services endpoint similarly.
+
+On Service change:
+
+Clear Coverage.
+
+Coverage select → Data source: GET /functions/coverage?region={{region.value}}&country={{country.value}}&service={{service.value}}
+
+Option label: {{item.coverage}}
+
+Option value: index (0,1,…)e2
+
+Add a Text/Card below to show details. Bind its content to the selected coverage object:
+Currency: {{coverage.value.currency}}
+Limit:    {{coverage.value.txnLimit}}
+TAT:      {{coverage.value.tat}}
+Fee:      {{coverage.value.fee}}
+
+4. Preview & Publish
+Click “Preview” to interact locally: pick a region, watch Country populate, pick a country… and so on.
+
+When everything looks good, “Publish”. Windsurf will host both your API endpoints and the UI.
+

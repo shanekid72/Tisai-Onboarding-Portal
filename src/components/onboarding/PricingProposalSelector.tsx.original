@@ -1,0 +1,492 @@
+import React, { useState, useEffect } from 'react';
+import { 
+  transformPricingData,
+  mockPricingData,
+  getRegions, 
+  getCountriesForRegion, 
+  getServicesForCountry, 
+  getCoverageForService,
+  PricingData,
+  PricingCoverage
+} from '../../utils/pricingDataUtils';
+import { PricingSelection } from '../../types/partnerOnboarding';
+import './PricingProposalSelector.css';
+
+// Types
+interface PricingProposalSelectorProps {
+  isOpen: boolean;
+  onClose: () => void;
+  onComplete: (selections: PricingSelection) => void;
+}
+
+interface SelectionState {
+  region: string;
+  country: string;
+  service: string;
+  coverage: number | null;
+}
+
+interface Selection {
+  region: string;
+  country: string;
+  service: string;
+  coverage: PricingCoverage;
+}
+
+// Component
+export const PricingProposalSelector: React.FC<PricingProposalSelectorProps> = ({
+  isOpen,
+  onClose,
+  onComplete
+}) => {
+  // State management
+  const [processedData, setProcessedData] = useState<PricingData>(mockPricingData);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
+  
+  // Selection state
+  const [selection, setSelection] = useState<SelectionState>({
+    region: '',
+    country: '',
+    service: '',
+    coverage: null
+  });
+  
+  // Derived data based on selections
+  const regions = getRegions(processedData);
+  const countries = getCountriesForRegion(processedData, selection.region);
+  const services = getServicesForCountry(processedData, selection.region, selection.country);
+  const coverageOptions = getCoverageForService(
+    processedData, 
+    selection.region, 
+    selection.country, 
+    selection.service
+  );
+  
+  // Selected coverage details
+  const selectedCoverage = selection.coverage !== null 
+    ? coverageOptions[selection.coverage] 
+    : null;
+  
+  // Final selections for review and submission
+  const [finalSelections, setFinalSelections] = useState<Selection[]>([]);
+  const [isReviewing, setIsReviewing] = useState<boolean>(false);
+  
+  // Load and process pricing data
+  useEffect(() => {
+    const loadPricingData = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+        
+        // Environment-based data loading strategy
+        let data: PricingData;
+        
+        // Check environment and load data accordingly
+        const isProduction = process.env.NODE_ENV === 'production';
+        const isTest = process.env.NODE_ENV === 'test';
+        
+        if (isProduction) {
+          // In production, fetch from API endpoint
+          try {
+            const response = await fetch('/api/pricing/data');
+            if (!response.ok) {
+              throw new Error(`Failed to fetch pricing data: ${response.status}`);
+            }
+            const rawData = await response.json();
+            data = transformPricingData(rawData);
+          } catch (fetchError) {
+            console.error('API fetch error:', fetchError);
+            // Fallback to mock data if API fails in production
+            console.warn('Falling back to mock pricing data');
+            data = mockPricingData;
+          }
+        } else {
+          // In development or test, use mock data
+          console.log(`Using mock pricing data (${isTest ? 'test' : 'development'} environment)`);
+          data = mockPricingData;
+        }
+        
+        console.log('Pricing data loaded successfully');
+        setProcessedData(data);
+        setLoading(false);
+      } catch (err) {
+        console.error("Error processing pricing data:", err);
+        setError("Failed to load pricing data. Please try again.");
+        setLoading(false);
+      }
+    };
+    
+    loadPricingData();
+  }, []);
+  
+  // Reset dependent fields when parent selection changes
+  useEffect(() => {
+    if (!selection.region) {
+      setSelection(prev => ({
+        ...prev,
+        country: '',
+        service: '',
+        coverage: null
+      }));
+    }
+  }, [selection.region]);
+  
+  useEffect(() => {
+    if (!selection.country) {
+      setSelection(prev => ({
+        ...prev,
+        service: '',
+        coverage: null
+      }));
+    }
+  }, [selection.country]);
+  
+  useEffect(() => {
+    if (!selection.service) {
+      setSelection(prev => ({
+        ...prev,
+        coverage: null
+      }));
+    }
+  }, [selection.service]);
+  
+  // Handlers
+  const handleRegionChange = (region: string) => {
+    setSelection(prev => ({
+      ...prev,
+      region,
+      country: '',
+      service: '',
+      coverage: null
+    }));
+  };
+  
+  const handleCountryChange = (country: string) => {
+    setSelection(prev => ({
+      ...prev,
+      country,
+      service: '',
+      coverage: null
+    }));
+  };
+  
+  const handleServiceChange = (service: string) => {
+    setSelection(prev => ({
+      ...prev,
+      service,
+      coverage: null
+    }));
+  };
+  
+  const handleCoverageChange = (coverageIndex: number) => {
+    setSelection(prev => ({
+      ...prev,
+      coverage: coverageIndex
+    }));
+  };
+  
+  const handleAddSelection = () => {
+    if (selection.region && selection.country && selection.service && selection.coverage !== null) {
+      const newSelection: Selection = {
+        region: selection.region,
+        country: selection.country,
+        service: selection.service,
+        coverage: coverageOptions[selection.coverage]
+      };
+      
+      setFinalSelections(prev => [...prev, newSelection]);
+      
+      // Reset selection for adding another
+      setSelection({
+        region: '',
+        country: '',
+        service: '',
+        coverage: null
+      });
+    }
+  };
+  
+  const handleRemoveSelection = (index: number) => {
+    setFinalSelections(prev => prev.filter((_, i) => i !== index));
+  };
+  
+  const handleReview = () => {
+    // If no selections yet but current selection is complete, add it first
+    if (finalSelections.length === 0 && 
+        selection.region && 
+        selection.country && 
+        selection.service && 
+        selection.coverage !== null) {
+      handleAddSelection();
+    }
+    setIsReviewing(true);
+  };
+  
+  const handleBackFromReview = () => {
+    setIsReviewing(false);
+  };
+  
+  const handleComplete = () => {
+    // Transform selections to the format expected by onComplete
+    const result: PricingSelection = {
+      regions: [...new Set(finalSelections.map(s => s.region))],
+      selectedCountries: [...new Set(finalSelections.map(s => s.country))],
+      selectedServices: finalSelections.reduce((acc, curr) => {
+        if (!acc[curr.country]) {
+          acc[curr.country] = [];
+        }
+        if (!acc[curr.country].includes(curr.service)) {
+          acc[curr.country].push(curr.service);
+        }
+        return acc;
+      }, {} as Record<string, string[]>)
+    };
+    
+    console.log('Submitting pricing selection:', result);
+    onComplete(result);
+    onClose(); // Close the modal after completion
+  };
+  
+  // Skip the modal if not open
+  if (!isOpen) return null;
+  
+  // Render loading or error states
+  if (loading) {
+    return (
+      <div className="pricing-modal-overlay">
+        <div className="pricing-modal">
+          <div className="pricing-loading">
+            <div className="pricing-spinner"></div>
+            <p>Loading pricing options...</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+  
+  if (error) {
+    return (
+      <div className="pricing-modal-overlay">
+        <div className="pricing-modal">
+          <div className="pricing-error">
+            <p>{error}</p>
+            <button onClick={() => window.location.reload()}>Try Again</button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Render review mode
+  if (isReviewing) {
+    return (
+      <div className="pricing-modal-overlay">
+        <div className="pricing-modal">
+          <div className="pricing-header">
+            <h2>Review Your Pricing Selections</h2>
+            <button className="pricing-close-btn" onClick={onClose}>&times;</button>
+          </div>
+          
+          <div className="pricing-content">
+            {finalSelections.length === 0 ? (
+              <div className="pricing-empty">
+                <p>You haven't made any selections yet.</p>
+                <button 
+                  className="pricing-btn pricing-btn-primary" 
+                  onClick={handleBackFromReview}
+                >
+                  Make Selections
+                </button>
+              </div>
+            ) : (
+              <>
+                <div className="pricing-selections-list">
+                  {finalSelections.map((item, index) => (
+                    <div key={index} className="pricing-selection-card">
+                      <div className="pricing-selection-details">
+                        <h3>{item.country} - {item.service}</h3>
+                        <div className="pricing-selection-coverage">
+                          <p><strong>Coverage:</strong> {item.coverage.coverage}</p>
+                          <p><strong>Currency:</strong> {item.coverage.currency}</p>
+                          <p><strong>Transaction Limit:</strong> {item.coverage.txnLimit}</p>
+                          <p><strong>TAT:</strong> {item.coverage.tat}</p>
+                          <p><strong>Fee:</strong> {item.coverage.fee} USD</p>
+                        </div>
+                      </div>
+                      <button 
+                        className="pricing-remove-btn" 
+                        onClick={() => handleRemoveSelection(index)}
+                      >
+                        Remove
+                      </button>
+                    </div>
+                  ))}
+                </div>
+                
+                <div className="pricing-summary">
+                  <p><strong>Total Selections:</strong> {finalSelections.length}</p>
+                  <p><strong>Regions:</strong> {[...new Set(finalSelections.map(s => s.region))].join(', ')}</p>
+                  <p><strong>Countries:</strong> {[...new Set(finalSelections.map(s => s.country))].join(', ')}</p>
+                </div>
+              </>
+            )}
+          </div>
+          
+          <div className="pricing-footer">
+            <button 
+              className="pricing-btn pricing-btn-secondary" 
+              onClick={handleBackFromReview}
+            >
+              Back
+            </button>
+            
+            <button 
+              className="pricing-btn pricing-btn-primary" 
+              onClick={handleComplete}
+              disabled={finalSelections.length === 0}
+            >
+              Complete
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+  
+  // Render selection mode
+  return (
+    <div className="pricing-modal-overlay">
+      <div className="pricing-modal">
+        <div className="pricing-header">
+          <h2>Select Pricing Options</h2>
+          <button className="pricing-close-btn" onClick={onClose}>&times;</button>
+        </div>
+        
+        <div className="pricing-content">
+          <div className="pricing-form">
+            {/* Region selection */}
+            <div className="pricing-field">
+              <label>Region</label>
+              <select 
+                value={selection.region} 
+                onChange={(e) => handleRegionChange(e.target.value)}
+              >
+                <option value="">Select a region</option>
+                {regions.map(region => (
+                  <option key={region} value={region}>{region}</option>
+                ))}
+              </select>
+            </div>
+            
+            {/* Country selection */}
+            <div className="pricing-field">
+              <label>Country</label>
+              <select 
+                value={selection.country} 
+                onChange={(e) => handleCountryChange(e.target.value)}
+                disabled={!selection.region}
+              >
+                <option value="">Select a country</option>
+                {countries.map(country => (
+                  <option key={country} value={country}>{country}</option>
+                ))}
+              </select>
+            </div>
+            
+            {/* Service selection */}
+            <div className="pricing-field">
+              <label>Service Type</label>
+              <select 
+                value={selection.service} 
+                onChange={(e) => handleServiceChange(e.target.value)}
+                disabled={!selection.country}
+              >
+                <option value="">Select a service</option>
+                {services.map(service => (
+                  <option key={service} value={service}>{service}</option>
+                ))}
+              </select>
+            </div>
+            
+            {/* Coverage options */}
+            {selection.service && coverageOptions.length > 0 && (
+              <div className="pricing-field">
+                <label>Coverage Options</label>
+                <div className="pricing-options-grid">
+                  {coverageOptions.map((option, index) => (
+                    <div 
+                      key={index}
+                      className={`pricing-option-card ${selection.coverage === index ? 'selected' : ''}`}
+                      onClick={() => handleCoverageChange(index)}
+                    >
+                      <h4>{option.coverage}</h4>
+                      <div className="pricing-option-details">
+                        <p><strong>Currency:</strong> {option.currency}</p>
+                        <p><strong>Transaction Limit:</strong> {option.txnLimit}</p>
+                        <p><strong>TAT:</strong> {option.tat}</p>
+                        <p><strong>Fee:</strong> {option.fee} USD</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+          
+          {/* Selected items list */}
+          {finalSelections.length > 0 && (
+            <div className="pricing-selected-items">
+              <h3>Your Selections</h3>
+              <div className="pricing-selections-list">
+                {finalSelections.map((item, index) => (
+                  <div key={index} className="pricing-selection-summary">
+                    {item.country} - {item.service} ({item.coverage.coverage})
+                    <button 
+                      className="pricing-remove-btn-small" 
+                      onClick={() => handleRemoveSelection(index)}
+                    >
+                      &times;
+                    </button>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+        
+        <div className="pricing-footer">
+          <div className="pricing-selection-actions">
+            <button 
+              className="pricing-btn pricing-btn-tertiary"
+              onClick={handleAddSelection}
+              disabled={!selection.region || !selection.country || !selection.service || selection.coverage === null}
+            >
+              Add Selection
+            </button>
+          </div>
+          
+          <div className="pricing-navigation">
+            <button 
+              className="pricing-btn pricing-btn-secondary" 
+              onClick={onClose}
+            >
+              Cancel
+            </button>
+            
+            <button 
+              className="pricing-btn pricing-btn-primary" 
+              onClick={handleReview}
+              disabled={finalSelections.length === 0 && 
+                      (!selection.region || !selection.country || !selection.service || selection.coverage === null)}
+            >
+              Review
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default PricingProposalSelector;

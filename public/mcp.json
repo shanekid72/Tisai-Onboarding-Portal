@@ -1,0 +1,18 @@
+{
+  "mcpServers": {
+    "worldAPI": {
+      "name": "WorldAPI finder",
+      "version": "0.1.0",
+      "description": "An MCP server that retrieves API details related to WorldAPI and Digit9.",
+      "url": "http://worldapi.block9.ai:8000/sse",
+      "env": {
+        "PARTNER_ID": "sk_15120"
+      },
+      "capabilities": {
+        "tools": {
+          "listChanged": true
+        }
+      }
+    }
+  }
+}

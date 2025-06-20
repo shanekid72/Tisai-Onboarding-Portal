@@ -1,0 +1,694 @@
+Region - Africa 
+Country - Benin
+Currency - XOF
+Services - bank payout, Coverage - UBA Bank, TXn limit 5000000, TAT - T+1, Fee - 1.90 USD; wallet payout, Coverage - MTN, TXn limit 2000000, TAT - Real Time, Fee - 1.90 USD
+
+Region - Africa 
+Country - Botswana
+Currency - BWP
+Services - wallet payout, Coverage - BTC, TXn limit 10000, TAT - Real Time, Fee - 1.90 USD
+
+Region - Africa 
+Country - Burkina Faso
+Currency - XOF
+Services - bank payout, Coverage - UBA Bank, TXn limit 5000000, TAT - T+1, Fee - 1.90 USD; wallet payout, Coverage - Orange, Onatel, TXn limit 2000000, TAT - Real Time, Fee - 1.90 USD
+
+Region - Africa 
+Country - Burundi
+Currency - BIF
+Services - wallet payout, Coverage - Ecocash, TXn limit 1600000, TAT - Real Time, Fee - 1.90 USD
+
+Region - Africa 
+Country - Cameroon
+Currency - XAF
+Services - bank payout, Coverage - UBA Bank, TXn limit nan, TAT - nan, Fee - 1.80 USD; wallet payout, Coverage - MTN, Orange, TXn limit 1000000, TAT - Real Time, Fee - 1.80 USD
+
+Region - Africa 
+Country - Congo B
+Currency - XAF
+Services - wallet payout, Coverage - Airtel, TXn limit 1000000, TAT - Real Time, Fee - 1.70 USD
+
+Region - Africa 
+Country - DRC
+Currency - USD
+Services - wallet payout, Coverage - Airtel, TXn limit 1000, TAT - Real Time, Fee - 1.90 USD
+
+Region - Africa 
+Country - Egypt
+Currency - EGP
+Services - wallet payout, Coverage - Vodafone, Orange, Etisalat, WE, TXn limit 30000, TAT - Real Time, Fee - 1.50 USD
+
+Region - Africa 
+Country - Egypt
+Currency - EGP/USD
+Services - bank payout, Coverage - All Banks, TXn limit EGP182500, TAT - Same Day/T+1 after bank cut-off time, Fee - 1.50 USD
+
+Region - Africa 
+Country - Ethiopia
+Currency - ETB
+Services - bank payout, Coverage - All banks, TXn limit No Limit, TAT - Same Day/T+1
+Cutoff: 1600 hours EAT, Fee - 1.70 USD
+
+Region - Africa 
+Country - Gabon
+Currency - XAF
+Services - wallet payout, Coverage - Airtel, TXn limit nan, TAT - nan, Fee - 1.90 USD
+
+Region - Africa 
+Country - Ghana
+Currency - GHS
+Services - bank payout, Coverage - All banks, TXn limit 150000, TAT - Real Time, Fee - 1.70 USD; wallet payout, Coverage - MTN, Airtel-Tigo, Vodafone, TXn limit 10000, TAT - Real Time, Fee - 1.80 USD
+
+Region - Africa 
+Country - Guinea Bissau
+Currency - XOF
+Services - wallet payout, Coverage - MTN, TXn limit 1500000, TAT - Real Time, Fee - 1.70 USD
+
+Region - Africa 
+Country - Guinea Conakry
+Currency - GNF
+Services - wallet payout, Coverage - MTN, TXn limit 50000000, TAT - Real Time, Fee - 1.90 USD
+
+Region - Africa 
+Country - Ivory Coast
+Currency - XOF
+Services - bank payout, Coverage - UBA Bank, TXn limit 5000000, TAT - T+1, Fee - 1.90 USD; wallet payout, Coverage - Orange, MTN, Moov, TXn limit 1500000, TAT - Real Time, Fee - 1.90 USD
+
+Region - Africa 
+Country - Kenya
+Currency - KES
+Services - bank payout, Coverage - All banks, TXn limit 1000000, TAT - Same Day/T+1
+Cutoff: 1400 hours EAT, Fee - 1.50 USD; wallet payout, Coverage - Airtel, M-Pesa, TXn limit 150000, TAT - Real Time, Fee - 1.50 USD
+
+Region - Africa 
+Country - Liberia
+Currency - USD
+Services - bank payout, Coverage - UBA Bank, TXn limit nan, TAT - nan, Fee - 2.00 USD; wallet payout, Coverage - MTN, TXn limit No Limit, TAT - Real Time, Fee - 2.00 USD
+
+Region - Africa 
+Country - Madagascar
+Currency - MGA
+Services - wallet payout, Coverage - Airtel, TXn limit 5000000, TAT - Real Time, Fee - 1.90 USD
+
+Region - Africa 
+Country - Malawi
+Currency - MWK
+Services - wallet payout, Coverage - Airtel, TXn limit 200000, TAT - Real Time, Fee - 1.70 USD
+
+Region - Africa 
+Country - Mali
+Currency - XOF
+Services - wallet payout, Coverage - Orange, Malitel, TXn limit 2000000, TAT - Real Time, Fee - 1.90 USD
+
+Region - Africa 
+Country - Morocco
+Currency - MAD
+Services - bank payout, Coverage - All Banks, TXn limit 80000, TAT - Attijariwafa Bank Accounts: Same day, no cut-off
+Other Bank accounts: T+1, cut-off time 3PM local time, Fee - 2.10 USD
+
+Region - Africa 
+Country - Mozambique
+Currency - MZN
+Services - wallet payout, Coverage - Mkesh ,M-Pesa, TXn limit 25000, TAT - Real Time, Fee - 2.00 USD
+
+Region - Africa 
+Country - Nigeria
+Currency - NGN
+Services - bank credit, Coverage - All Bakns, TXn limit nan, TAT - nan, Fee - 1.50 USD
+
+Region - Africa 
+Country - Rwanda
+Currency - RWF
+Services - bank payout, Coverage - All banks, TXn limit 5000000, TAT - Same Day/T+1
+Cutoff: 1400 hours EAT, Fee - 1.80 USD; wallet payout, Coverage - MTN, Airtel-Tigo, TXn limit 2000000, TAT - Real Time, Fee - 1.80 USD
+
+Region - Africa 
+Country - Senegal
+Currency - XOF
+Services - wallet payout, Coverage - Orange, Tigo, TXn limit 5000000, TAT - T+1, Fee - 2.10 USD
+
+Region - Africa 
+Country - Sierra Leone
+Currency - SLL
+Services - wallet payout, Coverage - Orange, TXn limit 15000000, TAT - Real Time, Fee - 1.90 USD
+
+Region - Africa 
+Country - South Africa
+Currency - ZAR
+Services - bank payout, Coverage - All banks, TXn limit 300000, TAT - Same Day/T+1
+Cutoff: 1400 hours GMT+2, Fee - 2.00 USD
+
+Region - Africa 
+Country - South Sudan
+Currency - SSP
+Services - wallet payout, Coverage - mGurush, TXn limit 2000, TAT - Real Time, Fee - 1.90 USD
+
+Region - Africa 
+Country - Tanzania
+Currency - TZS
+Services - bank payout, Coverage - All banks, TXn limit 10000000, TAT - Same Day/T+1
+Cutoff: 1400 hours EAT, Fee - 1.70 USD; wallet payout, Coverage - Airtel, Vodacom, Tigo, TXn limit 5000000, TAT - Real Time, Fee - 1.70 USD
+
+Region - Africa 
+Country - Togo
+Currency - XOF
+Services - wallet payout, Coverage - Moov, TXn limit 1500000, TAT - Real Time, Fee - 1.80 USD
+
+Region - Africa 
+Country - Uganda
+Currency - UGX
+Services - bank payout, Coverage - All banks, TXn limit 20000000, TAT - Same Day/T+1
+Cutoff: 1400 hours EAT, Fee - 1.50 USD; wallet payout, Coverage - MTN, Airtel, TXn limit 7000000, TAT - Real Time, Fee - 1.50 USD
+
+Region - Africa 
+Country - Zambia
+Currency - ZMK
+Services - wallet payout, Coverage - Airtel, MTN, TXn limit 20000, TAT - Real Time, Fee - 1.90 USD
+
+Region - Africa 
+Country - Zimbabwe
+Currency - USD
+Services - wallet payout, Coverage - Ecocash, TXn limit 2000, TAT - Real Time, Fee - 0.02 USD
+
+Region - Americas 
+Country - Argentina
+Currency - ARS
+Services - bank payout, Coverage - All banks, TXn limit USD 3,500
+(Differentiated FX rate), TAT - Same Day/T+1
+Cutoff: 2100 hours local time, Fee - 2.00 USD
+
+Region - Americas 
+Country - Bolivia
+Currency - BOB
+Services - bank payout, Coverage - All banks, TXn limit USD 3,000, TAT - Same Day/T+1
+Cutoff: 1500 hours local time, Fee - 2.00 USD
+
+Region - Americas 
+Country - Brazil
+Currency - BRL
+Services - bank payout, Coverage - All banks, TXn limit 30000, TAT - PIX Transactions: Instant
+Non PIX: Same Day/T+1
+Cutoff: 1500 hours local time, Fee - 2.00 USD
+
+Region - Americas 
+Country - Chile
+Currency - CLP
+Services - bank payout, Coverage - All banks, TXn limit USD 3,500, TAT - Same Day/T+1
+Cutoff: 1500 hours local time, Fee - 2.00 USD
+
+Region - Americas 
+Country - Colombia
+Currency - COP
+Services - bank payout, Coverage - All banks, TXn limit USD 10,000, TAT - Same Day/T+1
+Cutoff: 1500 hours local time, Fee - 2.20 USD; wallet payout, Coverage - Movii, TXn limit USD 2,500, TAT - Instant (One time registration required), Fee - 2.30 USD
+
+Region - Americas 
+Country - Costa Rica
+Currency - CRC
+Services - bank payout, Coverage - All banks, TXn limit USD 10,000, TAT - Same Day/T+1
+Cutoff: 1400 hours local time, Fee - 2.00 USD
+
+Region - Americas 
+Country - Ecuador
+Currency - USD
+Services - bank payout, Coverage - All banks, TXn limit USD 1,000,000, TAT - Same Day/T+1
+Cutoff: 1500 hours local time, Fee - 2.70 USD
+
+Region - Americas 
+Country - Haiti
+Currency - HTG
+Services - wallet payout, Coverage - MonCash(Digicel), TXn limit nan, TAT - Real Time, Fee - 2.20 USD
+
+Region - Americas 
+Country - Mexico
+Currency - MXN
+Services - bank payout, Coverage - All banks, TXn limit USD 10,000, TAT - All Banks: Real Time
+Bancoppel: Within 3 hours, Fee - 2.00 USD
+
+Region - Americas 
+Country - Panama
+Currency - USD
+Services - bank payout, Coverage - All banks, TXn limit USD 10,000, TAT - Same Day/T+1
+Cutoff: 1500 hours local time, Fee - 2.50 USD
+
+Region - Americas 
+Country - Paraguay
+Currency - PYG
+Services - bank payout, Coverage - All banks, TXn limit 7000000000, TAT - Same Day/T+1
+Cutoff: 1500 hours local time, Fee - 2.00 USD
+
+Region - Americas 
+Country - Peru
+Currency - PEN
+Services - bank payout, Coverage - All banks, TXn limit USD 1,200, TAT - Instant (One time registration required), Fee - 2.00 USD
+
+Region - Americas 
+Country - USA
+Currency - USD
+Services - bank payout, Coverage - All banks, TXn limit 350000, TAT - Same Day/T+1
+Cutoff: 1300 hours GMT-5, Fee - 3.00 USD
+
+Region - Americas 
+Country - Uruguay
+Currency - UYU
+Services - bank payout, Coverage - All banks, TXn limit 5000000, TAT - Same Day/T+1
+Cutoff: 1500 hours local time, Fee - 2.00 USD
+
+Region - Asia 
+Country - Bangladesh
+Currency - BDT
+Services - bank payout, Coverage - All banks, TXn limit No Limit, TAT - Same Day/T+1, Fee - 1.00 USD; wallet payout, Coverage - Bkash, Rocket, TXn limit 250000, TAT - Real Time, Fee - 1.00 USD
+
+Region - Asia 
+Country - Cambodia
+Currency - USD
+Services - wallet payout, Coverage - Wing, TXn limit 2500, TAT - Real Time, Fee - 3.90 USD
+
+Region - Asia 
+Country - China
+Currency - CNY
+Services - bank payout, Coverage - All Banks via Union Pay, TXn limit 20000, TAT - Real Time, Fee - 4.00 USD; wallet payout, Coverage - Alipay, TXn limit 50000, TAT - Same Day/T+1 
+Cutoff: 2230 hours GMT+8, Fee - 5.00 USD
+
+Region - Asia 
+Country - India
+Currency - INR
+Services - bank payout, Coverage - All banks, TXn limit No Limit, TAT - Real Time, Fee - 0.70 USD
+
+Region - Asia 
+Country - Indonesia
+Currency - IDR
+Services - bank payout, Coverage - All banks, TXn limit 100000000, TAT - Real Time, Fee - 1.50 USD; wallet payout, Coverage - Ovo, Gopay, Linkaja, TXn limit LinkAja: 10,000,000
+Others: 20,000,000, TAT - Real Time, Fee - 1.50 USD
+
+Region - Asia 
+Country - Malaysia
+Currency - MYR
+Services - bank payout, Coverage - All banks, TXn limit 100000, TAT - Real Time, Fee - 1.70 USD
+
+Region - Asia 
+Country - Nepal
+Currency - NPR
+Services - bank payout, Coverage - All banks, TXn limit 1000000, TAT - Real Time, Fee - 0.75 USD; wallet payout, Coverage - eSewa, TXn limit 150000, TAT - Real Time, Fee - 0.75 USD
+
+Region - Asia 
+Country - Pakistan
+Currency - PKR
+Services - bank payout, Coverage - All banks, TXn limit below USD100, TAT - Real Time, Fee - 1.00 USD; wallet payout, Coverage - JazzCash, Easypaisa, TXn limit below USD100, TAT - Real Time, Fee - 1.00 USD
+
+Region - Asia 
+Country - Pakistan (PRI eligible)
+Currency - PKR
+Services - bank payout, Coverage - All banks(Trx above $100), TXn limit from USD100, no max limit, TAT - Real Time, Fee - Rebate SAR 28; wallet payout, Coverage - Any, TXn limit from USD100, max limit of PKR500,000, TAT - Real Time, Fee - Rebate SAR 28
+
+Region - Asia 
+Country - Philippines
+Currency - PHP
+Services - bank payout, Coverage - All banks, TXn limit No Limit, TAT - Real Time upto 50K  
+Same Day/ T+1 for greater than 50K, Fee - 1.00 USD; cash payout, Coverage - Anywhere, TXn limit nan, TAT - nan, Fee - 2.50 USD; wallet payout, Coverage - GCash, PayMaya,Coins PH, GrabPay wallets, TXn limit GCash: 500,000
+Others: 50,000, TAT - Real Time, Fee - 1.00 USD
+
+Region - Asia 
+Country - South Korea
+Currency - KRW
+Services - bank payout, Coverage - All banks, TXn limit USD5,000, TAT - Real Time, Fee - 2.00 USD
+
+Region - Asia 
+Country - Sri Lanka
+Currency - LKR
+Services - bank payout, Coverage - All banks, TXn limit LKR1,000,000, TAT - Real Time, Fee - 0.75 USD
+
+Region - Asia 
+Country - Thailand
+Currency - THB
+Services - bank payout, Coverage - All banks, TXn limit 700000, TAT - Real Time, Fee - 1.90 USD
+
+Region - Asia 
+Country - Vietnam
+Currency - VND
+Services - bank payout, Coverage - All banks, TXn limit 500000000, TAT - Real Time, Fee - 1.80 USD; wallet, Coverage - Momo, VNPT, Zalo Pay, VN Pay, TXn limit 50000000, TAT - Real Time, Fee - 1.70 USD
+
+Region - Europe
+SEPA Instant Credit
+Country - Andorra
+Currency - EUR
+Services - bank payout, Coverage - All Bank is SEPA region, TXn limit SEPA Instant 100 EUR per Txn
+SEPA credit 1 Million per txn, TAT - SEPA Instant: 24*7, Real-time,
+SEPA Non Instant: Same Day/T+1
+Cutoff: 1430 hours GMT, Fee - 1.50 USD
+
+Region - Europe
+SEPA Instant Credit
+Country - Austria
+Currency - EUR
+Services - bank payout, Coverage - All Bank is SEPA region, TXn limit SEPA Instant 100 EUR per Txn
+SEPA credit 1 Million per txn, TAT - SEPA Instant: 24*7, Real-time,
+SEPA Non Instant: Same Day/T+1
+Cutoff: 1430 hours GMT, Fee - 1.50 USD
+
+Region - Europe
+SEPA Instant Credit
+Country - Belgium
+Currency - EUR
+Services - bank payout, Coverage - All Bank is SEPA region, TXn limit SEPA Instant 100 EUR per Txn
+SEPA credit 1 Million per txn, TAT - SEPA Instant: 24*7, Real-time,
+SEPA Non Instant: Same Day/T+1
+Cutoff: 1430 hours GMT, Fee - 1.50 USD
+
+Region - Europe
+SEPA Instant Credit
+Country - Bulgaria
+Currency - EUR
+Services - bank payout, Coverage - All Bank is SEPA region, TXn limit SEPA Instant 100 EUR per Txn
+SEPA credit 1 Million per txn, TAT - SEPA Instant: 24*7, Real-time,
+SEPA Non Instant: Same Day/T+1
+Cutoff: 1430 hours GMT, Fee - 1.50 USD
+
+Region - Europe
+SEPA Instant Credit
+Country - Croatia
+Currency - EUR
+Services - bank payout, Coverage - All Bank is SEPA region, TXn limit SEPA Instant 100 EUR per Txn
+SEPA credit 1 Million per txn, TAT - SEPA Instant: 24*7, Real-time,
+SEPA Non Instant: Same Day/T+1
+Cutoff: 1430 hours GMT, Fee - 1.50 USD
+
+Region - Europe
+SEPA Instant Credit
+Country - Cyprus
+Currency - EUR
+Services - bank payout, Coverage - All Bank is SEPA region, TXn limit SEPA Instant 100 EUR per Txn
+SEPA credit 1 Million per txn, TAT - SEPA Instant: 24*7, Real-time,
+SEPA Non Instant: Same Day/T+1
+Cutoff: 1430 hours GMT, Fee - 1.50 USD
+
+Region - Europe
+SEPA Instant Credit
+Country - Czech Republic
+Currency - EUR
+Services - bank payout, Coverage - All Bank is SEPA region, TXn limit SEPA Instant 100 EUR per Txn
+SEPA credit 1 Million per txn, TAT - SEPA Instant: 24*7, Real-time,
+SEPA Non Instant: Same Day/T+1
+Cutoff: 1430 hours GMT, Fee - 1.50 USD
+
+Region - Europe
+SEPA Instant Credit
+Country - Denmark
+Currency - EUR
+Services - bank payout, Coverage - All Bank is SEPA region, TXn limit SEPA Instant 100 EUR per Txn
+SEPA credit 1 Million per txn, TAT - SEPA Instant: 24*7, Real-time,
+SEPA Non Instant: Same Day/T+1
+Cutoff: 1430 hours GMT, Fee - 1.50 USD
+
+Region - Europe
+SEPA Instant Credit
+Country - Estonia
+Currency - EUR
+Services - bank payout, Coverage - All Bank is SEPA region, TXn limit SEPA Instant 100 EUR per Txn
+SEPA credit 1 Million per txn, TAT - SEPA Instant: 24*7, Real-time,
+SEPA Non Instant: Same Day/T+1
+Cutoff: 1430 hours GMT, Fee - 1.50 USD
+
+Region - Europe
+SEPA Instant Credit
+Country - Finland
+Currency - EUR
+Services - bank payout, Coverage - All Bank is SEPA region, TXn limit SEPA Instant 100 EUR per Txn
+SEPA credit 1 Million per txn, TAT - SEPA Instant: 24*7, Real-time,
+SEPA Non Instant: Same Day/T+1
+Cutoff: 1430 hours GMT, Fee - 1.50 USD
+
+Region - Europe
+SEPA Instant Credit
+Country - France
+Currency - EUR
+Services - bank payout, Coverage - All Bank is SEPA region, TXn limit SEPA Instant 100 EUR per Txn
+SEPA credit 1 Million per txn, TAT - SEPA Instant: 24*7, Real-time,
+SEPA Non Instant: Same Day/T+1
+Cutoff: 1430 hours GMT, Fee - 1.50 USD
+
+Region - Europe
+SEPA Instant Credit
+Country - Germany
+Currency - EUR
+Services - bank payout, Coverage - All Bank is SEPA region, TXn limit SEPA Instant 100 EUR per Txn
+SEPA credit 1 Million per txn, TAT - SEPA Instant: 24*7, Real-time,
+SEPA Non Instant: Same Day/T+1
+Cutoff: 1430 hours GMT, Fee - 1.50 USD
+
+Region - Europe
+SEPA Instant Credit
+Country - Greece
+Currency - EUR
+Services - bank payout, Coverage - All Bank is SEPA region, TXn limit SEPA Instant 100 EUR per Txn
+SEPA credit 1 Million per txn, TAT - SEPA Instant: 24*7, Real-time,
+SEPA Non Instant: Same Day/T+1
+Cutoff: 1430 hours GMT, Fee - 1.50 USD
+
+Region - Europe
+SEPA Instant Credit
+Country - Hungary
+Currency - EUR
+Services - bank payout, Coverage - All Bank is SEPA region, TXn limit SEPA Instant 100 EUR per Txn
+SEPA credit 1 Million per txn, TAT - SEPA Instant: 24*7, Real-time,
+SEPA Non Instant: Same Day/T+1
+Cutoff: 1430 hours GMT, Fee - 1.50 USD
+
+Region - Europe
+SEPA Instant Credit
+Country - Iceland
+Currency - EUR
+Services - bank payout, Coverage - All Bank is SEPA region, TXn limit SEPA Instant 100 EUR per Txn
+SEPA credit 1 Million per txn, TAT - SEPA Instant: 24*7, Real-time,
+SEPA Non Instant: Same Day/T+1
+Cutoff: 1430 hours GMT, Fee - 1.50 USD
+
+Region - Europe
+SEPA Instant Credit
+Country - Ireland
+Currency - EUR
+Services - bank payout, Coverage - All Bank is SEPA region, TXn limit SEPA Instant 100 EUR per Txn
+SEPA credit 1 Million per txn, TAT - SEPA Instant: 24*7, Real-time,
+SEPA Non Instant: Same Day/T+1
+Cutoff: 1430 hours GMT, Fee - 1.50 USD
+
+Region - Europe
+SEPA Instant Credit
+Country - Italy
+Currency - EUR
+Services - bank payout, Coverage - All Bank is SEPA region, TXn limit SEPA Instant 100 EUR per Txn
+SEPA credit 1 Million per txn, TAT - SEPA Instant: 24*7, Real-time,
+SEPA Non Instant: Same Day/T+1
+Cutoff: 1430 hours GMT, Fee - 1.50 USD
+
+Region - Europe
+SEPA Instant Credit
+Country - Latvia
+Currency - EUR
+Services - bank payout, Coverage - All Bank is SEPA region, TXn limit SEPA Instant 100 EUR per Txn
+SEPA credit 1 Million per txn, TAT - SEPA Instant: 24*7, Real-time,
+SEPA Non Instant: Same Day/T+1
+Cutoff: 1430 hours GMT, Fee - 1.50 USD
+
+Region - Europe
+SEPA Instant Credit
+Country - Liechtenstein
+Currency - EUR
+Services - bank payout, Coverage - All Bank is SEPA region, TXn limit SEPA Instant 100 EUR per Txn
+SEPA credit 1 Million per txn, TAT - SEPA Instant: 24*7, Real-time,
+SEPA Non Instant: Same Day/T+1
+Cutoff: 1430 hours GMT, Fee - 1.50 USD
+
+Region - Europe
+SEPA Instant Credit
+Country - Lithuania
+Currency - EUR
+Services - bank payout, Coverage - All Bank is SEPA region, TXn limit SEPA Instant 100 EUR per Txn
+SEPA credit 1 Million per txn, TAT - SEPA Instant: 24*7, Real-time,
+SEPA Non Instant: Same Day/T+1
+Cutoff: 1430 hours GMT, Fee - 1.50 USD
+
+Region - Europe
+SEPA Instant Credit
+Country - Luxembourg
+Currency - EUR
+Services - bank payout, Coverage - All Bank is SEPA region, TXn limit SEPA Instant 100 EUR per Txn
+SEPA credit 1 Million per txn, TAT - SEPA Instant: 24*7, Real-time,
+SEPA Non Instant: Same Day/T+1
+Cutoff: 1430 hours GMT, Fee - 1.50 USD
+
+Region - Europe
+SEPA Instant Credit
+Country - Malta
+Currency - EUR
+Services - bank payout, Coverage - All Bank is SEPA region, TXn limit SEPA Instant 100 EUR per Txn
+SEPA credit 1 Million per txn, TAT - SEPA Instant: 24*7, Real-time,
+SEPA Non Instant: Same Day/T+1
+Cutoff: 1430 hours GMT, Fee - 1.50 USD
+
+Region - Europe
+SEPA Instant Credit
+Country - Monaco
+Currency - EUR
+Services - bank payout, Coverage - All Bank is SEPA region, TXn limit SEPA Instant 100 EUR per Txn
+SEPA credit 1 Million per txn, TAT - SEPA Instant: 24*7, Real-time,
+SEPA Non Instant: Same Day/T+1
+Cutoff: 1430 hours GMT, Fee - 1.50 USD
+
+Region - Europe
+SEPA Instant Credit
+Country - Netherlands
+Currency - EUR
+Services - bank payout, Coverage - All Bank is SEPA region, TXn limit SEPA Instant 100 EUR per Txn
+SEPA credit 1 Million per txn, TAT - SEPA Instant: 24*7, Real-time,
+SEPA Non Instant: Same Day/T+1
+Cutoff: 1430 hours GMT, Fee - 1.50 USD
+
+Region - Europe
+SEPA Instant Credit
+Country - Norway
+Currency - EUR
+Services - bank payout, Coverage - All Bank is SEPA region, TXn limit SEPA Instant 100 EUR per Txn
+SEPA credit 1 Million per txn, TAT - SEPA Instant: 24*7, Real-time,
+SEPA Non Instant: Same Day/T+1
+Cutoff: 1430 hours GMT, Fee - 1.50 USD
+
+Region - Europe
+SEPA Instant Credit
+Country - Poland
+Currency - EUR
+Services - bank payout, Coverage - All Bank is SEPA region, TXn limit SEPA Instant 100 EUR per Txn
+SEPA credit 1 Million per txn, TAT - SEPA Instant: 24*7, Real-time,
+SEPA Non Instant: Same Day/T+1
+Cutoff: 1430 hours GMT, Fee - 1.50 USD
+
+Region - Europe
+SEPA Instant Credit
+Country - Portugal
+Currency - EUR
+Services - bank payout, Coverage - All Bank is SEPA region, TXn limit SEPA Instant 100 EUR per Txn
+SEPA credit 1 Million per txn, TAT - SEPA Instant: 24*7, Real-time,
+SEPA Non Instant: Same Day/T+1
+Cutoff: 1430 hours GMT, Fee - 1.50 USD
+
+Region - Europe
+SEPA Instant Credit
+Country - Romania
+Currency - EUR
+Services - bank payout, Coverage - All Bank is SEPA region, TXn limit SEPA Instant 100 EUR per Txn
+SEPA credit 1 Million per txn, TAT - SEPA Instant: 24*7, Real-time,
+SEPA Non Instant: Same Day/T+1
+Cutoff: 1430 hours GMT, Fee - 1.50 USD
+
+Region - Europe
+SEPA Instant Credit
+Country - San Marino
+Currency - EUR
+Services - bank payout, Coverage - All Bank is SEPA region, TXn limit SEPA Instant 100 EUR per Txn
+SEPA credit 1 Million per txn, TAT - SEPA Instant: 24*7, Real-time,
+SEPA Non Instant: Same Day/T+1
+Cutoff: 1430 hours GMT, Fee - 1.50 USD
+
+Region - Europe
+SEPA Instant Credit
+Country - Slovakia
+Currency - EUR
+Services - bank payout, Coverage - All Bank is SEPA region, TXn limit SEPA Instant 100 EUR per Txn
+SEPA credit 1 Million per txn, TAT - SEPA Instant: 24*7, Real-time,
+SEPA Non Instant: Same Day/T+1
+Cutoff: 1430 hours GMT, Fee - 1.50 USD
+
+Region - Europe
+SEPA Instant Credit
+Country - Slovenia
+Currency - EUR
+Services - bank payout, Coverage - All Bank is SEPA region, TXn limit SEPA Instant 100 EUR per Txn
+SEPA credit 1 Million per txn, TAT - SEPA Instant: 24*7, Real-time,
+SEPA Non Instant: Same Day/T+1
+Cutoff: 1430 hours GMT, Fee - 1.50 USD
+
+Region - Europe
+SEPA Instant Credit
+Country - Spain
+Currency - EUR
+Services - bank payout, Coverage - All Bank is SEPA region, TXn limit SEPA Instant 100 EUR per Txn
+SEPA credit 1 Million per txn, TAT - SEPA Instant: 24*7, Real-time,
+SEPA Non Instant: Same Day/T+1
+Cutoff: 1430 hours GMT, Fee - 1.50 USD
+
+Region - Europe
+SEPA Instant Credit
+Country - Sweden
+Currency - EUR
+Services - bank payout, Coverage - All Bank is SEPA region, TXn limit SEPA Instant 100 EUR per Txn
+SEPA credit 1 Million per txn, TAT - SEPA Instant: 24*7, Real-time,
+SEPA Non Instant: Same Day/T+1
+Cutoff: 1430 hours GMT, Fee - 1.50 USD
+
+Region - Europe
+SEPA Instant Credit
+Country - Switzerland
+Currency - EUR
+Services - bank payout, Coverage - All Bank is SEPA region, TXn limit SEPA Instant 100 EUR per Txn
+SEPA credit 1 Million per txn, TAT - SEPA Instant: 24*7, Real-time,
+SEPA Non Instant: Same Day/T+1
+Cutoff: 1430 hours GMT, Fee - 1.50 USD
+
+Region - Europe
+SEPA Instant Credit
+Country - United Kingdom
+Currency - EUR
+Services - bank payout, Coverage - All Bank is SEPA region, TXn limit SEPA Instant 100 EUR per Txn
+SEPA credit 1 Million per txn, TAT - SEPA Instant: 24*7, Real-time,
+SEPA Non Instant: Same Day/T+1
+Cutoff: 1430 hours GMT, Fee - 1.50 USD
+
+Region - Europe
+SEPA Instant Credit
+Country - Vatican City State
+Currency - EUR
+Services - bank payout, Coverage - All Bank is SEPA region, TXn limit SEPA Instant 100 EUR per Txn
+SEPA credit 1 Million per txn, TAT - SEPA Instant: 24*7, Real-time,
+SEPA Non Instant: Same Day/T+1
+Cutoff: 1430 hours GMT, Fee - 1.50 USD
+
+Region - Europe 
+Country - Turkey
+Currency - TRY
+Services - bank payout, Coverage - All banks, TXn limit 150,000, TAT - Real-time for transactions processed
+during business hours 9:00 AM to 05:00
+PM (GMT+3), Fee - 2.00 USD
+
+Region - Europe 
+Country - UK(GBP)
+Currency - GBP
+Services - bank payout, Coverage - All banks, TXn limit nan, TAT - nan, Fee - 1.80 USD
+
+Region - Middle East
+Country - Bahrain
+Currency - BHD
+Services - cash payout, Coverage - Lulu Locations in Bahrain, TXn limit 10,000 USD equivalent, TAT - Real time, Fee - 2.00 USD; nan, Coverage - nan, TXn limit nan, TAT - nan, Fee - 
+
+Region - Middle East
+Country - Jordan
+Currency - JOD
+Services - bank payout, Coverage - nan, TXn limit nan, TAT - Real time up to JOD5,000 or equivalent in USD
+
+Above JOD5,000 same day cut-off time 12:00 noon Jordan time.
+
+after cut-off time is next day credit., Fee - 1.75 USD; wallet, Coverage - nan, TXn limit maximum amount 5,000 JOD per beneficiary per month; payments are exclusively in JOD, TAT - nan, Fee - 1.75 USD; cash payout, Coverage - nan, TXn limit USD50,000 (Cash payments over the counter exceeding 50,000 USD or its equivalent in JOD require prior coordination to ensure the availability of cash at remote branches., TAT - Real Time, Fee - 1,75
+
+Region - Middle East
+Country - Oman
+Currency - OMR
+Services - cash payout, Coverage - Lulu Locations in Oman, TXn limit 0 - 3000 OMR, TAT - Real time, Fee - 4.00 USD; bank payout, Coverage - Any Bank, TXn limit 0 - 20000 OMR, TAT - Real time, Fee - 7.00 USD; bank payout, Coverage - Any Bank, TXn limit Above 20000, TAT - Real time, Fee - 9.00 USD
+
+Region - Middle East
+Country - Qatar
+Currency - QAR
+Services - bank payout, Coverage - Any Bank, TXn limit QAR100,000, TAT - Trxn processed after 12:00PM will be credited next day, Fee - 7.50 USD; cash payout, Coverage - Lulu and Trust Exchange branches, TXn limit QAR10,000, TAT - Real Time, Fee - 3.00 USD
+
+Region - Middle East
+Country - UAE
+Currency - AED
+Services - cash payout, Coverage - Lulu Locations in UAE, TXn limit nan, TAT - Real time, Fee - 2.50 USD; bank payout, Coverage - Any Bank, TXn limit 10,000 USD equivalent, TAT - Txn Processed after 04:00 PM UAE time will be credited next day, Fee - 2.50 USD

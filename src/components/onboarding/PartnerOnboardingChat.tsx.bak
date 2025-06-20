@@ -1,0 +1,1213 @@
+import React, { useState, useEffect, useRef } from 'react';
+import { gsap } from 'gsap';
+import { usePartnerOnboarding } from '../../context/PartnerOnboardingContext';
+import { useCRMData } from '../../context/CRMDataContext';
+import { PartnerInfo, ChatMessage as ChatMessageType, OnboardingStage, ComplianceDocument } from '../../types/partnerOnboarding';
+import { CreateContactData } from '../../types/crm';
+import DocumentUploadSection from './DocumentUploadSection';
+import UnifiedDocumentNotification from './UnifiedDocumentNotification';
+import PricingProposalSelector from './PricingProposalSelector';
+
+// Enhanced Partner Info Form Component
+const PartnerInfoForm: React.FC<{ onSubmit: (info: PartnerInfo) => Promise<void> }> = ({ onSubmit }) => {
+  const [formData, setFormData] = useState<PartnerInfo>({
+    name: '',
+    organization: '',
+    email: '',
+    phone: '',
+    role: '',
+    country: ''
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (formData.name && formData.organization && formData.email) {
+      setIsSubmitting(true);
+      try {
+        await onSubmit(formData);
+      } catch (error) {
+        console.error('Error submitting partner info:', error);
+      } finally {
+        setIsSubmitting(false);
+      }
+    }
+  };
+
+  return (
+    <div className="max-w-lg mx-auto bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-md rounded-2xl p-8 border border-white/20 shadow-2xl">
+      <div className="text-center mb-8">
+        <div className="w-20 h-20 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg">
+          <span className="text-3xl">🚀</span>
+        </div>
+        <h2 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-400 mb-3">
+          Welcome to WorldAPI
+        </h2>
+        <p className="text-white/70 text-lg">Let's start your partnership journey</p>
+      </div>
+
+      <form onSubmit={handleSubmit} className="space-y-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <label className="block text-sm font-medium text-white/80 mb-3">
+              Full Name *
+            </label>
+            <input
+              type="text"
+              value={formData.name}
+              onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+              className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 text-white placeholder-white/40 transition-all duration-300 hover:bg-white/15"
+              placeholder="Enter your full name"
+              required
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-white/80 mb-3">
+              Email Address *
+            </label>
+            <input
+              type="email"
+              value={formData.email}
+              onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+              className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 text-white placeholder-white/40 transition-all duration-300 hover:bg-white/15"
+              placeholder="your@company.com"
+              required
+            />
+          </div>
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-white/80 mb-3">
+            Organization *
+          </label>
+          <input
+            type="text"
+            value={formData.organization}
+            onChange={(e) => setFormData({ ...formData, organization: e.target.value })}
+            className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 text-white placeholder-white/40 transition-all duration-300 hover:bg-white/15"
+            placeholder="Your company name"
+            required
+          />
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <label className="block text-sm font-medium text-white/80 mb-3">
+              Phone Number
+            </label>
+            <input
+              type="tel"
+              value={formData.phone}
+              onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+              className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 text-white placeholder-white/40 transition-all duration-300 hover:bg-white/15"
+              placeholder="+1 (555) 123-4567"
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-white/80 mb-3">
+              Role/Title
+            </label>
+            <input
+              type="text"
+              value={formData.role}
+              onChange={(e) => setFormData({ ...formData, role: e.target.value })}
+              className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 text-white placeholder-white/40 transition-all duration-300 hover:bg-white/15"
+              placeholder="CEO, CTO, etc."
+            />
+          </div>
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-white/80 mb-3">
+            Country
+          </label>
+          <input
+            type="text"
+            value={formData.country}
+            onChange={(e) => setFormData({ ...formData, country: e.target.value })}
+            className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 text-white placeholder-white/40 transition-all duration-300 hover:bg-white/15"
+            placeholder="United States, Canada, etc."
+          />
+        </div>
+
+        <button
+          type="submit"
+          disabled={!formData.name || !formData.email || !formData.organization || isSubmitting}
+          className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 disabled:from-gray-600 disabled:to-gray-600 text-white py-4 px-6 rounded-xl transition-all duration-300 font-medium text-lg shadow-lg hover:shadow-xl hover:shadow-blue-500/25 transform hover:scale-[1.02] disabled:transform-none disabled:cursor-not-allowed flex items-center justify-center space-x-2"
+        >
+          {isSubmitting ? (
+            <>
+              <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" fill="none" viewBox="0 0 24 24">
+                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              </svg>
+              <span>Creating CRM Lead & Initializing...</span>
+            </>
+          ) : (
+            <>
+              <span>🚀 Start Partnership Journey</span>
+            </>
+          )}
+        </button>
+
+        <div className="text-center text-xs text-white/60 mt-4">
+          <p>By continuing, you agree to our Terms of Service and Privacy Policy</p>
+        </div>
+      </form>
+    </div>
+  );
+};
+
+// Helper function to render message content with download links
+const renderMessageContent = (content: string) => {
+  console.log('Rendering message content:', content);
+  
+  // Check if content contains download links - simpler approach
+  if (content.includes('🔗 **[Download NDA Document]')) {
+    const parts = content.split('🔗 **[Download NDA Document](/WorldAPI_NDA.docx)**');
+    
+    return (
+      <div>
+        {parts[0] && <span>{parts[0]}</span>}
+        <div className="my-3">
+          <a
+            href="/WorldAPI_NDA.docx"
+            download
+            className="inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+            Download NDA Document
+          </a>
+        </div>
+        {parts[1] && <span>{parts[1]}</span>}
+      </div>
+    );
+  }
+  
+  // Handle line breaks and basic formatting
+  return content.split('\n').map((line, index) => (
+    <div key={index}>
+      {line.startsWith('**') && line.endsWith('**') ? (
+        <strong>{line.slice(2, -2)}</strong>
+      ) : line.startsWith('💡 **') ? (
+        <div className="mt-2 p-2 bg-blue-600/10 rounded border-l-2 border-blue-500">
+          <strong>{line}</strong>
+        </div>
+      ) : line.startsWith('📄 **') ? (
+        <div className="mt-2 mb-2">
+          <strong className="text-blue-400">{line}</strong>
+        </div>
+      ) : (
+        line
+      )}
+    </div>
+  ));
+};
+
+// Enhanced Chat Message Component
+const ChatMessage: React.FC<{ message: ChatMessageType }> = ({ message }) => {
+  const { state } = usePartnerOnboarding();
+  const isAgent = message.sender === 'agent';
+  const isSystem = message.sender === 'system';
+  const isPartner = message.sender === 'partner';
+
+  const getKYCDocuments = () => {
+    const kycStage = state?.stages.find(s => s.id === 'kyc');
+    return kycStage?.requirements || [];
+  };
+
+  const getMessageIcon = () => {
+    if (isSystem) return '🔔';
+    if (isAgent) return '🤖';
+    return '👤';
+  };
+
+  const getMessageStyling = () => {
+    if (isSystem) {
+      return {
+        container: 'bg-gradient-to-r from-yellow-600/20 to-orange-600/20 border-yellow-500/30',
+        avatar: 'bg-gradient-to-br from-yellow-500 to-orange-600',
+        name: 'text-yellow-300'
+      };
+    }
+    if (isAgent) {
+      return {
+        container: 'bg-gradient-to-r from-blue-600/20 to-purple-600/20 border-blue-500/30',
+        avatar: 'bg-gradient-to-br from-blue-500 to-purple-600',
+        name: 'text-blue-300'
+      };
+    }
+    return {
+      container: 'bg-gradient-to-r from-gray-600/20 to-gray-500/20 border-gray-500/30',
+      avatar: 'bg-gradient-to-br from-gray-500 to-gray-600',
+      name: 'text-gray-300'
+    };
+  };
+
+  const styling = getMessageStyling();
+
+  return (
+    <div className={`flex ${isAgent || isSystem ? 'justify-start' : 'justify-end'} mb-6`}>
+      <div className={`max-w-[85%] ${styling.container} border rounded-2xl p-6 backdrop-blur-sm shadow-lg`}>
+        <div className="flex items-center mb-4">
+          <div className={`w-10 h-10 ${styling.avatar} rounded-xl flex items-center justify-center mr-3 shadow-lg`}>
+            <span className="text-lg">{getMessageIcon()}</span>
+          </div>
+          <div className="flex-1">
+            <span className={`font-medium text-sm ${styling.name}`}>
+              {isSystem ? 'System Notification' : isAgent ? 'WorldAPI Agent' : 'You'}
+            </span>
+            <div className="text-xs text-white/50 mt-0.5">
+              {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+            </div>
+          </div>
+          {isAgent && (
+            <div className="flex items-center space-x-1 text-xs text-white/60">
+              <div className="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse"></div>
+              <span>AI</span>
+            </div>
+          )}
+        </div>
+        
+        <div className="whitespace-pre-wrap text-sm leading-relaxed text-white/90">
+          {renderMessageContent(message.content)}
+        </div>
+        
+        {/* Enhanced Interactive Components */}
+        {(message.type === 'document-request' || message.content.includes('Download NDA Document')) && state?.currentStage === 'nda' && (
+          <div className="mt-6 pt-4 border-t border-white/10">
+            <SimpleFileUpload stageId="nda" />
+          </div>
+        )}
+        {message.type === 'commercial-agreement' && (
+          <div className="mt-6 pt-4 border-t border-white/10">
+            <CommercialAgreement />
+          </div>
+        )}
+        {state?.currentStage === 'commercials' && message.type === 'stage-completion' && (
+          <div className="mt-6 pt-4 border-t border-white/10">
+            <CommercialAgreement />
+          </div>
+        )}
+        {message.type === 'kyc-documents' && (
+          <div className="mt-6">
+            <DocumentUploadSection documents={getKYCDocuments()} />
+          </div>
+        )}
+        {message.type === 'agreement-preview' && (
+          <div className="mt-6 pt-4 border-t border-white/10">
+            <AgreementPreview />
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
+// Agreement Preview Component
+const AgreementPreview: React.FC = () => {
+  const [isProcessing, setIsProcessing] = useState(false);
+
+  const handleAgreementAction = async (action: 'review' | 'later') => {
+    setIsProcessing(true);
+    
+    if (action === 'review') {
+      // In a real implementation, this would open the agreement document
+      // For now, we'll show a message
+      setTimeout(() => {
+        alert('Partnership Agreement document would open here. In a real implementation, this would display the full agreement for review.');
+        setIsProcessing(false);
+      }, 1000);
+    } else {
+      setIsProcessing(false);
+      // Send a message that they can review later
+      alert('No problem! You can review the Partnership Agreement later. We\'ll notify you once compliance review is complete.');
+    }
+  };
+
+  return (
+    <div className="mt-4 p-4 bg-gradient-to-r from-purple-600/20 to-blue-600/20 border border-purple-500/30 rounded-lg">
+      <h5 className="text-sm font-medium text-white mb-3 flex items-center">
+        <span className="text-purple-400 mr-2">📋</span>
+        Partnership Agreement Review
+      </h5>
+      <p className="text-xs text-gray-300 mb-4">
+        Review the Partnership Agreement while compliance verification is in progress to speed up your onboarding.
+      </p>
+      
+      <div className="flex space-x-3">
+        <button
+          onClick={() => handleAgreementAction('review')}
+          disabled={isProcessing}
+          className="flex-1 bg-purple-600 hover:bg-purple-700 disabled:bg-gray-600 text-white text-sm px-4 py-2 rounded-lg transition-colors flex items-center justify-center"
+        >
+          {isProcessing ? (
+            <>
+              <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
+                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              </svg>
+              Opening...
+            </>
+          ) : (
+            <>
+              📄 Review Agreement Now
+            </>
+          )}
+        </button>
+        
+        <button
+          onClick={() => handleAgreementAction('later')}
+          disabled={isProcessing}
+          className="flex-1 bg-gray-600 hover:bg-gray-700 disabled:bg-gray-600 text-white text-sm px-4 py-2 rounded-lg transition-colors flex items-center justify-center"
+        >
+          ⏰ Review Later
+        </button>
+      </div>
+      
+      <div className="mt-3 text-xs text-purple-300">
+        💡 <strong>Tip:</strong> Reviewing now will help you ask questions and speed up final approval!
+      </div>
+    </div>
+  );
+};
+
+// Commercial Agreement Component
+const CommercialAgreement: React.FC = () => {
+  const { updateApprovalStatus, moveToNextStage } = usePartnerOnboarding();
+  const [isProcessing, setIsProcessing] = useState(false);
+
+  const handleAgreement = async (agreed: boolean) => {
+    setIsProcessing(true);
+    
+    if (agreed) {
+      // Mark commercial terms as approved
+      updateApprovalStatus('commercials', 'Business', 'approved', 'Commercial terms agreed by partner');
+      updateApprovalStatus('commercials', 'Pricing', 'approved', 'Pricing structure accepted');
+      
+      // Move to next stage after a short delay
+      setTimeout(() => {
+        moveToNextStage();
+        setIsProcessing(false);
+      }, 1500);
+    } else {
+      setIsProcessing(false);
+      // Send a message that they need to discuss further
+      alert('Please discuss any concerns with our business team. They will contact you to address your questions.');
+    }
+  };
+
+  return (
+    <div className="mt-4 p-4 bg-gray-700/30 rounded-lg border border-gray-600">
+      <h5 className="text-sm font-medium text-white mb-3">Commercial Terms Agreement</h5>
+      <p className="text-xs text-gray-300 mb-4">
+        Have you reviewed and agreed to the commercial terms discussed with our business team?
+      </p>
+      
+      <div className="flex space-x-3">
+        <button
+          onClick={() => handleAgreement(true)}
+          disabled={isProcessing}
+          className="flex-1 bg-green-600 hover:bg-green-700 disabled:bg-gray-600 text-white text-sm px-4 py-2 rounded-lg transition-colors flex items-center justify-center"
+        >
+          {isProcessing ? (
+            <>
+              <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
+                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              </svg>
+              Processing...
+            </>
+          ) : (
+            <>
+              ✅ Yes, I Agree
+            </>
+          )}
+        </button>
+        
+        <button
+          onClick={() => handleAgreement(false)}
+          disabled={isProcessing}
+          className="flex-1 bg-red-600 hover:bg-red-700 disabled:bg-gray-600 text-white text-sm px-4 py-2 rounded-lg transition-colors flex items-center justify-center"
+        >
+          ❌ No, Need Discussion
+        </button>
+      </div>
+    </div>
+  );
+};
+
+// Simple File Upload Component for NDA
+const SimpleFileUpload: React.FC<{ stageId: string }> = ({ stageId }) => {
+  const [isUploading, setIsUploading] = useState(false);
+  const [showNotification, setShowNotification] = useState(false);
+  const [notificationData, setNotificationData] = useState<{
+    documentName: string;
+    documentType: string;
+    crmDocumentId?: string;
+  }>({ documentName: '', documentType: '' });
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const { updateApprovalStatus, moveToNextStage, state } = usePartnerOnboarding();
+
+  const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    setIsUploading(true);
+    try {
+      console.log(`🔄 Uploading ${stageId} file:`, file.name);
+      console.log(`📊 Current stage before upload:`, state?.currentStage);
+      
+      // Sync to CRM document management system first
+      if (state?.partnerInfo) {
+        try {
+          const { unifiedDocumentService } = await import('../../services/unifiedDocumentService');
+          
+          const documentType = stageId === 'nda' ? 'nda' : 'other';
+          console.log('🔄 Syncing to CRM with partner info:', state.partnerInfo);
+          
+          const crmDocument = await unifiedDocumentService.syncOnboardingDocumentToCRM(
+            file,
+            documentType,
+            state.partnerInfo,
+            stageId
+          );
+          
+          if (crmDocument) {
+            console.log('✅ Document synced to CRM:', crmDocument.id);
+            
+            // Debug: Check if document is actually in the CRM system
+            setTimeout(async () => {
+              try {
+                const { documentService } = await import('../../services/documentService');
+                
+                // Search by document ID first
+                const idSearchResults = await documentService.searchDocuments({
+                  query: crmDocument.id,
+                  limit: 10
+                });
+                console.log('🔍 CRM Search Results by ID:', idSearchResults.documents.length);
+                
+                // Search by partner company name
+                const companySearchResults = await documentService.searchDocuments({
+                  query: state.partnerInfo.organization,
+                  limit: 10
+                });
+                console.log('🔍 CRM Search Results by company:', companySearchResults.documents.length);
+                console.log('📄 Company documents:', companySearchResults.documents.map(d => ({
+                  id: d.id,
+                  name: d.name,
+                  type: d.type,
+                  uploadedBy: d.uploadedBy,
+                  tags: d.tags
+                })));
+                
+                // Search for all documents to see total count
+                const allResults = await documentService.searchDocuments({
+                  query: '',
+                  limit: 100
+                });
+                console.log('📋 Total documents in CRM:', allResults.documents.length);
+                
+                // Search specifically for NDA documents
+                const ndaResults = await documentService.searchDocuments({
+                  type: ['nda'],
+                  limit: 20
+                });
+                console.log('📄 NDA documents in CRM:', ndaResults.documents.length);
+                console.log('📄 NDA documents:', ndaResults.documents.map(d => ({
+                  id: d.id,
+                  name: d.name,
+                  uploadedBy: d.uploadedBy,
+                  customFields: d.customFields
+                })));
+                
+                // Check if our specific document exists
+                const ourDoc = allResults.documents.find(d => d.id === crmDocument.id);
+                console.log('🎯 Our uploaded document found:', ourDoc ? 'YES' : 'NO');
+                if (ourDoc) {
+                  console.log('📄 Document details:', {
+                    id: ourDoc.id,
+                    name: ourDoc.name,
+                    type: ourDoc.type,
+                    category: ourDoc.category,
+                    uploadedBy: ourDoc.uploadedBy,
+                    tags: ourDoc.tags,
+                    customFields: ourDoc.customFields
+                  });
+                } else {
+                  console.log('❌ Document not found in search results');
+                  console.log('🔍 Searching for documents with similar names...');
+                  const nameSearchResults = await documentService.searchDocuments({
+                    query: file.name.split('.')[0], // Search without extension
+                    limit: 10
+                  });
+                  console.log('📄 Similar name documents:', nameSearchResults.documents.map(d => d.name));
+                }
+              } catch (error) {
+                console.error('❌ Failed to search CRM documents:', error);
+              }
+            }, 1000);
+            
+            // Show notification
+            setNotificationData({
+              documentName: file.name,
+              documentType: documentType,
+              crmDocumentId: crmDocument.id
+            });
+            setShowNotification(true);
+          } else {
+            console.warn('⚠️ CRM document sync returned null');
+          }
+        } catch (syncError) {
+          console.error('❌ Failed to sync document to CRM:', syncError);
+          // Continue with onboarding even if CRM sync fails
+        }
+      } else {
+        console.warn('⚠️ No partner info available for CRM sync');
+      }
+      
+      // Simulate upload delay
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      
+      // For NDA stage, move to next stage immediately
+      if (stageId === 'nda') {
+        console.log('🎯 NDA uploaded, current stage:', state?.currentStage);
+        console.log('🚀 Processing NDA approval and stage progression...');
+        
+        // Mark NDA as approved by Legal team first
+        updateApprovalStatus('nda', 'Legal', 'approved', 'NDA document uploaded and received');
+        
+        // Wait a bit longer to ensure state update completes before moving to next stage
+        setTimeout(() => {
+          console.log('🚀 Moving to next stage after approval...');
+          moveToNextStage();
+        }, 500); // Increased delay to ensure approval status is processed first
+        
+        console.log('📊 Stage progression initiated');
+      }
+      
+    } catch (error) {
+      console.error('❌ Upload failed:', error);
+      alert('Upload failed. Please try again.');
+    } finally {
+      setIsUploading(false);
+      if (fileInputRef.current) {
+        fileInputRef.current.value = '';
+      }
+    }
+  };
+
+  return (
+    <>
+      <div className="bg-gray-800/50 border border-gray-700 rounded-xl p-6 backdrop-blur-sm">
+        <div className="flex items-center space-x-3 mb-4">
+          <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center">
+            <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+            </svg>
+          </div>
+          <div>
+            <h3 className="text-lg font-semibold text-white">Upload {stageId.toUpperCase()} Document</h3>
+            <p className="text-gray-400 text-sm">Select and upload your document</p>
+          </div>
+        </div>
+
+        <div className="space-y-4">
+          <div className="border-2 border-dashed border-gray-600 rounded-lg p-8 text-center hover:border-blue-500 transition-colors">
+            <input
+              ref={fileInputRef}
+              type="file"
+              onChange={handleFileUpload}
+              className="hidden"
+              accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
+              disabled={isUploading}
+            />
+            
+            <div className="space-y-3">
+              <div className="w-12 h-12 bg-gray-700 rounded-lg flex items-center justify-center mx-auto">
+                <svg className="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
+              </div>
+              
+              <div>
+                <p className="text-white font-medium">Click to upload or drag and drop</p>
+                <p className="text-gray-400 text-sm">PDF, DOC, DOCX, JPG, PNG up to 10MB</p>
+              </div>
+              
+              <button
+                onClick={() => fileInputRef.current?.click()}
+                disabled={isUploading}
+                className="bg-blue-600 hover:bg-blue-700 disabled:bg-gray-600 text-white px-6 py-2 rounded-lg font-medium transition-colors"
+              >
+                {isUploading ? 'Uploading...' : 'Choose File'}
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <UnifiedDocumentNotification
+        show={showNotification}
+        documentName={notificationData.documentName}
+        documentType={notificationData.documentType}
+        crmDocumentId={notificationData.crmDocumentId}
+        onClose={() => setShowNotification(false)}
+      />
+    </>
+  );
+};
+
+// Enhanced Chat Input Component
+const EnhancedChatInput: React.FC<{ onSend: (message: string) => void; disabled?: boolean }> = ({ onSend, disabled }) => {
+  const [input, setInput] = useState('');
+  const [isFocused, setIsFocused] = useState(false);
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (input.trim() && !disabled) {
+      onSend(input.trim());
+      setInput('');
+    }
+  };
+
+  return (
+    <div className="border-t border-white/10 p-6 bg-gradient-to-r from-gray-800/60 to-gray-700/60 backdrop-blur-md">
+      <form onSubmit={handleSubmit}>
+        <div className="flex items-end space-x-4">
+          <div className="flex-1 relative">
+            <div className={`relative transition-all duration-300 ${
+              isFocused ? 'transform scale-[1.02]' : ''
+            }`}>
+              <input
+                type="text"
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                onFocus={() => setIsFocused(true)}
+                onBlur={() => setIsFocused(false)}
+                placeholder="Type your message to the AI agent..."
+                disabled={disabled}
+                className={`w-full bg-gradient-to-r from-white/10 to-white/5 backdrop-blur-sm border rounded-xl px-6 py-4 focus:outline-none transition-all duration-300 text-white placeholder-white/40 ${
+                  isFocused 
+                    ? 'border-blue-500/50 shadow-lg shadow-blue-500/20 bg-white/15' 
+                    : 'border-white/20 hover:border-white/30'
+                } ${disabled ? 'opacity-50 cursor-not-allowed' : ''}`}
+              />
+              {isFocused && (
+                <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-blue-500/10 to-purple-500/10 pointer-events-none"></div>
+              )}
+            </div>
+            
+            {/* Character count */}
+            <div className="absolute right-3 top-1/2 transform -translate-y-1/2 text-xs text-white/40">
+              {input.length}/500
+            </div>
+          </div>
+          
+          <button
+            type="submit"
+            disabled={!input.trim() || disabled}
+            className={`px-8 py-4 rounded-xl font-medium transition-all duration-300 flex items-center space-x-2 ${
+              !input.trim() || disabled
+                ? 'bg-gray-600/50 text-gray-400 cursor-not-allowed'
+                : 'bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white shadow-lg hover:shadow-xl hover:shadow-blue-500/25 transform hover:scale-105'
+            }`}
+          >
+            <span>Send</span>
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+            </svg>
+          </button>
+        </div>
+        
+        {/* Quick Actions */}
+        <div className="flex items-center justify-between mt-4">
+          <div className="flex items-center space-x-4">
+            <div className="flex items-center space-x-2 text-xs text-white/60">
+              <div className="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse"></div>
+              <span>AI Agent is ready</span>
+            </div>
+          </div>
+          
+          <div className="flex items-center space-x-2">
+            <button
+              type="button"
+              onClick={() => setInput("I need help with the current stage")}
+              className="text-xs bg-white/10 hover:bg-white/20 text-white/80 px-3 py-1.5 rounded-lg transition-colors"
+            >
+              💡 Get Help
+            </button>
+            <button
+              type="button"
+              onClick={() => setInput("What's the next step?")}
+              className="text-xs bg-white/10 hover:bg-white/20 text-white/80 px-3 py-1.5 rounded-lg transition-colors"
+            >
+              ➡️ Next Step
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  );
+};
+
+// Enhanced Progress Component
+const EnhancedProgress: React.FC = () => {
+  const { state } = usePartnerOnboarding();
+
+  if (!state) return null;
+
+  // Local calculateProgress function
+  const calculateProgress = (): number => {
+    if (!state) return 0;
+    const completedStages = state.stages.filter(stage => stage.completed).length;
+    return Math.round((completedStages / state.stages.length) * 100);
+  };
+
+  const progress = calculateProgress();
+  const currentStageIndex = state.stages.findIndex(s => s.id === state.currentStage);
+
+  return (
+    <div className="p-6 h-full flex flex-col">
+      {/* Header */}
+      <div className="mb-6">
+        <h3 className="text-xl font-bold mb-2 text-white">Partnership Journey</h3>
+        <div className="flex items-center space-x-3">
+          <div className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-400">
+            {progress}%
+          </div>
+          <div className="flex-1">
+            <div className="w-full bg-gray-700/50 rounded-full h-2 overflow-hidden">
+              <div 
+                className="h-full bg-gradient-to-r from-blue-500 to-purple-500 rounded-full transition-all duration-1000 ease-out"
+                style={{ width: `${progress}%` }}
+              ></div>
+            </div>
+            <div className="text-xs text-white/60 mt-1">Overall Progress</div>
+          </div>
+        </div>
+      </div>
+
+      {/* Partner Information */}
+      <div className="bg-gradient-to-br from-white/5 to-white/10 backdrop-blur-sm rounded-xl p-4 mb-6 border border-white/10">
+        <h4 className="font-medium mb-3 text-white flex items-center">
+          <span className="w-2 h-2 bg-green-400 rounded-full mr-2"></span>
+          Partner Details
+        </h4>
+        <div className="space-y-2 text-sm">
+          <div className="flex justify-between">
+            <span className="text-white/60">Name:</span>
+            <span className="text-white font-medium">{state.partnerInfo.name}</span>
+          </div>
+          <div className="flex justify-between">
+            <span className="text-white/60">Company:</span>
+            <span className="text-white font-medium">{state.partnerInfo.organization}</span>
+          </div>
+          <div className="flex justify-between">
+            <span className="text-white/60">Email:</span>
+            <span className="text-white font-medium text-xs">{state.partnerInfo.email}</span>
+          </div>
+        </div>
+      </div>
+
+      {/* Stages */}
+      <div className="flex-1 overflow-y-auto">
+        <h4 className="font-medium mb-4 text-white">Onboarding Stages</h4>
+        <div className="space-y-3">
+          {state.stages.map((stage, index) => {
+            const isActive = stage.id === state.currentStage;
+            const isCompleted = stage.completed;
+            const isPending = !isCompleted && !isActive;
+            
+            return (
+              <div 
+                key={stage.id} 
+                className={`relative p-4 rounded-xl transition-all duration-300 ${
+                  isActive 
+                    ? 'bg-gradient-to-r from-blue-600/30 to-purple-600/30 border border-blue-500/50 shadow-lg shadow-blue-500/20' 
+                    : isCompleted 
+                      ? 'bg-gradient-to-r from-green-600/20 to-emerald-600/20 border border-green-500/30' 
+                      : 'bg-white/5 border border-white/10 hover:bg-white/10'
+                }`}
+              >
+                <div className="flex items-center space-x-3">
+                  <div className={`w-8 h-8 rounded-lg flex items-center justify-center text-sm font-bold ${
+                    isActive 
+                      ? 'bg-gradient-to-br from-blue-500 to-purple-600 text-white' 
+                      : isCompleted 
+                        ? 'bg-gradient-to-br from-green-500 to-emerald-600 text-white' 
+                        : 'bg-gray-600/50 text-gray-400'
+                  }`}>
+                    {isCompleted ? '✓' : index + 1}
+                  </div>
+                  <div className="flex-1">
+                    <div className="text-sm font-medium text-white">{stage.title}</div>
+                    <div className={`text-xs ${
+                      isActive ? 'text-blue-300' : isCompleted ? 'text-green-300' : 'text-gray-400'
+                    }`}>
+                      {isCompleted ? 'Completed' : isActive ? 'In Progress' : 'Pending'}
+                    </div>
+                    
+                    {/* Debug information */}
+                    {isActive && (
+                      <div className="mt-2 text-xs text-white/60">
+                        <div>Stage ID: {stage.id}</div>
+                        <div>Approvals: {stage.approvals.map(a => `${a.team}:${a.status}`).join(', ')}</div>
+                        <div>Completed: {stage.completed ? 'Yes' : 'No'}</div>
+                      </div>
+                    )}
+                  </div>
+                  {isActive && (
+                    <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse"></div>
+                  )}
+                </div>
+                
+                {/* Progress indicator line */}
+                {index < state.stages.length - 1 && (
+                  <div className="absolute left-7 top-12 w-0.5 h-6 bg-gradient-to-b from-white/20 to-transparent"></div>
+                )}
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Footer */}
+      <div className="mt-6 pt-4 border-t border-white/10">
+        <div className="text-xs text-white/60 text-center">
+          🚀 Powered by WorldAPI AI
+        </div>
+      </div>
+      
+
+    </div>
+  );
+};
+
+// Main Partner Onboarding Chat Component - Beautified
+const PartnerOnboardingChat: React.FC = () => {
+  const { 
+    state, 
+    initializeOnboarding, 
+    sendMessage, 
+    resetOnboarding,
+    showPricingSelector,
+    hidePricingSelector,
+    savePricingSelection,
+    isPricingSelectorVisible,
+    pricingSelection
+  } = usePartnerOnboarding();
+  const { createContact } = useCRMData();
+  const [showForm, setShowForm] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isTyping, setIsTyping] = useState(false);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  console.log('🚀 PartnerOnboardingChat render - state:', state);
+  console.log('🚀 PartnerOnboardingChat render - showForm:', showForm);
+  console.log('🚀 PartnerOnboardingChat render - isLoading:', isLoading);
+
+  // Auto-scroll to bottom when messages update, but only for actual chat messages
+  useEffect(() => {
+    // Only auto-scroll if the latest message is from a user or agent chat message
+    // Don't auto-scroll for document-related state changes
+    if (state?.messages && state.messages.length > 0) {
+      const latestMessage = state.messages[state.messages.length - 1];
+      const isDocumentRelatedMessage = 
+        latestMessage.type === 'document-request' || 
+        latestMessage.type === 'kyc-documents' ||
+        latestMessage.type === 'stage-completion' ||
+        latestMessage.type === 'agreement-preview' ||
+        latestMessage.type === 'commercial-agreement';
+      
+      // Only scroll for actual conversation messages from users or agents
+      // Don't scroll for document-related messages or automated status updates
+      const shouldAutoScroll = 
+        !isDocumentRelatedMessage && 
+        (latestMessage.sender === 'partner' || latestMessage.sender === 'agent') &&
+        latestMessage.type === 'message';
+      
+      if (shouldAutoScroll) {
+        messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  }, [state?.messages]);
+
+  // Animation for message entry with proper GSAP context
+  useEffect(() => {
+    if (state?.messages && state.messages.length > 0) {
+      const ctx = gsap.context(() => {
+        const lastMessage = document.querySelector('.chat-message:last-child');
+        if (lastMessage) {
+          gsap.fromTo(lastMessage, 
+            { opacity: 0, y: 20 },
+            { 
+              opacity: 1, 
+              y: 0, 
+              duration: 0.3, 
+              ease: 'power2.out',
+              force3D: false
+            }
+          );
+        }
+      });
+      
+      return () => ctx.revert();
+    }
+  }, [state?.messages?.length]);
+
+  // Enhanced onboarding initialization with CRM integration
+  const handlePartnerInfoSubmit = async (partnerInfo: PartnerInfo) => {
+    console.log('🚀 Starting partner onboarding submission:', partnerInfo);
+    setIsLoading(true);
+    
+    try {
+      // Create CRM contact lead automatically
+      const partnerId = `partner_${Date.now()}`;
+      console.log('📝 Generated Partner ID:', partnerId);
+      
+      const crmContactData: CreateContactData = {
+        firstName: partnerInfo.name.split(' ')[0] || partnerInfo.name,
+        lastName: partnerInfo.name.split(' ').slice(1).join(' ') || '',
+        title: partnerInfo.role || 'Partner Contact',
+        company: partnerInfo.organization,
+        methods: [
+          { type: 'email' as const, value: partnerInfo.email, isPrimary: true },
+          ...(partnerInfo.phone ? [{ type: 'phone' as const, value: partnerInfo.phone, isPrimary: false }] : [])
+        ],
+        addresses: partnerInfo.country ? [{
+          type: 'work' as const,
+          street: '',
+          city: '',
+          state: '',
+          postalCode: '',
+          country: partnerInfo.country,
+          isPrimary: true
+        }] : [],
+        customFields: [
+          { key: 'Partner ID', value: partnerId, type: 'text' as const },
+          { key: 'Onboarding Stage', value: 'nda', type: 'text' as const },
+          { key: 'Lead Source', value: 'Partner Onboarding', type: 'text' as const },
+          { key: 'Onboarding Started', value: new Date().toISOString(), type: 'date' as const }
+        ],
+        source: 'Partner Onboarding',
+        organizationIds: [],
+        tags: ['partner-lead', 'onboarding', 'new-partner']
+      };
+
+      console.log('📊 CRM Contact Data to be created:', crmContactData);
+
+      // Create contact in D9 CRM
+      console.log('🔄 Calling createContact function...');
+      const newContact = await createContact(crmContactData);
+      
+      console.log('✅ CRM createContact response:', newContact);
+      
+      if (newContact) {
+        console.log('✅ Partner contact successfully created in D9 CRM:', {
+          name: partnerInfo.name,
+          company: partnerInfo.organization,
+          email: partnerInfo.email,
+          partnerId: partnerId,
+          crmContactId: newContact.id
+        });
+
+        // Store CRM contact ID for future updates
+        const enhancedPartnerInfo = {
+          ...partnerInfo,
+          crmContactId: newContact.id
+        };
+
+        // Initialize onboarding process
+        initializeOnboarding(enhancedPartnerInfo);
+        setShowForm(false);
+      } else {
+        console.warn('⚠️ CRM contact creation returned null/undefined');
+        // Continue with onboarding even if CRM creation fails
+        initializeOnboarding(partnerInfo);
+        setShowForm(false);
+      }
+      
+    } catch (error) {
+      console.error('❌ Failed to create CRM contact for partner:', error);
+      console.error('❌ Error details:', {
+        message: error instanceof Error ? error.message : 'Unknown error',
+        stack: error instanceof Error ? error.stack : 'No stack trace'
+      });
+      
+      // Continue with onboarding even if CRM creation fails
+      console.log('🔄 Continuing with onboarding despite CRM error...');
+      initializeOnboarding(partnerInfo);
+      setShowForm(false);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // Function to update CRM contact when onboarding stage changes
+  const updateCRMContactStage = async (currentStage: OnboardingStage, partnerId: string) => {
+    try {
+      // Find the contact by Partner ID custom field
+      const contacts = state?.partnerInfo ? [state.partnerInfo] : [];
+      // In a real implementation, you would search for the contact by Partner ID
+      // For now, we'll just log the stage update
+      console.log('📊 CRM Stage Update:', {
+        partnerId: partnerId,
+        newStage: currentStage,
+        timestamp: new Date().toISOString()
+      });
+      
+      // Here you would update the contact's custom field "Onboarding Stage"
+      // await updateContact(contactId, { 
+      //   customFields: [...existingFields, { key: 'Onboarding Stage', value: currentStage, type: 'text' }]
+      // });
+      
+    } catch (error) {
+      console.error('❌ Failed to update CRM contact stage:', error);
+    }
+  };
+
+  // Monitor stage changes and update CRM
+  useEffect(() => {
+    if (state?.currentStage && state?.partnerId) {
+      updateCRMContactStage(state.currentStage, state.partnerId);
+    }
+  }, [state?.currentStage, state?.partnerId]);
+
+  const handleSendMessage = (content: string) => {
+    setIsTyping(true);
+    sendMessage(content);
+    
+    // Simulate agent thinking time
+    setTimeout(() => {
+      setIsTyping(false);
+    }, 2000);
+  };
+
+  // Show partner info form if no onboarding state
+  if (!state) {
+    console.log('Showing partner info form');
+    return (
+      <div className="h-full flex items-center justify-center bg-gradient-to-br from-gray-900/50 to-blue-900/20 backdrop-blur-sm">
+        <PartnerInfoForm onSubmit={handlePartnerInfoSubmit} />
+      </div>
+    );
+  }
+
+  console.log('Showing chat interface');
+  return (
+    <div className="h-full flex bg-gradient-to-br from-gray-900/80 to-gray-800/80 backdrop-blur-sm">
+      {/* Enhanced Progress Sidebar */}
+      <div className="w-80 bg-gradient-to-b from-gray-800/60 to-gray-900/60 backdrop-blur-md border-r border-white/10">
+        <EnhancedProgress />
+      </div>
+
+      {/* Main Chat Area */}
+      <div className="flex-1 flex flex-col">
+        {/* Enhanced Chat Header */}
+        <div className="bg-gradient-to-r from-gray-800/60 to-gray-700/60 backdrop-blur-md border-b border-white/10 p-6">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-4">
+              <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center">
+                <span className="text-xl">🤖</span>
+              </div>
+              <div>
+                <h2 className="text-xl font-bold text-white">AI Onboarding Assistant</h2>
+                <p className="text-sm text-white/60">
+                  Guiding {state.partnerInfo.name} from {state.partnerInfo.organization}
+                </p>
+              </div>
+            </div>
+            
+            <div className="flex items-center space-x-4">
+              <div className="text-right">
+                <div className="text-sm text-white/60">Overall Progress</div>
+                <div className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-400">
+                  {Math.round((state.stages.filter(s => s.completed).length / state.stages.length) * 100)}%
+                </div>
+              </div>
+              <button
+                onClick={() => {
+                  if (confirm('Are you sure you want to reset the chat? This will clear all progress.')) {
+                    resetOnboarding();
+                  }
+                }}
+                className="text-xs bg-red-500/20 hover:bg-red-500/30 text-red-300 px-4 py-2 rounded-lg transition-all backdrop-blur-sm border border-red-500/30 hover:border-red-500/50"
+              >
+                🔄 Reset
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Enhanced Messages Area */}
+        <div className="flex-1 overflow-y-auto p-6 space-y-6 bg-gradient-to-b from-transparent to-gray-900/20">
+          {state.messages.map((message) => (
+            <div key={message.id} className="chat-message">
+              <ChatMessage message={message} />
+            </div>
+          ))}
+          
+          {/* Enhanced Typing Indicator */}
+          {isTyping && (
+            <div className="flex justify-start mb-4">
+              <div className="bg-gradient-to-r from-blue-600/20 to-purple-600/20 border border-blue-500/30 rounded-2xl p-6 max-w-[80%] backdrop-blur-sm">
+                <div className="flex items-center">
+                  <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center mr-3">
+                    <span className="text-lg">🤖</span>
+                  </div>
+                  <div>
+                    <span className="font-medium text-sm text-white block">WorldAPI Agent</span>
+                    <div className="flex items-center space-x-1 mt-1">
+                      <span className="text-xs text-white/60">Thinking</span>
+                      <div className="flex space-x-1">
+                        <div className="w-1.5 h-1.5 rounded-full bg-blue-400 animate-bounce" style={{ animationDelay: '0ms' }}></div>
+                        <div className="w-1.5 h-1.5 rounded-full bg-blue-400 animate-bounce" style={{ animationDelay: '200ms' }}></div>
+                        <div className="w-1.5 h-1.5 rounded-full bg-blue-400 animate-bounce" style={{ animationDelay: '400ms' }}></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+          
+          <div ref={messagesEndRef} />
+        </div>
+
+        {/* Enhanced Current Stage Info */}
+        <div className="border-t border-white/10 p-4 bg-gradient-to-r from-gray-800/40 to-gray-700/40 backdrop-blur-sm">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-3">
+              <div className="w-2 h-2 rounded-full bg-blue-400 animate-pulse"></div>
+              <span className="text-sm text-white/80">
+                Current Stage: <span className="text-white font-medium">{state.stages.find(s => s.id === state.currentStage)?.title}</span>
+              </span>
+            </div>
+            <div className="text-xs text-white/60">
+              Stage {state.stages.findIndex(s => s.id === state.currentStage) + 1} of {state.stages.length}
+
+        {/* Enhanced Chat Input */}
+        <EnhancedChatInput onSend={handleSendMessage} disabled={isTyping} />
+      </div>
+
+      {/* Pricing Proposal Selector */}
+      {isPricingSelectorVisible && (
+        <PricingProposalSelector 
+          isOpen={isPricingSelectorVisible} 
+          onClose={hidePricingSelector} 
+          onComplete={savePricingSelection} 
+        />
+      )}
+    </div>
+  );
+};
+
+export default PartnerOnboardingChat;
